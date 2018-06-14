@@ -53,3 +53,8 @@ p{
 }
 
 /*Fin clases Tabla*/
+
+/*Fondos*/
+.background{
+    background-attachment: fixed;
+}
