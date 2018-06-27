@@ -26,9 +26,9 @@
             </div>
             <div>
                 <form>
-                    <label for="rdEstado">Estado</label>
-                    <input type="radio" name="estado" id="rdEstado" value="1" checked> Activo
-                    <input type="radio" name="estado" value="0"> Inactivo
+                    <label for="divRadios">Estado</label>
+                        <input type="radio" name="estado" id="rdButton" value="1" checked> Activo
+                        <input type="radio" name="estado" value="0"> Inactivo
                 </form>
             </div>
             <button type="button" id="btnRegistrar">Registrar</button>
@@ -53,9 +53,36 @@
         </table>
     </fieldset>
 
+    <fieldset>
+        <legend>Buscar:</legend>
+        <form>
+            <div>
+                <label for="txtBuscarCodigo"></label>
+                <input type="text" id="txtBuscarCodigo">
+                
+                <button type="button" id="btnBuscar">Buscar</button>
+            </div>
+        </form>
+
+        <table id="tblBusqueda">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Créditos</th>
+                    <th>Fecha de creación</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </fieldset>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/servicioCarreras.js"></script>
-    <script src="js/controladorCarreras.js"></script>
+    <script src="js/carreras/servicioCarreras.js"></script>
+    <script src="js/carreras/controladorCarreras.js"></script>
 </body>
 </html>
