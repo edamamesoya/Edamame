@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Laborarotios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/reset.css"/>
+</head>
+<body>
+
+    <h1>Laboratorios</h1>
+    <form>
+        <fieldset>
+            <legend>Registrar</legend>
+            <div>
+                <label for="txtCodigo">Código</label>
+                <input type="number" id="txtCodigo">
+            </div>
+            <div>
+                <label for="txtNombre">Nombre</label>
+                <input type="text" id="txtNombre">
+            </div>
+            <div>
+                <label for="txtCupos">Cupo</label>
+                <input type="number" id="txtCupos">
+            </div>
+            <div>
+                <form>
+                    <label for="rdEstado">Estado</label>
+                    <input type="radio" name="estado" id="rdEstado" value="1" checked> Activo
+                    <input type="radio" name="estado" value="0"> Inactivo
+                </form>
+            </div>
+            <button type="button" id="btnRegistrar">Registrar</button>
+        </fieldset>
+    </form>
+
+    <fieldset>
+        <legend>Laboratorios Registrados</legend>
+        <table id="tblLaboratorios">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Cupo</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+            </tbody>
+        </table>
+    </fieldset>
+    
+    <script src="http://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/servicioLaboratorios.js"></script>
+    <script src="js/controladorLaboratorios.js"></script>
+</body>
+</html>
