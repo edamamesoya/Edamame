@@ -1,34 +1,33 @@
 'use strict';
 mostrarListaGrupos()
 
-let botonRegistrar = document.querySelector('#btnRegistrar');
-botonRegistrar.addEventListener('click', obtenerDatos);
-
-
 let inputNumeroGrupo = document.querySelector('#txtNumeroGrupo');
 let inputNumeroLaboratorio = document.querySelector('#txtNumeroLab');
 let inputNombreProfesor = document.querySelector('#txtNombrePro');
 let inputNumeroEstudiantes = document.querySelector('#txtNumeroEst');
 let inputDiasSemana = document.querySelector('#txtSelecionarDia');
+let botonRegistrar = document.querySelector('#btnRegistrar');
+botonRegistrar.addEventListener('click', obtenerDatos);
 
 
 let nNumeroGrupo = 0;
 let nNumeroLaboratorio = 0;
 let sNombreProfesor = '';
-let nNumeroEsttudiantes = 0;
-let odiasSemana = '';
+let nNumeroEstudiantes = 0;
+let sDiasSemana = '';
 let reglaLetras = /^[a-zA-Z ]+$/;
 let reglaNumeros = /^[0-9]+$/;
 
 
 function obtenerDatos() {
-    let bError = false;
+
     let nNumeroGrupo = inputNumeroGrupo.value;
     let nNumeroLaboratorio = inputNumeroLaboratorio.value;
     let sNombreProfesor = inputNombreProfesor.value;
     let nNumeroEstudiantes = inputNumeroEstudiantes.value;
-    let sdiasSemana = inputDiasSemana.value;
+    let sDiasSemana = inputDiasSemana.value;
 
+    let bError = false;
     bError = validar();
     if (bError == true) {
         swal({
@@ -38,7 +37,7 @@ function obtenerDatos() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarGrupo(nNumeroGrupo, nNumeroLaboratorio, sNombreProfesor, nNumeroEstudiantes, sdiasSemana);
+        let respuesta = registrarGrupo(nNumeroGrupo, nNumeroLaboratorio, sNombreProfesor, nNumeroEstudiantes, sDiasSemana);
         swal({
             title: 'Registro Correcto',
             text: 'Se Registro de forma Correcta',
@@ -50,13 +49,15 @@ function obtenerDatos() {
 }
 
 function validar() {
+
+
     let bError = false;
 
     nNumeroGrupo = Number(inputNumeroGrupo.value);
     nNumeroLaboratorio = Number(inputNumeroLaboratorio.value);
     sNombreProfesor = inputNombreProfesor.value;
     nNumeroEstudiantes = Number(inputNumeroEstudiantes.value);
-    sdiasSemana = inputDiasSemana.value;
+    sDiasSemana = inputDiasSemana.value;
 
     //validar nombre
     if (sNombreProfesor == '' || (reglaLetras.test(sNombreProfesor) == false)) {
