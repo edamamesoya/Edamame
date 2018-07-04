@@ -60,7 +60,7 @@ app.use( function(req, res, next) {
 });
 
 /**
- * Exportams todas las rutas dentro del index.js
+ * Exportamos todas las rutas dentro del index.js
  */
 const carreras = require('./components/carreras/carrera.route');
 
