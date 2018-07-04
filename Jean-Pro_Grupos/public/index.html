@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Registro de Grupos</title>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend>Registro de Grupos</legend>
+            <div>
+                <label for "txtNumeroGru">Numero del Grupo</label>
+                <input type="number" id="txtNumeroGrupo" min="0">
+            </div>
+            <div>
+                <label for="txtNumeroLab">Numero de Laboratorio</label>
+                <input type="number" id="txtNumeroLab" min="0">
+            </div>
+            <div>
+                <label for="txtNombrePro">Nombre de Profesor</label>
+                <input type="text" id="txtNombrePro">
+            </div>
+            <div>
+                <label for="txtNumeroEst">Numero de Estudiantes Matriculados</label>
+                <input type="number" id="txtNumeroEst" min="1">
+            </div>
+            <div id="txtHorarioGru">
+                <p>
+                    Registro de horarios
+                </p>
+                <div>
+                    Selecione la cantidad de dias del curso ó virtual de ser el caso
+                    <select name="totaldias" id="txtSelecionarDia">
+                        <option selected value="none">Elige una opción</option>
+                        <option value="virtual">Virtual</option>
+                        <option value="Un Dia">1 Dia</option>
+                        <option value="Dos Dias">2 Dias</option>
+                        <option value="Tres Dias">3 Dias</option>
+                        <option value="Cuatro Dias">4 Dias</option>
+                        <option value="Cinco Dias">5 Dias</option>
+                        <option value="Seis Dias">6 Dias</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" id="btnRegistrar">Registrar</button>
+        </fieldset>
+    </form>
+    <fieldset>
+        <legend>Grupos Registrados</legend>
+        <table id="tblGrupos">
+            <thead>
+                <tr>
+                    <th>Numero del Grupo</th>
+                    <th>Numero de Laboratorio</th>
+                    <th>Nombre del Profesor</th>
+                    <th>Numero de Estudiantes Matriculados</th>
+                    <th>Horarios</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </fieldset>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/servicioGrupos.js"></script>
+    <script src="js/controladorGrupos.js"></script>
+</body>
+
+</html>
