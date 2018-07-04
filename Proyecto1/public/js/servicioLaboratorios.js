@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarLaboratorio(pCodigo, pNombre, pCupo){
+function registrarLaboratorio(pCodigo, pNombre, pCupos, pEstado){
 
     let respuesta = '';
     let peticion = $.ajax({
@@ -12,7 +12,8 @@ function registrarLaboratorio(pCodigo, pNombre, pCupo){
         data:{
            codigo : pCodigo,
            nombre : pNombre,
-           cupo : pCupo
+           cupos : pCupos,
+           estado : pEstado
         }
     });
 

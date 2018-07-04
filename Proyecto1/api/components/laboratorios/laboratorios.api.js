@@ -1,12 +1,12 @@
 'use strict'
 
-const laboratorioModel = require('./laboratorio.model');
+const laboratorioModel = require('./laboratorios.model');
 
 module.exports.registrar = function(req, res) {
     let nuevoLaboratorio = new laboratorioModel({
         codigo : req.body.codigo,
         nombre : req.body.nombre,
-        creditos : req.body.creditos,
+        cupos : req.body.cupos,
         estado : req.body.estado
     });
 

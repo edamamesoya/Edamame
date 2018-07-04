@@ -13,20 +13,20 @@
         <fieldset>
             <legend>Registrar</legend>
             <div>
-                <label for="txtCodigo">Código</label>
-                <input type="number" id="txtCodigo">
+                <label for="txtCodigo">Código:</label>
+                <input type="number" id="txtCodigo" min="0">
             </div>
             <div>
-                <label for="txtNombre">Nombre</label>
+                <label for="txtNombre">Nombre:</label>
                 <input type="text" id="txtNombre">
             </div>
             <div>
-                <label for="txtCupos">Cupo</label>
-                <input type="number" id="txtCupos">
+                <label for="txtCupos">Cupo:</label>
+                <input type="number" id="txtCupos" min="0">
             </div>
             <div>
                 <form>
-                    <label for="rdEstado">Estado</label>
+                    <label for="rdEstado">Estado:</label>
                     <input type="radio" name="estado" id="rdEstado" value="1" checked> Activo
                     <input type="radio" name="estado" value="0"> Inactivo
                 </form>
@@ -43,8 +43,7 @@
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Cupo</th>
-                    <th></th>
-                    <th></th>
+                    <th>Estado</th>
                 </tr>
             </thead>
 
@@ -54,7 +53,7 @@
         </table>
     </fieldset>
     
-    <script src="http://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="../node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/servicioLaboratorios.js"></script>
     <script src="js/controladorLaboratorios.js"></script>

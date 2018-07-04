@@ -14,8 +14,11 @@ function obtenerDatos(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCupos = Number(inputCupos.value);
-    let bEstado = inputEstado.checked;
-
+    if(inputEstado.checked == 0){
+        let bEstado = 'Inactivo';
+    }else{
+        let bEstado = 'Activo';
+    }
     //bError = validar();
     
     if(bError == true){
