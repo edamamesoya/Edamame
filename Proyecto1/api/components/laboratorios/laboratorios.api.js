@@ -25,4 +25,23 @@ module.exports.listar_todos = function(req, res){
             res.send(laboratorios);
         }
     );
-}
+};
+
+module.exports.buscar_laboratorio = function(req, res){
+    let sCodigo = req.body.codigo;
+    let sNombre = req.body.nombre;
+    laboratorioModel.find({
+        'codigo': {'$regex': sCodigo, '$options': 'i'}
+    }).then(
+        function(laboratorios){
+            res.send(laboratorios);
+        }
+    );
+    laboratorioModel.find({
+        'nombre': {'$regex': sNombre, '$options': 'i'}  
+    }).then(
+        function(laboratorios){
+            res.send(laboratorios);
+        }
+    );
+};

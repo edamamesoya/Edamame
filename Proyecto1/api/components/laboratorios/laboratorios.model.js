@@ -6,8 +6,8 @@ let laboratorioSchema = new mongoose.Schema({
     nombre : {type : String, required : true},
     cupos : {type : Number, required : true},
     estado : {type : Boolean, required : true}
-    //periodos
-    //sedes
 });
+
+laboratorioSchema.index({codigo : 'text', nombre : 'text'});
 
 module.exports = mongoose.model('Laboratorio', laboratorioSchema);

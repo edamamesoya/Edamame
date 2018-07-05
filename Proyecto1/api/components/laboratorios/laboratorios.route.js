@@ -13,4 +13,8 @@ router.route('/listar_laboratorios')
         laboratorioApi.listar_todos(req, res);
     });
 
+router.route('/buscar_laboratorio')
+    .post(function(req, res){
+        laboratorioApi.buscar_laboratorio(req, res);
+    });
 module.exports = router;
