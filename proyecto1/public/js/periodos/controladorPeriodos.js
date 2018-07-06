@@ -2,8 +2,6 @@
 
 mostrarListaLaboratorios()
 
-document.getElementById('defaultOpen').click();
-
 let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
