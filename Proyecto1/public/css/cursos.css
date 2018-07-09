@@ -1,0 +1,53 @@
+
+#barraBuscador {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+#barraBuscador:focus {
+    width: 40%;
+}
+
+
+h2{
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+p {
+    font-size: 14px;
+    text-align: center;
+    line-height: 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+}
+
+/* Inicio estilos Fieldsets */
+fieldset{
+  background-color:#fff;
+
+  padding: 20px;	
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-bottom: 20px;
+}
+
+.fieldset {
+    border:2px solid purple;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
+}
+/* Fin estilos fieldset */
