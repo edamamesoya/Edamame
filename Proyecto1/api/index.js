@@ -60,14 +60,16 @@ app.use( function(req, res, next) {
 });
 
 /**
- * Exportamos todas las rutas dentro del index.js
+ * Exportams todas las rutas dentro del index.js
  */
-const carreras = require('./components/carreras/carrera.route');
+const cursos = require('./componentes/cursos/curso.route');
+
 
 /**
  * Le indicamos que le de acceso externo a las rutas inicializadas
  */
-app.use('/api', carreras);
+app.use('/api', cursos);
+
 
 // Se guarda todo lo que se ha realizado
 module.exports = app;
