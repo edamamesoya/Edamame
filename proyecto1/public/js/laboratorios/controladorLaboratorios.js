@@ -8,7 +8,7 @@ let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
 let inputCupos = document.querySelector('#txtCupos');
-let inputEstado = document.querySelector('#rdEstado');
+let inputEstado = true
 let inputBuscar = document.querySelector('#txtBuscarCodigo');
 inputBuscar.addEventListener('keyup', mostrarBusquedaLaboratorios);
 
@@ -30,7 +30,7 @@ function obtenerDatos(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCupos = Number(inputCupos.value);
-    let bEstado = inputEstado.checked;
+    let bEstado = true;
     bError = validarLaboratorios();
     
     if(bError == true){

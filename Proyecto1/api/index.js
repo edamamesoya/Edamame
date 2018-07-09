@@ -63,11 +63,13 @@ app.use( function(req, res, next) {
  * Exportamos todas las rutas dentro del index.js
  */
 const laboratorios = require('./components/laboratorios/laboratorios.route');
+const periodos = require('./components/periodos/periodos.route');
 
 /**
  * Le indicamos que le de acceso externo a las rutas inicializadas
  */
 app.use('/api', laboratorios);
+app.use('/api', periodos);
 
 // Se guarda todo lo que se ha realizado
 module.exports = app;

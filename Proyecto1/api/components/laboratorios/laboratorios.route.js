@@ -10,11 +10,11 @@ router.route('/registrar_laboratorio')
 
 router.route('/listar_laboratorios')
     .get(function(req, res){
-        laboratorioApi.listar_todos(req, res);
+        laboratorioApi.listar_laboratorios(req, res);
     });
 
 router.route('/buscar_laboratorio')
     .post(function(req, res){
-        laboratorioApi.buscar_laboratorio(req, res);
+        laboratorioApi.buscar_laboratorios(req, res);
     });
 module.exports = router;

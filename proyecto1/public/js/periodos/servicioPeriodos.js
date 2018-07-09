@@ -1,10 +1,10 @@
 'use strict';
 
-function registrarLaboratorio(pCodigo, pNombre, pCupos, pEstado){
+function registrarPeriodo(pCodigo, pNombre, pCupos, pEstado){
 
     let respuesta = '';
     let peticion = $.ajax({
-        url: 'http://localhost:4000/api/registrar_laboratorio',
+        url: 'http://localhost:4000/api/registrar_periodo',
         type: 'post',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
@@ -12,7 +12,8 @@ function registrarLaboratorio(pCodigo, pNombre, pCupos, pEstado){
         data:{
            codigo : pCodigo,
            nombre : pNombre,
-           cupos : pCupos,
+           fechainicio : pFechaInicio,
+           fechaconclusion : pFechaConclusion,
            estado : pEstado
         }
     });
@@ -30,10 +31,10 @@ function registrarLaboratorio(pCodigo, pNombre, pCupos, pEstado){
 
 };
 
-function obtenerLaboratorios(){
-    let listaLaboratorios = [];
+function obtenerPeriodos(){
+    let listaPeriodos = [];
     let peticion = $.ajax({
-        url: 'http://localhost:4000/api/listar_Laboratorios',
+        url: 'http://localhost:4000/api/listar_Periodos',
         type: 'get',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
@@ -50,13 +51,13 @@ function obtenerLaboratorios(){
        
       });
 
-    return listaLaboratorios;
+    return listaPeriodos;
 };
 
-function obtenerBusquedaLaboratorios(pBuscar){
-    let listaLaboratorios = [];
+function obtenerBusquedaPeriodos(pBuscar){
+    let listaPeriodos = [];
     let peticion = $.ajax({
-        url: 'http://localhost:4000/api/buscar_laboratorio',
+        url: 'http://localhost:4000/api/buscar_Periodo',
         type: 'post',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType: 'json',
@@ -65,12 +66,12 @@ function obtenerBusquedaLaboratorios(pBuscar){
     });
 
     peticion.done(function(response){
-        listaLaboratorios = response;
+        listaPeriodos = response;
     });
 
     peticion.fail(function(){
 
     });
 
-    return listaLaboratorios;
+    return listaPeriodos;
 }

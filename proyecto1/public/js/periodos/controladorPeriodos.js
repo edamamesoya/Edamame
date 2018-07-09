@@ -1,20 +1,20 @@
 'use strict'
 
-mostrarListaLaboratorios()
+mostrarListaPeriodos()
 
 let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
-let inputCupos = document.querySelector('#txtCupos');
+let inputFechaInicio = document.querySelector('#txtFechaInicio');
+let inputFechaConclusion = document.querySelector('#txtFechaConclusion')
 let inputEstado = document.querySelector('#rdEstado');
 let inputBuscar = document.querySelector('#txtBuscarCodigo');
 
 botonRegistrar.addEventListener('click', obtenerDatos);
-inputBuscar.addEventListener('keyup', mostrarBusquedaLaboratorios);
+inputBuscar.addEventListener('keyup', mostrarBusquedaPeriodos);
 
 //Regex//
 let regexCodigo = /^[a-zA-Z0-9]+$/;
-let regexCupos = /^[0-9]+$/;
 let regexNombre = /^[a-zA-Z ]+$/;
 //Fin Regex//
 
@@ -22,19 +22,20 @@ function obtenerDatos(){
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
-    let nCupos = Number(inputCupos.value);
-    let bEstado = inputEstado.checked;
+    let nFechaInicio = new Date(inputFechaInicio.value);
+    let nFechaConclusion = new Date(inputFechaConclusion.value)
+    let bEstado = true;
     bError = validar();
     
     if(bError == true){
         swal({
             title: 'Registro incorrecto',
-            text: 'No se pudo registrar el laboratorio. Por favor, revise los campos en rojo.',
+            text: 'No se pudo registrar el periodo. Por favor, revise los campos en rojo.',
             type: 'warning',
             confirmButtonText: 'Entendido'
           });
     }else{
-        let respuesta = registrarLaboratorio(sCodigo , sNombre, nCupos, bEstado);
+        let respuesta = registrarPeriodo(sCodigo , sNombre, nFechaInicio, nFechaConclusion, bEstado);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -51,27 +52,29 @@ function obtenerDatos(){
               });
         }
         limpiarFormulario();
-        mostrarListaLaboratorios();  
+        mostrarListaPeriodos();  
     }
 };
 
-function mostrarListaLaboratorios(){
-    let listaLaboratorios = obtenerLaboratorios();
-    let tbody = document.querySelector('#tblLaboratorios tbody');
+function mostrarListaPeriodos(){
+    let listaPeriodos = obtenerPeriodos();
+    let tbody = document.querySelector('#tblPeriodos tbody');
     tbody.innerHTML = '';
 
-    for(let i = 0; i < listaLaboratorios.length; i++){
+    for(let i = 0; i < listaPeriodos.length; i++){
         let fila = tbody.insertRow();
 
         let celdaCodigo = fila.insertCell();
         let celdaNombre = fila.insertCell();
-        let celdaCupos = fila.insertCell();
+        let celdaFechaInicio = fila.insertCell();
+        let celdaFechaConclusion = fila.insertCell();
         let celdaEstado = fila.insertCell();
 
-        celdaCodigo.innerHTML = listaLaboratorios[i]['codigo'];
-        celdaNombre.innerHTML = listaLaboratorios[i]['nombre'];
-        celdaCupos.innerHTML = listaLaboratorios[i]['cupos'];
-        celdaEstado.innerHTML = listaLaboratorios[i]['estado'];
+        celdaCodigo.innerHTML = listaPeriodos[i]['codigo'];
+        celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
+        celdaFechaInicio.innerHTML = listaPeriodos[i]['fechainicio'];
+        celdaFechaConclusion.innerHTML = listaPeriodos[i]['fechaconclusion'];
+        celdaEstado.innerHTML = listaPeriodos[i]['estado'];
     }
 };
 
@@ -79,7 +82,8 @@ function validar(){
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
-    let nCupos = inputCupos.value;
+    let nFechaInicio = inputFechaInicio.value;
+    let nFechaConclusion = inputFechaConclusion.value;
 
     if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)){
         inputCodigo.classList.add('errorInput');
@@ -95,37 +99,48 @@ function validar(){
         inputNombre.classList.remove('errorInput');
     }
 
-    if(nCupos == 0 || (regexCupos.test(nCupos) == false)){
-        inputCupos.classList.add('errorInput');
+    if(nFechaInicio == 0 || nFechaInicio < Date.now()){
+        inputFechaInicio.classList.add('errorInput');
         bError = true
     }else{
-        inputCupos.classList.remove('errorInput');
+        inputFechaInicio.classList.remove('errorInput');
+    }
+
+    
+
+    if(nFechaConclusion == 0 || nFechaConclusion < date.now()){
+        inputFechaConclusion.classList.add('errorInput');
+        bError = true
+    }else{
+        inputFechaConclusion.classList.remove('errorInput');
     }
 
     return bError;
 }
 
-function mostrarBusquedaLaboratorios(){
-    let listaLaboratorios = obtenerBusquedaLaboratorios(inputBuscar.value);
+function mostrarBusquedaPeriodos(){
+    let listaPeriodos = obtenerBusquedaPeriodos(inputBuscar.value);
 
     let tbody = document.querySelector('#tblBusqueda tbody');
     tbody.innerHTML = '';
 
-    for(let i = 0; i < listaLaboratorios.length; i++){
+    for(let i = 0; i < listaPeriodos.length; i++){
         let fila = tbody.insertRow();
 
         let celdaCodigo = fila.insertCell();
         let celdaNombre = fila.insertCell();
-        let celdaCupos = fila.insertCell();
+        let celdaFechaInicio = fila.insertCell();
+        let celdaFechaConclusion = fila.insertCell();
         let celdaEstado = fila.insertCell();
         let celdaEditar = fila.insertCell();
         let celdaEliminar = fila.insertCell();
 
-        celdaCodigo.innerHTML = listaLaboratorios[i]['codigo'];
-        celdaNombre.innerHTML = listaLaboratorios[i]['nombre'];
-        celdaCupos.innerHTML = listaLaboratorios[i]['cupos'];
+        celdaCodigo.innerHTML = listaPeriodos[i]['codigo'];
+        celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
+        celdaFechaInicio.innerHTML = listaPeriodos[i]['fechainicio'];
+        celdaFechaConclusion.innerHTML = listaPeriodos[i]['fechaconclusion']
 
-        let bEstado = listaLaboratorios[i]['estado'];
+        let bEstado = listaPeriodos[i]['estado'];
         if(bEstado){
             celdaEstado.innerHTML = 'Activo';
         }else{
@@ -164,5 +179,6 @@ function abrirFuncion(evt, funcion) {
 function limpiarFormulario(){
     inputCodigo.value = '';
     inputNombre.value = '';
-    inputCupos.value = '';
+    inputFechaInicio.value = '';
+    inputFechaConclusion.value = '';
 };

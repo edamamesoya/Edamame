@@ -33,7 +33,7 @@ function registrarLaboratorio(pCodigo, pNombre, pCupos, pEstado){
 function obtenerLaboratorios(){
     let listaLaboratorios = [];
     let peticion = $.ajax({
-        url: 'http://localhost:4000/api/listar_Laboratorios',
+        url: 'http://localhost:4000/api/listar_laboratorios',
         type: 'get',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
@@ -56,7 +56,7 @@ function obtenerLaboratorios(){
 function obtenerBusquedaLaboratorios(pBuscar){
     let listaLaboratorios = [];
     let peticion = $.ajax({
-        url: 'http://localhost:4000/api/buscar_laboratorio',
+        url: 'http://localhost:4000/api/buscar_laboratorios',
         type: 'post',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType: 'json',

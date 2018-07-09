@@ -19,7 +19,7 @@ module.exports.registrar = function(req, res) {
     });
 };
 
-module.exports.listar_todos = function(req, res){
+module.exports.listar_laboratorios = function(req, res){
     laboratorioModel.find().sort({nombre : 'asc'}).then(
         function(laboratorios){
             res.send(laboratorios);
@@ -27,7 +27,7 @@ module.exports.listar_todos = function(req, res){
     );
 };
 
-module.exports.buscar_laboratorio = function(req, res){
+module.exports.buscar_laboratorios = function(req, res){
     let sCodigo = req.body.codigo;
     let sNombre = req.body.nombre;
     laboratorioModel.find({

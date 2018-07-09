@@ -6,7 +6,8 @@ module.exports.registrar = function(req, res) {
     let nuevoPeriodo = new periodoModel({
         codigo : req.body.codigo,
         nombre : req.body.nombre,
-        cupos : req.body.cupos,
+        fechainicio : req.body.fechainicio,
+        fechaconclusion : req.body.fechaconclusion,
         estado : req.body.estado
     });
 
