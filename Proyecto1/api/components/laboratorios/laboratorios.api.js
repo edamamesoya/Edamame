@@ -7,12 +7,13 @@ module.exports.registrar = function(req, res) {
         codigo : req.body.codigo,
         nombre : req.body.nombre,
         cupos : req.body.cupos,
+        sede : req.body.sede,
         estado : req.body.estado
     });
 
     nuevoLaboratorio.save(function(error){
         if(error){
-            res.json({success : false, msg : 'No se pudo registrar la laboratorio' + error});
+            res.json({success : false, msg : 'No se pudo registrar el laboratorio' + error});
         }else{
             res.json({success : true, msg : 'La laboratorio se registró con éxito'});
         }

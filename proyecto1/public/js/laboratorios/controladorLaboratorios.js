@@ -1,18 +1,19 @@
 'use strict'
 
 
-
 mostrarListaLaboratorios()
 
 let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
 let inputCupos = document.querySelector('#txtCupos');
+let inputSede = document.querySelector('txtSede');
 let inputEstado = true
 let inputBuscar = document.querySelector('#txtBuscarCodigo');
 inputBuscar.addEventListener('keyup', mostrarBusquedaLaboratorios);
 
 botonRegistrar.addEventListener('click', obtenerDatos);
+
 if(inputBuscar == ''){
     mostrarListaLaboratorios();
 }else{
@@ -23,6 +24,7 @@ if(inputBuscar == ''){
 let regexCodigo = /^[a-zA-Z0-9]+$/;
 let regexCupos = /^[0-9]+$/;
 let regexNombre = /^[a-zA-Z ]+$/;
+let regexSede = /^[a-zA-z0-9 ]+$/;
 //Fin Regex//
 
 function obtenerDatos(){
@@ -30,7 +32,8 @@ function obtenerDatos(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCupos = Number(inputCupos.value);
-    let bEstado = true;
+    let sSede = inputSede.value;
+    let bEstado = inputEstado.value;
     bError = validarLaboratorios();
     
     if(bError == true){
@@ -41,7 +44,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
           });
     }else{
-        let respuesta = registrarLaboratorio(sCodigo , sNombre, nCupos, bEstado);
+        let respuesta = registrarLaboratorio(sCodigo , sNombre, nCupos, sSede, bEstado);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -117,16 +120,23 @@ function validarLaboratorios(){
 
     if (sNombre == '' || (regexNombre.test(sNombre) == false)){
         inputNombre.classList.add('errorInput');
-        bError = true
+        bError = true;
     }else{
         inputNombre.classList.remove('errorInput');
     }
 
     if(nCupos == 0 || (regexCupos.test(nCupos) == false)){
         inputCupos.classList.add('errorInput');
-        bError = true
+        bError = true;
     }else{
         inputCupos.classList.remove('errorInput');
+    }
+
+    if(sSede == '' || (regexSede.test(sSede) == false)){
+        inputSede.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputSede.classList.remove('errorInput');
     }
 
     return bError;

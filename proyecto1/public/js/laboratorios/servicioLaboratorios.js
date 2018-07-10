@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarLaboratorio(pCodigo, pNombre, pCupos, pEstado){
+function registrarLaboratorio(pCodigo, pNombre, pCupos, pSede, pEstado){
 
     let respuesta = '';
     let peticion = $.ajax({
@@ -13,6 +13,7 @@ function registrarLaboratorio(pCodigo, pNombre, pCupos, pEstado){
            codigo : pCodigo,
            nombre : pNombre,
            cupos : pCupos,
+           sede : pSede,
            estado : pEstado
         }
     });
@@ -38,8 +39,7 @@ function obtenerLaboratorios(){
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
         async:false,
-        data:{
-        }
+        data:{}
       });
     
       peticion.done(function(response){
