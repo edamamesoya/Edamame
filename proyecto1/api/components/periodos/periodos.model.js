@@ -6,7 +6,7 @@ let periodoSchema = new mongoose.Schema({
     nombre : {type : String, required : true},
     fechainicio : {type : Date, required : true},
     fechaconclusion : {type : Date, required : true},
-    estado : {type : boolean, required : true}
+    estado : {type : Boolean, required : true}
 });
 
 periodoSchema.index({codigo : 'text', nombre : 'text'});
