@@ -100,7 +100,7 @@ function validar(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCupo = inputCupo.value;
-    let nclusion = inputclusion.value;
+    let sSede = selectSede.value;
 
     if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)){
         inputCodigo.classList.add('errorInput');
@@ -122,6 +122,8 @@ function validar(){
     }else{
         inputCupo.classList.remove('errorInput');
     }
+
+    return bError
 }
     
 
