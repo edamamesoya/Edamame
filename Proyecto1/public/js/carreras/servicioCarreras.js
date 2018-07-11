@@ -8,7 +8,7 @@
  * {Date} pFechaCreacion, {boolean} pEstado
  * @return: {String} repuesta
  */
-function registrarCarrera(pCodigo, pNombre, pCreditos, pFechaCreacion, pEstado){
+function registrarCarrera(pCodigo, pNombre, pCreditos, pFechaCreacion){
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_carrera',
@@ -20,8 +20,7 @@ function registrarCarrera(pCodigo, pNombre, pCreditos, pFechaCreacion, pEstado){
            codigo : pCodigo,
            nombre : pNombre,
            creditos : pCreditos,
-           fechaCreacion : pFechaCreacion,
-           estado : pEstado 
+           fechaCreacion : pFechaCreacion
         }
       });
     

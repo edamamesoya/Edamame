@@ -6,19 +6,12 @@
 mostrarListaCarreras()
 
 /**
- * Hace click a la opción de 'Acciones' para que se muestre
- * por default al cargar o recargar la página.
- */
-document.getElementById("defaultOpen").click();
-
-/**
  * Declaración de variables.
  */
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
 let inputCreditos = document.querySelector('#txtCreditos');
 let inputFecha = document.querySelector('#txtFecha');
-let inputEstado = document.querySelector('#rdButton');
 let inputBuscar = document.querySelector('#txtBuscarCodigo');
 let botonRegistrar = document.querySelector('#btnRegistrar');
 
@@ -35,6 +28,10 @@ let regexCodigo = /^[a-zA-Z0-9]+$/;
 let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
 let regexCreditos = /^[0-9]+$/;
 
+//Carga toda la lista de carreras
+inputBuscar.value = '';
+mostrarBusqueda()
+
 /**
  * Descripción: breve descripción sobre la funcionalidad
  * @param: n/a
@@ -45,7 +42,6 @@ function obtenerDatos(){
     let sNombre = inputNombre.value;
     let nCreditos = inputCreditos.value;
     let dFechaCreacion = inputFecha.value;
-    let bEstado = inputEstado.checked;
 
     let bError = false;
     bError = validarRegistro();
@@ -58,7 +54,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
           });
     }else{
-        let respuesta = registrarCarrera(sCodigo , sNombre, nCreditos, dFechaCreacion, bEstado);
+        let respuesta = registrarCarrera(sCodigo , sNombre, nCreditos, dFechaCreacion);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -75,7 +71,9 @@ function obtenerDatos(){
               });
         }
         limpiarFormulario();
+        mostrarBusqueda();
         mostrarListaCarreras();  
+        document.getElementById("buscar").click();
     }
 };
 
@@ -125,8 +123,6 @@ function validarRegistro(){
     }else{
         inputFecha.classList.remove('errorInput');
     }
-
-    // agregar validarEstado();
     return bError;
 }
 
@@ -213,7 +209,7 @@ function mostrarBusqueda(){
         }
 
         let botonEditar = document.createElement('a');
-        botonEditar.href = '#';
+        botonEditar.href = '';
         botonEditar.classList.add('far');
         botonEditar.classList.add('fa-edit');
         celdaEditar.appendChild(botonEditar);
@@ -237,26 +233,4 @@ function limpiarFormulario(){
     inputNombre.value = '';
     inputCreditos.value = '';
     inputFecha.value = '';
-};
-
-/**
- * Descripción: Muestra una función según el botón presionado
- * en el panel de 'Acciones' y deshabilita las otras funciones
- * para que no se muestren.
- * @param: {String} evento, {String} funcion
- * @return: n/a
- */
-function abrirFuncion(evt, funcion) {
-    let i, tabcontent, tablinks;
-
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(funcion).style.display = "block";
-    evt.currentTarget.className += " active";
 };

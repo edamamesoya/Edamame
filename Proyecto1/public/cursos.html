@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Carreras</title>
+    <title>Cursos</title>
 
     <!--Páginas de estilo css-->
     <link rel="stylesheet" href="css/reset.css">
@@ -53,45 +53,52 @@
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
-            <button class="tablinks" onclick="abrirFuncion(event, 'registrarCarrera')" id="defaultOpen">Registrar carrera</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'buscarCarrera')" id="buscar">Buscar carrera</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'listarCarrera')">Listar carreras</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'listarCarrera')">Enlazar cursos</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarCurso')" id="defaultOpen">Registrar curso</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarCurso')" id="buscar">Buscar curso</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarCurso')">Enlazar grupos</button>
         </div>
 
         <!--Función registrar carreras-->
-        <div id="registrarCarrera" class="tabcontent">
-            <h2>Registrar carreras</h2>
+        <div id="registrarCurso" class="tabcontent">
+            <h2>Registrar cursos</h2>
             <p>Ingrese la información solicitada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
                 para guardar los datos.
             </p>
 
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
-                    <h3>Información de carrera</h3>
+                    <h3>Información de curso</h3>
                     <div>
                         <label for="txtCodigo">Código:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtCodigo" placeholder="Código de carrera" required autofocus>
+                        <input type="text" id="txtCodigo" placeholder="Código de curso" required autofocus>
                         <label for="txtCodigo" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtNombre">Nombre:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtNombre" placeholder="Nombre de carrera" required>
+                        <input type="text" id="txtNombre" placeholder="Nombre de curso" required>
                         <label for="txtNombre" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtCreditos">Créditos:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="number" id="txtCreditos" min="0" placeholder="Créditos de carrera" required>
+                        <input type="number" id="txtCreditos" min="0" placeholder="Créditos de curso" required>
                         <label for="txtCreditos" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtFecha">Fecha de creación:</label>
-                        <i class="far fa-calendar-alt"></i>
-                        <input type="date" id="txtFecha" placeholder="Fecha de creación" required>
-                        <label for="txtFecha" class="labelError">*</label>
+                        <label for="txtCarrera">Carrera:</label>
+                        <input list="lstCarrera" id="txtCarrera" required>
+                        <label for="txtCarrera" class="labelError">*</label>
+                        <datalist id="lstCarrera">
+                        </datalist>
+                    </div>
+                    <div>
+                        <label for="txtRequisitos">Requisitos:</label>
+                        <input list="lstRequisitos" id="txtRequisitos" required>
+                        <label for="txtRequisitos" class="labelError">*</label>
+                        <datalist id="lstRequisitos">
+                        </datalist>
                     </div>
                     <label for="" id="labelRequerido">*: campos requeridos</label>
                     <button type="button" id="btnRegistrar">Registrar</button>
@@ -100,10 +107,10 @@
         </div>
 
         <!--Función buscar carreras-->
-        <div id="buscarCarrera" class="tabcontent">
-            <h2>Lista de carreras</h2>
-            <p>Despliegue total de registros para la sección "Carreras". Para búsquedas específicas, ingrese el nombre completo,
-                parcial, o el código de la carrera en "Filtrar". Para buscar entre carreras activas o inactivas, selecciónelo
+        <div id="buscarCurso" class="tabcontent">
+            <h2>Lista de cursos</h2>
+            <p>Despliegue total de registros para la sección "Cursos". Para búsquedas específicas, ingrese el nombre completo,
+                parcial, o el código del curso en "Filtrar". Para buscar entre cursos activas o inactivas, selecciónelo
                 desde el menú desplegable junto a "Filtrar".
             </p>
 
@@ -122,28 +129,10 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Créditos</th>
-                        <th>Fecha de creación</th>
-                        <th>Estado</th>
+                        <th>Carreras</th>
+                        <th>Requisitos</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </div>
-
-        <!--Función listar carreras-->
-        <div id="listarCarrera" class="tabcontent">
-            <table id="tblCarreras" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Créditos</th>
-                        <th>Fecha de creación</th>
-                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -158,8 +147,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/controladorGeneral.js"></script>
-    <script src="js/carreras/servicioCarreras.js"></script>
-    <script src="js/carreras/controladorCarreras.js"></script>
+    <script src="js/cursos/servicioCursos.js"></script>
+    <script src="js/cursos/controladorCursos.js"></script>
 </body>
 
 </html>

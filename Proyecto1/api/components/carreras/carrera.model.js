@@ -2,13 +2,11 @@
 let mongoose = require('mongoose');
 
 let carreraSchema = new mongoose.Schema({
-    codigo : {type : String, required : true},
-    nombre : {type : String, required : true},
+    codigo : {type : String, required : true, unique : true},
+    nombre : {type : String, required : true, unique : true},
     creditos : {type : Number, required : true},
     fechaCreacion : {type : Date, required : true},
     estado : {type : Boolean, required : true}
-    //periodos
-    //sedes
 });
 carreraSchema.index({codigo: 'text', nombre : 'text'});
 
