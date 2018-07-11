@@ -6,6 +6,7 @@ let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
 let inputCupo = document.querySelector('#txtCupo');
+let selectSede = document.querySelector('#txtSede');
 let inputEstado = document.querySelector('#rdEstado');
 let inputBuscar = document.querySelector('#txtBuscarCodigo');
 
@@ -23,6 +24,7 @@ function obtenerDatos(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCupo = Number(inputCupo.value);
+    let sSede = selectSede.value;
     let bEstado = true;
     bError = validar();
     
@@ -34,7 +36,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
           });
     }else{
-        let respuesta = registrarLaboratorio(sCodigo , sNombre, nCupo, bEstado);
+        let respuesta = registrarLaboratorio(sCodigo , sNombre, nCupo, sSede, bEstado);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -66,12 +68,13 @@ function mostrarListaLaboratorios(){
         let celdaCodigo = fila.insertCell();
         let celdaNombre = fila.insertCell();
         let celdaCupo = fila.insertCell();
-        let celdaclusion = fila.insertCell();
+        let celdaSede = fila.insertCell();
         let celdaEstado = fila.insertCell();
 
         celdaCodigo.innerHTML = listaLaboratorios[i]['codigo'];
         celdaNombre.innerHTML = listaLaboratorios[i]['nombre'];
         celdaCupo.innerHTML = listaLaboratorios[i]['cupo'];
+        celdaSede.innerHTML = listaLaboratorios[i]['sede'];
         
         let bEstado = listaLaboratorios[i]['estado'];
         if(bEstado){
@@ -79,6 +82,16 @@ function mostrarListaLaboratorios(){
         }else{
             celdaEstado.innerHTML = 'Inactivo';
         }
+    }
+};
+
+function mostrarSedes(){
+    let listaSedes = listar_sedes();
+    let selectSede = document.querySelector('#lstSede');
+    for(let i=0; i < listaSedes.length; i++){
+        let nuevaOpcion = new Option(listaSedes[i]['nombre']);
+        nuevaOpcion.value = listaSedes[i]['nombre'];
+        selectSede.appendChild(nuevaOpcion);
     }
 };
 
