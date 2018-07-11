@@ -15,7 +15,7 @@ module.exports.registrar = function(req, res) {
         if(error){
             res.json({success : false, msg : 'No se pudo registrar la periodo' + error});
         }else{
-            res.json({success : true, msg : 'La periodo se registró con éxito'});
+            res.json({success : true, msg : 'El periodo se registró con éxito'});
         }
     });
 };

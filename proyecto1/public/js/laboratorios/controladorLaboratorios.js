@@ -1,40 +1,30 @@
 'use strict'
 
-
 mostrarListaLaboratorios()
 
 let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
-let inputCupos = document.querySelector('#txtCupos');
-let inputSede = document.querySelector('txtSede');
-let inputEstado = true
+let inputCupo = document.querySelector('#txtCupo');
+let inputEstado = document.querySelector('#rdEstado');
 let inputBuscar = document.querySelector('#txtBuscarCodigo');
-inputBuscar.addEventListener('keyup', mostrarBusquedaLaboratorios);
 
 botonRegistrar.addEventListener('click', obtenerDatos);
-
-if(inputBuscar == ''){
-    mostrarListaLaboratorios();
-}else{
-    mostrarBusquedaLaboratorios();
-};
+inputBuscar.addEventListener('keyup', mostrarBusquedaLaboratorios);
 
 //Regex//
-let regexCodigo = /^[a-zA-Z0-9]+$/;
-let regexCupos = /^[0-9]+$/;
+let regexCodigo = /^[a-zA-Z0-9 -_]+$/;
 let regexNombre = /^[a-zA-Z ]+$/;
-let regexSede = /^[a-zA-z0-9 ]+$/;
+let regexCupo = /^[0-9]+$/;
 //Fin Regex//
 
 function obtenerDatos(){
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
-    let nCupos = Number(inputCupos.value);
-    let sSede = inputSede.value;
-    let bEstado = inputEstado.value;
-    bError = validarLaboratorios();
+    let nCupo = Number(inputCupo.value);
+    let bEstado = true;
+    bError = validar();
     
     if(bError == true){
         swal({
@@ -44,7 +34,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
           });
     }else{
-        let respuesta = registrarLaboratorio(sCodigo , sNombre, nCupos, sSede, bEstado);
+        let respuesta = registrarLaboratorio(sCodigo , sNombre, nCupo, bEstado);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -75,41 +65,29 @@ function mostrarListaLaboratorios(){
 
         let celdaCodigo = fila.insertCell();
         let celdaNombre = fila.insertCell();
-        let celdaCupos = fila.insertCell();
+        let celdaCupo = fila.insertCell();
+        let celdaclusion = fila.insertCell();
         let celdaEstado = fila.insertCell();
-        let celdaEditar = fila.insertCell();
-        let celdaEliminar = fila.insertCell();
 
         celdaCodigo.innerHTML = listaLaboratorios[i]['codigo'];
         celdaNombre.innerHTML = listaLaboratorios[i]['nombre'];
-        celdaCupos.innerHTML = listaLaboratorios[i]['cupos'];
-       
+        celdaCupo.innerHTML = listaLaboratorios[i]['cupo'];
+        
         let bEstado = listaLaboratorios[i]['estado'];
         if(bEstado){
             celdaEstado.innerHTML = 'Activo';
         }else{
             celdaEstado.innerHTML = 'Inactivo';
         }
-
-        let botonEditar = document.createElement('a');
-        botonEditar.href = '#';
-        botonEditar.classList.add('far');
-        botonEditar.classList.add('fa-edit');
-        celdaEditar.appendChild(botonEditar);
-
-        let botonEliminar = document.createElement('a');
-        botonEliminar.href = '#';
-        botonEliminar.classList.add('far');
-        botonEliminar.classList.add('fa-trash-alt');
-        celdaEliminar.appendChild(botonEliminar);
     }
 };
 
-function validarLaboratorios(){
+function validar(){
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
-    let nCupos = inputCupos.value;
+    let nCupo = inputCupo.value;
+    let nclusion = inputclusion.value;
 
     if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)){
         inputCodigo.classList.add('errorInput');
@@ -120,27 +98,20 @@ function validarLaboratorios(){
 
     if (sNombre == '' || (regexNombre.test(sNombre) == false)){
         inputNombre.classList.add('errorInput');
-        bError = true;
+        bError = true
     }else{
         inputNombre.classList.remove('errorInput');
     }
 
-    if(nCupos == 0 || (regexCupos.test(nCupos) == false)){
-        inputCupos.classList.add('errorInput');
-        bError = true;
+    if(nCupo == 0 || (regexCupo.test(nCupo) == false)){
+        inputCupo.classList.add('errorInput');
+        bError = true
     }else{
-        inputCupos.classList.remove('errorInput');
+        inputCupo.classList.remove('errorInput');
     }
-
-    if(sSede == '' || (regexSede.test(sSede) == false)){
-        inputSede.classList.add('errorInput');
-        bError = true;
-    }else{
-        inputSede.classList.remove('errorInput');
-    }
-
-    return bError;
 }
+    
+
 
 function mostrarBusquedaLaboratorios(){
     let listaLaboratorios = obtenerBusquedaLaboratorios(inputBuscar.value);
@@ -153,14 +124,15 @@ function mostrarBusquedaLaboratorios(){
 
         let celdaCodigo = fila.insertCell();
         let celdaNombre = fila.insertCell();
-        let celdaCupos = fila.insertCell();
+        let celdaCupo = fila.insertCell();
+        let celdaclusion = fila.insertCell();
         let celdaEstado = fila.insertCell();
         let celdaEditar = fila.insertCell();
         let celdaEliminar = fila.insertCell();
 
         celdaCodigo.innerHTML = listaLaboratorios[i]['codigo'];
         celdaNombre.innerHTML = listaLaboratorios[i]['nombre'];
-        celdaCupos.innerHTML = listaLaboratorios[i]['cupos'];
+        celdaCupo.innerHTML = listaLaboratorios[i]['cupo'];
 
         let bEstado = listaLaboratorios[i]['estado'];
         if(bEstado){
@@ -201,5 +173,6 @@ function abrirFuncion(evt, funcion) {
 function limpiarFormulario(){
     inputCodigo.value = '';
     inputNombre.value = '';
-    inputCupos.value = '';
+    inputCupo.value = '';
+    inputclusion.value = '';
 };

@@ -74,7 +74,13 @@ function mostrarListaPeriodos(){
         celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
         celdaFechaInicio.innerHTML = listaPeriodos[i]['fechainicio'];
         celdaFechaConclusion.innerHTML = listaPeriodos[i]['fechaconclusion'];
-        celdaEstado.innerHTML = listaPeriodos[i]['estado'];
+        
+        let bEstado = listaPeriodos[i]['estado'];
+        if(bEstado){
+            celdaEstado.innerHTML = 'Activo';
+        }else{
+            celdaEstado.innerHTML = 'Inactivo';
+        }
     }
 };
 
@@ -108,7 +114,7 @@ function validar(){
 
     
 
-    if(nFechaConclusion == 0 || nFechaConclusion < date.now()){
+    if(nFechaConclusion == 0 || nFechaConclusion < Date.now()){
         inputFechaConclusion.classList.add('errorInput');
         bError = true
     }else{

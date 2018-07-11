@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarPeriodo(pCodigo, pNombre, pCupos, pEstado){
+function registrarPeriodo(pCodigo, pNombre, pFechaInicio, pFechaConclusion, pEstado){
 
     let respuesta = '';
     let peticion = $.ajax({

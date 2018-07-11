@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarLaboratorio(pCodigo, pNombre, pCupos, pSede, pEstado){
+function registrarLaboratorio(pCodigo, pNombre, pCupo, pEstado){
 
     let respuesta = '';
     let peticion = $.ajax({
@@ -12,8 +12,7 @@ function registrarLaboratorio(pCodigo, pNombre, pCupos, pSede, pEstado){
         data:{
            codigo : pCodigo,
            nombre : pNombre,
-           cupos : pCupos,
-           sede : pSede,
+           cupo : pCupo,
            estado : pEstado
         }
     });
@@ -34,12 +33,13 @@ function registrarLaboratorio(pCodigo, pNombre, pCupos, pSede, pEstado){
 function obtenerLaboratorios(){
     let listaLaboratorios = [];
     let peticion = $.ajax({
-        url: 'http://localhost:4000/api/listar_laboratorios',
+        url: 'http://localhost:4000/api/listar_laboratorio',
         type: 'get',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
         async:false,
-        data:{}
+        data:{
+        }
       });
     
       peticion.done(function(response){
@@ -56,7 +56,7 @@ function obtenerLaboratorios(){
 function obtenerBusquedaLaboratorios(pBuscar){
     let listaLaboratorios = [];
     let peticion = $.ajax({
-        url: 'http://localhost:4000/api/buscar_laboratorios',
+        url: 'http://localhost:4000/api/buscar_laboratorio',
         type: 'post',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType: 'json',
