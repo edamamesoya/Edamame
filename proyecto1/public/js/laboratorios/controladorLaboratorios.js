@@ -19,7 +19,7 @@ let regexNombre = /^[a-zA-Z ]+$/;
 let regexCupo = /^[0-9]+$/;
 //Fin Regex//
 
-function obtenerDatos(){
+function obtenerDatos() {
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
@@ -27,42 +27,42 @@ function obtenerDatos(){
     let sSede = selectSede.value;
     let bEstado = true;
     bError = validar();
-    
-    if(bError == true){
+
+    if (bError == true) {
         swal({
             title: 'Registro incorrecto',
             text: 'No se pudo registrar el laboratorio. Por favor, revise los campos en rojo.',
             type: 'warning',
             confirmButtonText: 'Entendido'
-          });
-    }else{
-        let respuesta = registrarLaboratorio(sCodigo , sNombre, nCupo, sSede, bEstado);
-        if(respuesta.success == true){
+        });
+    } else {
+        let respuesta = registrarLaboratorio(sCodigo, sNombre, nCupo, sSede, bEstado);
+        if (respuesta.success == true) {
             swal({
                 title: 'Registro correcto',
                 text: respuesta.msg,
                 type: 'success',
                 confirmButtonText: 'Entendido'
-              });
-        }else{
+            });
+        } else {
             swal({
                 title: 'Registro incorrecto',
                 text: respuesta.msg,
                 type: 'error',
                 confirmButtonText: 'Entendido'
-              });
+            });
         }
         limpiarFormulario();
-        mostrarListaLaboratorios();  
+        mostrarListaLaboratorios();
     }
 };
 
-function mostrarListaLaboratorios(){
+function mostrarListaLaboratorios() {
     let listaLaboratorios = obtenerLaboratorios();
     let tbody = document.querySelector('#tblLaboratorios tbody');
     tbody.innerHTML = '';
 
-    for(let i = 0; i < listaLaboratorios.length; i++){
+    for (let i = 0; i < listaLaboratorios.length; i++) {
         let fila = tbody.insertRow();
 
         let celdaCodigo = fila.insertCell();
@@ -75,66 +75,66 @@ function mostrarListaLaboratorios(){
         celdaNombre.innerHTML = listaLaboratorios[i]['nombre'];
         celdaCupo.innerHTML = listaLaboratorios[i]['cupo'];
         celdaSede.innerHTML = listaLaboratorios[i]['sede'];
-        
+
         let bEstado = listaLaboratorios[i]['estado'];
-        if(bEstado){
+        if (bEstado) {
             celdaEstado.innerHTML = 'Activo';
-        }else{
+        } else {
             celdaEstado.innerHTML = 'Inactivo';
         }
     }
 };
 
-function mostrarSedes(){
+function mostrarSedes() {
     let listaSedes = listar_sedes();
     let selectSede = document.querySelector('#lstSede');
-    for(let i=0; i < listaSedes.length; i++){
+    for (let i = 0; i < listaSedes.length; i++) {
         let nuevaOpcion = new Option(listaSedes[i]['nombre']);
         nuevaOpcion.value = listaSedes[i]['nombre'];
         selectSede.appendChild(nuevaOpcion);
     }
 };
 
-function validar(){
+function validar() {
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCupo = inputCupo.value;
     let sSede = selectSede.value;
 
-    if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)){
+    if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)) {
         inputCodigo.classList.add('errorInput');
         bError = true;
-    }else{
+    } else {
         inputCodigo.classList.remove('errorInput');
     }
 
-    if (sNombre == '' || (regexNombre.test(sNombre) == false)){
+    if (sNombre == '' || (regexNombre.test(sNombre) == false)) {
         inputNombre.classList.add('errorInput');
         bError = true
-    }else{
+    } else {
         inputNombre.classList.remove('errorInput');
     }
 
-    if(nCupo == 0 || (regexCupo.test(nCupo) == false)){
+    if (nCupo == 0 || (regexCupo.test(nCupo) == false)) {
         inputCupo.classList.add('errorInput');
         bError = true
-    }else{
+    } else {
         inputCupo.classList.remove('errorInput');
     }
 
     return bError
 }
-    
 
 
-function mostrarBusquedaLaboratorios(){
+
+function mostrarBusquedaLaboratorios() {
     let listaLaboratorios = obtenerBusquedaLaboratorios(inputBuscar.value);
 
     let tbody = document.querySelector('#tblBusqueda tbody');
     tbody.innerHTML = '';
 
-    for(let i = 0; i < listaLaboratorios.length; i++){
+    for (let i = 0; i < listaLaboratorios.length; i++) {
         let fila = tbody.insertRow();
 
         let celdaCodigo = fila.insertCell();
@@ -150,9 +150,9 @@ function mostrarBusquedaLaboratorios(){
         celdaCupo.innerHTML = listaLaboratorios[i]['cupo'];
 
         let bEstado = listaLaboratorios[i]['estado'];
-        if(bEstado){
+        if (bEstado) {
             celdaEstado.innerHTML = 'Activo';
-        }else{
+        } else {
             celdaEstado.innerHTML = 'Inactivo';
         }
 
@@ -171,7 +171,7 @@ function mostrarBusquedaLaboratorios(){
 };
 
 
-function limpiarFormulario(){
+function limpiarFormulario() {
     inputCodigo.value = '';
     inputNombre.value = '';
     inputCupo.value = '';

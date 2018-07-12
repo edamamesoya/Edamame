@@ -18,7 +18,7 @@ let regexCodigo = /^[a-zA-Z0-9]+$/;
 let regexNombre = /^[a-zA-Z ]+$/;
 //Fin Regex//
 
-function obtenerDatos(){
+function obtenerDatos() {
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
@@ -26,42 +26,42 @@ function obtenerDatos(){
     let nFechaConclusion = new Date(inputFechaConclusion.value)
     let bEstado = true;
     bError = validar();
-    
-    if(bError == true){
+
+    if (bError == true) {
         swal({
             title: 'Registro incorrecto',
             text: 'No se pudo registrar el periodo. Por favor, revise los campos en rojo.',
             type: 'warning',
             confirmButtonText: 'Entendido'
-          });
-    }else{
-        let respuesta = registrarPeriodo(sCodigo , sNombre, nFechaInicio, nFechaConclusion, bEstado);
-        if(respuesta.success == true){
+        });
+    } else {
+        let respuesta = registrarPeriodo(sCodigo, sNombre, nFechaInicio, nFechaConclusion, bEstado);
+        if (respuesta.success == true) {
             swal({
                 title: 'Registro correcto',
                 text: respuesta.msg,
                 type: 'success',
                 confirmButtonText: 'Entendido'
-              });
-        }else{
+            });
+        } else {
             swal({
                 title: 'Registro incorrecto',
                 text: respuesta.msg,
                 type: 'error',
                 confirmButtonText: 'Entendido'
-              });
+            });
         }
         limpiarFormulario();
-        mostrarListaPeriodos();  
+        mostrarListaPeriodos();
     }
 };
 
-function mostrarListaPeriodos(){
+function mostrarListaPeriodos() {
     let listaPeriodos = obtenerPeriodos();
     let tbody = document.querySelector('#tblPeriodos tbody');
     tbody.innerHTML = '';
 
-    for(let i = 0; i < listaPeriodos.length; i++){
+    for (let i = 0; i < listaPeriodos.length; i++) {
         let fila = tbody.insertRow();
 
         let celdaCodigo = fila.insertCell();
@@ -74,63 +74,63 @@ function mostrarListaPeriodos(){
         celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
         celdaFechaInicio.innerHTML = listaPeriodos[i]['fechainicio'];
         celdaFechaConclusion.innerHTML = listaPeriodos[i]['fechaconclusion'];
-        
+
         let bEstado = listaPeriodos[i]['estado'];
-        if(bEstado){
+        if (bEstado) {
             celdaEstado.innerHTML = 'Activo';
-        }else{
+        } else {
             celdaEstado.innerHTML = 'Inactivo';
         }
     }
 };
 
-function validar(){
+function validar() {
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nFechaInicio = inputFechaInicio.value;
     let nFechaConclusion = inputFechaConclusion.value;
 
-    if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)){
+    if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)) {
         inputCodigo.classList.add('errorInput');
         bError = true;
-    }else{
+    } else {
         inputCodigo.classList.remove('errorInput');
     }
 
-    if (sNombre == '' || (regexNombre.test(sNombre) == false)){
+    if (sNombre == '' || (regexNombre.test(sNombre) == false)) {
         inputNombre.classList.add('errorInput');
         bError = true
-    }else{
+    } else {
         inputNombre.classList.remove('errorInput');
     }
 
-    if(nFechaInicio == 0 || nFechaInicio < Date.now()){
+    if (nFechaInicio == 0 || nFechaInicio < Date.now()) {
         inputFechaInicio.classList.add('errorInput');
         bError = true
-    }else{
+    } else {
         inputFechaInicio.classList.remove('errorInput');
     }
 
-    
 
-    if(nFechaConclusion == 0 || nFechaConclusion < Date.now()){
+
+    if (nFechaConclusion == 0 || nFechaConclusion < Date.now()) {
         inputFechaConclusion.classList.add('errorInput');
         bError = true
-    }else{
+    } else {
         inputFechaConclusion.classList.remove('errorInput');
     }
 
     return bError;
 }
 
-function mostrarBusquedaPeriodos(){
+function mostrarBusquedaPeriodos() {
     let listaPeriodos = obtenerBusquedaPeriodos(inputBuscar.value);
 
     let tbody = document.querySelector('#tblBusqueda tbody');
     tbody.innerHTML = '';
 
-    for(let i = 0; i < listaPeriodos.length; i++){
+    for (let i = 0; i < listaPeriodos.length; i++) {
         let fila = tbody.insertRow();
 
         let celdaCodigo = fila.insertCell();
@@ -147,9 +147,9 @@ function mostrarBusquedaPeriodos(){
         celdaFechaConclusion.innerHTML = listaPeriodos[i]['fechaconclusion']
 
         let bEstado = listaPeriodos[i]['estado'];
-        if(bEstado){
+        if (bEstado) {
             celdaEstado.innerHTML = 'Activo';
-        }else{
+        } else {
             celdaEstado.innerHTML = 'Inactivo';
         }
 
@@ -168,7 +168,7 @@ function mostrarBusquedaPeriodos(){
 };
 
 
-function limpiarFormulario(){
+function limpiarFormulario() {
     inputCodigo.value = '';
     inputNombre.value = '';
     inputFechaInicio.value = '';
