@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Registro de Grupos</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/estilosGenerales.css">
+    <link rel="stylesheet" href="css/grupos.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <main>
+        <!--header arriba-->
+        <div class="header">
+            <div class="header-izquierda">
+                <img src="img/logoCenfo.png" alt="Logo U">
+            </div>
+            <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
+            <div class="w3-display-right">
+                <img src="" alt="Avatar usuario">
+                <a href="index.html" class="fas fa-sign-out-alt"></a>
+            </div>
+        </div>
+        <!--este es el menu general (tablitas arriba)-->
+        <div class="menuGeneral">
+            <a href="index.html">Inicio</a>
+            <a href="">Perfil</a>
+            <a href="">Solicitudes</a>
+            <a href="">Funciones</a>
+            <a href="">Reportes</a>
+            <a href="">Configuración</a>
+        </div>
+        <!--este es el menu del lado izquierdo-->
+        <div class="tab">
+            <h2>Menú</h2>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarGrupo')" id="defaultOpen">Registrar grupos</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarGrupo')">Buscar grupos</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarGrupo')">Listar grupos</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarGrupo')">Enlazar grupos</button>
+        </div>
+        <!--registro de los grupos-->
+        <div id="registrarGrupo" class="tabcontent">
+            <h2>Registrar Grupos</h2>
+            <p>
+                Ingrese la información solicitada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar" para guardar
+                los datos.
+            </p>
+            <fieldset class="fieldset">
+                <legend>Registro de Grupos</legend>
+                <div>
+                    <label>Seleccion curso al que desea agregar grupo</label>
+                    <select name="" id="sltCursos">
+
+                    </select>
+                </div>
+                <div>
+                    <label for "txtNumeroGru">Numero del Grupo</label>
+                    <input type="number" id="txtNumeroGrupo" min="0" required>
+                </div>
+                <div>
+                    <label for="txtNumeroLab">Numero de Laboratorio</label>
+                    <input type="number" id="txtNumeroLab" min="0" required>
+                </div>
+                <div>
+                    <label for="txtNombrePro">Nombre de Profesor</label>
+                    <input type="text" id="txtNombrePro" required>
+                </div>
+                <div>
+                    <label for="txtNumeroEst">Numero de Estudiantes Matriculados</label>
+                    <input type="number" id="txtNumeroEst" min="1" required>
+                </div>
+                <div>
+                    <p>
+                        Registro de Horario
+                    </p>
+                    <div>
+                        Seleccione el dia o dias de la semana en las que se imparte el curso
+                            <br>
+                            <input type="checkbox" value="Domingo" id="txtHorarioGrupoDomingo">Domingo
+                            <br>
+                            <input type="checkbox" value="Lunes" id="txtHorarioGrupoLunes">Lunes
+                            <br>
+                            <input type="checkbox" value="Martes" id="txtHorarioGrupoMartes">Martes
+                            <br>
+                            <input type="checkbox" value="Miercoles" id="txtHorarioGrupoMiercoles">Miercoles
+                            <br>
+                            <input type="checkbox" value="Jueves" id="txtHorarioGrupoJueves">Jueves
+                            <br>
+                            <input type="checkbox" value="Viernes" id="txtHorarioGrupoViernes">Viernes
+                            <br>
+                            <input type="checkbox" value="Sabado" id="txtHorarioGrupoSabado">Sabado
+                            <br>
+                            <input type="checkbox" value="Domingo" id="txtHorarioGrupoVirtual">Virtual
+                            <br>
+                    </div>
+                    <div>
+                        <input type="time" id="txtTiempoGrupoEntrada" value=""> Hora de Inicio
+                        <input type="time" id="txtTiempoGrupoSalida" value=""> Hora de Salida
+                    </div>
+                </div>
+                <button type="button" id="btnRegistrar">Registrar</button>
+            </fieldset>
+        </div>
+        <!--listado de los grupos-->
+        <div id="listarGrupo" class="tabcontent">
+            <table id="tblGrupos" class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
+                <thead>
+                    <tr>
+                        <th>Numero del Grupo</th>
+                        <th>Numero de Laboratorio</th>
+                        <th>Nombre del Profesor</th>
+                        <th>Numero de Estudiantes Matriculados</th>
+                        <th>Hora de entrada</th>
+                        <th>Hora de Salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <!--Busqueda de los grupos-->
+        <div id="buscarGrupo" class="tabcontent">
+            <h2>Lista de Grupos</h2>
+            <p>Despliegue total de registros para la sección "Grupos". Ingrese el nombre del profesor, la cantidad de Estudiantes
+                , o el numero del Grupo en "Filtrar".
+            </p>
+            <fieldset class="fieldset">
+                <legend>Buscar:</legend>
+                <form>
+                    <div>
+                        <label for="txtBuscarCodigo">Filtrar:</label>
+                        <input type="text" id="txtBuscarCodigo">
+                    </div>
+                </form>
+
+                <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Profesor</th>
+                            <th>Cantidad de Estudiantes</th>
+                            <th>Numero de Laboratorio</th>
+                            <th>Cantidad de Dias a la semana</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/servicioGrupos.js"></script>
+    <script src="js/controladorGrupos.js"></script>
+</body>
+
+</html>
