@@ -34,8 +34,13 @@ img {
 }
 
 body {
-    background-color: #000000;
+    background-image: url("https://na.leagueoflegends.com/sites/default/files/upload/art/bg-howling-abyss.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }
+
 main {
     border-bottom: 1px solid #cc8e35;
     text-align: center;
@@ -47,8 +52,9 @@ main section {
     margin-right: 5%;
     margin-bottom: 20px;
     width: 90%;
-    background-color: #f7f1e3;
+    background-color: #000000;
     border: 2px solid #cc8e35;
+    color: #cc8e35;
 }
 
 main section a{
@@ -62,6 +68,10 @@ main section a:hover {
 
 main section h2{
     color: #257372;
+    font-size: 24px;
+    font-style: italic;
+    margin-top: 2%;
+    margin-bottom: 5%;
 }
 
 main #img_titulo {

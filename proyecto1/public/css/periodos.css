@@ -14,7 +14,6 @@ p {
 /* Inicio estilos Fieldsets */
 fieldset{
   background-color:#fff;
-
   padding: 20px;	
   margin-left: 10%;
   margin-right: 10%;
@@ -26,7 +25,6 @@ fieldset{
     -moz-border-radius:8px;
     -webkit-border-radius:8px;	
     border-radius:8px;	
-    margin-bottom: 20px;
 }
 /* Fin estilos fieldset */
 
@@ -35,6 +33,10 @@ body main form {
     margin-left: 25%;
     margin-right: 25%;
     width: 50%;
+}
+body main #txtBuscarCodigo{
+    width: 50%;
+    margin-bottom: 20px;
 }
 body main fieldset label{
     display: block;
@@ -46,7 +48,6 @@ body main fieldset input{
     font-size: 14px;
     width: 90%;
 }
-
 body main fieldset div {
     margin-bottom: 15px;
     margin-left: 25px;
