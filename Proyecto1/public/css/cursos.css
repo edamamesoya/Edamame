@@ -41,6 +41,19 @@ body main #txtBuscarCodigo{
 body main fieldset label{
     display: block;
 }
+body main fieldset div #lstRequisitos{
+    width: 100%;
+    display: inline-block;
+    margin-left: 0px;
+}
+body main fieldset div #lstRequisitos label{
+    width: 95%;
+    display: inline-block;
+}
+body main fieldset div #lstRequisitos input{
+    width: 5%;
+    display: inline-block;
+}
 body main fieldset input{
     border: none;
     outline-style: none;
@@ -65,4 +78,5 @@ body main fieldset button {
     display: inline;
     font-size: 12px;
 }
+
 /* Fin estilos form */
