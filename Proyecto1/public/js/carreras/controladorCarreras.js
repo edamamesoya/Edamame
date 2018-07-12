@@ -24,7 +24,7 @@ inputBuscar.addEventListener('keyup', mostrarBusqueda);
 /**
  * Declaración de expresiones regulares.
  */
-let regexCodigo = /^[a-zA-Z0-9]+$/;
+let regexCodigo = /^[a-zA-Z0-9\-]+$/;
 let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
 let regexCreditos = /^[0-9]+$/;
 

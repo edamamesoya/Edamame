@@ -6,7 +6,7 @@ let cursoSchema = new mongoose.Schema({
     nombre : {type : String, required : true, unique : true},
     creditos : {type : Number, required : true},
     carrera : {type : String, required : true},
-    requisitos : {type : String, required : true}
+    requisitos : {type : Array, required : true}
 });
 
 module.exports = mongoose.model('Curso', cursoSchema);

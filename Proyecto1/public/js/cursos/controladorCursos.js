@@ -1,7 +1,10 @@
 'use strict';
 
-let listaCursos = obtenerCursos();
+let sListaCursos = obtenerCursos();
+let sListaCarreras = obtenerCarreras();
 mostrarBusqueda();
+mostrarCarreras();
+mostrarRequisitos();
 
 /**
  * Declaración de variables.
@@ -10,7 +13,6 @@ let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
 let inputCreditos = document.querySelector('#txtCreditos');
 let inputCarrera = document.querySelector('#txtCarrera');
-let inputRequisitos = document.querySelector('#txtRequisitos');
 let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputBuscar = document.querySelector('#txtBuscarCodigo');
 
@@ -25,7 +27,7 @@ inputBuscar.addEventListener('keyup', function(){
 /**
  * Declaración de expresiones regulares.
  */
-let regexCodigo = /^[a-zA-Z0-9]+$/;
+let regexCodigo = /^[a-zA-Z0-9\-]+$/;
 let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9 ]+$/;
 let regexCreditos = /^[0-9]+$/;
 
@@ -39,7 +41,16 @@ function obtenerDatos(){
     let sNombre = inputNombre.value;
     let nCreditos = inputCreditos.value;
     let sCarrera = inputCarrera.value;
-    let sRequisitos = inputRequisitos.value;
+    let sListaRequisitos = [];
+
+    let requisito = document.querySelectorAll('#lstRequisitos input[type=checkbox]');
+    for (let i=0; i < requisito.length; i++) {
+        if (requisito[i].checked){
+            sListaRequisitos.push(requisito[i].value);
+        }
+    }
+    console.log(sListaRequisitos);
+    let a = JSON.stringify(sListaRequisitos);
 
     let bError = false;
     bError = validarRegistro();
@@ -52,7 +63,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
         });
     }else{
-        let respuesta = registrarCurso(sCodigo , sNombre, nCreditos, sCarrera, sRequisitos);
+        let respuesta = registrarCurso(sCodigo , sNombre, nCreditos, sCarrera, a);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -60,8 +71,9 @@ function obtenerDatos(){
                 type: 'success',
                 confirmButtonText: 'Entendido'
             });
-            listaCursos = obtenerCursos();
+            sListaCursos = obtenerCursos();
             mostrarBusqueda();
+            mostrarRequisitos();
             limpiarFormulario();
             document.getElementById("buscar").click();
         }else{
@@ -88,7 +100,6 @@ function validarRegistro(){
     let sNombre = inputNombre.value;
     let nCreditos = inputCreditos.value;
     let sCarrera = inputCarrera.value;
-    let sRequisitos = inputRequisitos.value;
 
     // Validación del input para código
     if (sCodigo == '' || (regexCodigo.test(sCodigo) == false) ){
@@ -114,7 +125,6 @@ function validarRegistro(){
         inputCreditos.classList.remove('errorInput');
     }
 //Validar Carrera
-//Validar Requisitos
     return bError;
 }
 
@@ -133,9 +143,9 @@ function mostrarBusqueda(pFiltro){
     }
     tbody.innerHTML = '';
 
-    for(let i = 0; i < listaCursos.length; i++){
+    for(let i = 0; i < sListaCursos.length; i++){
 
-        if( (listaCursos[i]['codigo'].toLowerCase()).includes(pFiltro.toLowerCase()) || (listaCursos[i]['nombre'].toLowerCase()).includes(pFiltro.toLowerCase())){
+        if( (sListaCursos[i]['codigo'].toLowerCase()).includes(pFiltro.toLowerCase()) || (sListaCursos[i]['nombre'].toLowerCase()).includes(pFiltro.toLowerCase())){
             let fila = tbody.insertRow();
 
             let celdaCodigo = fila.insertCell();
@@ -146,11 +156,11 @@ function mostrarBusqueda(pFiltro){
             let celdaEditar = fila.insertCell();
             let celdaEliminar = fila.insertCell();
 
-            celdaCodigo.innerHTML = listaCursos[i]['codigo'];
-            celdaNombre.innerHTML = listaCursos[i]['nombre'];
-            celdaCreditos.innerHTML = listaCursos[i]['creditos'];
-            celdaCarrera.innerHTML = listaCursos[i]['carrera'];
-            celdaRequisitos.innerHTML = listaCursos[i]['requisitos'];
+            celdaCodigo.innerHTML = sListaCursos[i]['codigo'];
+            celdaNombre.innerHTML = sListaCursos[i]['nombre'];
+            celdaCreditos.innerHTML = sListaCursos[i]['creditos'];
+            celdaCarrera.innerHTML = sListaCursos[i]['carrera'];
+            celdaRequisitos.innerHTML = sListaCursos[i]['requisitos'];
 
             let botonEditar = document.createElement('a');
             botonEditar.href = '';
@@ -178,5 +188,35 @@ function limpiarFormulario(){
     inputNombre.value = '';
     inputCreditos = '';
     inputCarrera.value = '';
-    inputRequisitos.value = '';
 };
+
+function mostrarCarreras(){
+    let selectCarreras = document.querySelector('#lstCarreras');
+    selectCarreras.innerHTML = '';
+    for(let i=0; i < sListaCarreras.length; i++){
+        let nuevaOpcion = new Option(sListaCarreras[i]['nombre']);
+        nuevaOpcion.value = sListaCarreras[i]['nombre'];
+        selectCarreras.appendChild(nuevaOpcion);
+    }
+};
+
+function mostrarRequisitos() {     
+    let selectRequisitos = document.querySelector('#lstRequisitos');
+    selectRequisitos.innerHTML = '';
+
+    for (let i=0; i < sListaCursos.length; i++) { 
+
+    let etiquetaRequisito = document.createElement('label');
+    let requisito = document.createElement('input');
+
+    requisito.setAttribute('type', 'checkbox');
+    requisito.setAttribute('name', sListaCursos[i]['nombre']);
+    requisito.setAttribute('value', sListaCursos[i]['codigo']);
+
+    etiquetaRequisito.innerHTML = sListaCursos[i]['nombre'];
+    etiquetaRequisito.setAttribute('for', sListaCursos[i]['nombre']);
+
+    document.getElementById('lstRequisitos').appendChild(requisito);
+    document.getElementById('lstRequisitos').appendChild(etiquetaRequisito);
+    }
+}

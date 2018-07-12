@@ -8,7 +8,7 @@
     <!--Páginas de estilo css-->
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/estilosGenerales.css">
-    <link rel="stylesheet" href="css/carreras.css">
+    <link rel="stylesheet" href="css/cursos.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
@@ -71,34 +71,34 @@
                     <div>
                         <label for="txtCodigo">Código:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtCodigo" placeholder="Código de curso" required autofocus>
+                        <input type="text" id="txtCodigo" placeholder="Ej, INF03" required autofocus>
                         <label for="txtCodigo" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtNombre">Nombre:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtNombre" placeholder="Nombre de curso" required>
+                        <input type="text" id="txtNombre" placeholder="Ej, Fundamentos de bases de datos" required>
                         <label for="txtNombre" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtCreditos">Créditos:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="number" id="txtCreditos" min="0" placeholder="Créditos de curso" required>
+                        <input type="number" id="txtCreditos" min="0" placeholder="Ej, 4" required>
                         <label for="txtCreditos" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtCarrera">Carrera:</label>
-                        <input list="lstCarrera" id="txtCarrera" required>
+                        <i class="fas fa-list"></i>
+                        <input list="lstCarreras" id="txtCarrera" placeholder="Seleccione una opción de la lista" required>
+
+                        <datalist id="lstCarreras">
+                        </datalist> 
                         <label for="txtCarrera" class="labelError">*</label>
-                        <datalist id="lstCarrera">
-                        </datalist>
                     </div>
                     <div>
-                        <label for="txtRequisitos">Requisitos:</label>
-                        <input list="lstRequisitos" id="txtRequisitos" required>
-                        <label for="txtRequisitos" class="labelError">*</label>
-                        <datalist id="lstRequisitos">
-                        </datalist>
+                        <label for="lstRequisitos">Requisitos:</label>
+                        <div id="lstRequisitos">
+                        </div>
                     </div>
                     <label for="" id="labelRequerido">*: campos requeridos</label>
                     <button type="button" id="btnRegistrar">Registrar</button>
@@ -146,6 +146,7 @@
     <!--Scripts-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/carreras/servicioCarreras.js"></script>
     <script src="js/controladorGeneral.js"></script>
     <script src="js/cursos/servicioCursos.js"></script>
     <script src="js/cursos/controladorCursos.js"></script>
