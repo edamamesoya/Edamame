@@ -5,6 +5,7 @@ module.exports.registrar = function (req, res) {
     let nuevaSolicitud = new solicitudModel({
 
         nombre: req.body.nombre,
+        cursos: req.body.cursos
 
     });
 
@@ -17,7 +18,7 @@ module.exports.registrar = function (req, res) {
     });
 };
 //listar solicitudes
-module.exports.listar_todos = function (req, res) {
+module.exports.listar_solicitudes = function (req, res) {
     solicitudModel.find().sort({ nombre: 'asc' }).then(
         function (solicitudes) {
             res.send(solicitudes);
@@ -30,15 +31,7 @@ module.exports.agregar_curso = function(req, res){
     solicitudModel.update(
         {_id: req.body._id}, 
         {$push: 
-            {'cursos':
-                {
-                    codigo : req.body.codigo,
-                    nombre : req.body.nombre,
-                    creditos : req.body.creditos,
-                    carrera : req.body.carrera,
-                    requisitos : req.body.requisitos
-                }
-            }
+            {'cursos': req.body.cursos}
         },
         function(error){
             if(error){

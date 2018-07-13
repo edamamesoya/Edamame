@@ -9,13 +9,17 @@ document.getElementById("defaultOpen").click();
 
 let inputNombre = document.querySelector('#txtNombre');
 let selectCursos = document.querySelector('#txtCurso');
+let botonRegistrar = document.querySelector('#btnRegistrar')
 
 botonRegistrar.addEventListener('click', obtenerDatos);
+
+let reglaLetras = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
+
 
 let sNombre = '';
 
 function obtenerDatos(){
-    let id = selectCursos.value;
+    let curso = selectCursos.value;
     let sNombre = inputNombre.value;
 
     let bError = false;
@@ -28,7 +32,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarSolicitud(id, sNombre);
+        let respuesta = registrarSolicitud(curso, sNombre);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro Correcto',
@@ -45,13 +49,13 @@ function obtenerDatos(){
             });
         }
     }
-    mostrarListaGrupos();
+    mostrarListaSolicitudes();
 };
 
 function validar() {
     let bError = false;
 
-    sNombre = inputNombreProfesor.value;
+    sNombre = inputNombre.value;
 
     //validar nombre
     if (sNombre == '' || (reglaLetras.test(sNombre) == false)) {
@@ -74,8 +78,10 @@ function mostrarListaSolicitudes() {
 
 
         let celdaNombre = fila.insertCell();
+        let celdaCurso = fila.insertCell();
 
-        celdaNombre.innerHTML = listaSolicitudes[i]['nombreNombre'];
+        celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
+        celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
 
     }
 };

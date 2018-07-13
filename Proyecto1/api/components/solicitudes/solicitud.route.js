@@ -15,7 +15,7 @@ router.route('/agregar_cursos')
 
 router.route('/listar_solicitudes')
     .get(function (req, res) {
-        solicitudApi.listar_todos(req, res);
+        solicitudApi.listar_solicitudes(req, res);
     });
 
 module.exports = router;

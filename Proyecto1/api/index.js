@@ -68,6 +68,7 @@ const cursos = require('./components/cursos/curso.route.js');
 const laboratorios = require('./components/laboratorios/laboratorio.route.js');
 const periodos = require('./components/periodos/periodo.route.js');
 const grupos = require('./components/grupos/grupo.route.js');
+const solicitudes = require('./components/solicitudes/solicitud.route.js');
 
 
 /**
@@ -79,6 +80,7 @@ app.use('/api', cursos);
 app.use('/api', laboratorios);
 app.use('/api', grupos);
 app.use('/api', periodos);
+app.use('/api', solicitudes);
 
 
 // Se guarda todo lo que se ha realizado
