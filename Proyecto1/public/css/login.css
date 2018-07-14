@@ -65,4 +65,9 @@ body main fieldset button {
     display: inline;
     font-size: 12px;
 }
+
+.botonInicio{
+    float: left;
+    margin: 3%;
+}
 /* Fin estilos form */

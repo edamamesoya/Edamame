@@ -2,8 +2,10 @@
 const inputUsuario = document.querySelector('#txtUsuario');
 const inputCedula = document.querySelector('#txtCedula');
 const botonIniciar = document.querySelector('#btnIniciarSesion');
+const botonCancelar = document.querySelector('#btnCancelar');
 
 botonIniciar.addEventListener('click', obtenerDatos);
+botonCancelar.addEventListener('click', cancelar);
 
 function obtenerDatos() {
     let sUsuario = inputUsuario.value;
@@ -22,13 +24,31 @@ function verificarCredenciales(psUsuario, psCedula) {
 
                 sRol = listaPersonas[i]['rol'];
 
-                localStorage.setItem('nombreUsuarioActivo', listaPersonas[i]['nombre_completo']);
                 localStorage.setItem('correoUsuarioActivo', listaPersonas[i]['correo']);
                 localStorage.setItem('rolUsuarioActivo', sRol);
 
-            }
-        }
-    }
+                swal({
+                    title: 'Inicio Correcto',
+                    text: 'Sesión iniciada correctamente.',
+                    type: 'success'
+                });
+            } else {
+                swal({
+                    title: 'Inicio Fallido',
+                    text: 'No se pudo iniciar sesión. La combinación de correo electrónico y cédula no coinciden.',
+                    type: 'warning',
+                    confirmButtonText: 'Entendido'
+                });
+            };
+        } else {
+//            swal({
+  //              title: 'Inicio Fallido',
+    //            text: 'No se pudo iniciar sesión. La combinación de correo electrónico y cédula no coinciden.',
+      //          type: 'warning',
+        //        confirmButtonText: 'Entendido'
+          //  });
+        };
+    };
     switch (sRol) {
         case 'administrador':
             window.location.href = 'usuarios.html';
@@ -49,4 +69,18 @@ function verificarCredenciales(psUsuario, psCedula) {
             window.location.href = 'carreras.html';
             break;
     }
+
+    limpiarFormulario();
+};
+
+function limpiarFormulario() {
+    inputUsuario.value = '';
+    inputCedula.value = '';
+};
+
+function cancelar(){
+    localStorage.removeItem('correoUsuarioActivo');
+    localStorage.removeItem('rolUsuarioActivo');
+
+    window.location.href = 'index.html';
 }

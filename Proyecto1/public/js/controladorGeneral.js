@@ -1,5 +1,8 @@
 'use strict'
 
+const botonSalir = document.querySelector('#bLogOut');
+
+botonSalir.addEventListener('click', salir);
 /**
  * Hace click a la opción de 'Acciones' para que se muestre
  * por default al cargar o recargar la página.
@@ -27,3 +30,10 @@ function abrirFuncion(evt, funcion) {
     document.getElementById(funcion).style.display = "block";
     evt.currentTarget.className += " active";
 };
+
+function salir(){
+    localStorage.removeItem('correoUsuarioActivo');
+    localStorage.removeItem('rolUsuarioActivo');
+
+    window.location.href = 'login.html';
+}

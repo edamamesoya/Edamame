@@ -10,20 +10,45 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/estilosGenerales.css" />
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
 </head>
 
 <body>
+    <!--Header de la página-->
+    <div class="header">
+        <div class="w3-display-left">
+            <img src="img/logoCenfo.png" alt="Logo U">
+        </div>
+        <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
+        <div class="w3-display-right">
+            <img src="" alt="img usuario">
+            <button type="button"class="fas fa-sign-out-alt" id="bLogOut"></a>
+            <label for="bLogOut">Salir</label>
+        </div>
+    </div>
     <main>
-        <form id="formRegistro">
-            <input type="text" placeholder="Correo electrónico" id="txtUsuario" required>
-            <input type="text" placeholder="Cedula" id="txtCedula" required>
+        <div>
+            <h2>Iniciar Sesión</h2>
+            <form id="formRegistro">
+                <fieldset id="fieldset">
+                    <div>
+                        <label for="txtUsuario">Correo electronico:</label>
+                        <input type="text" placeholder="equirosa@ucenfotec.ac.cr" id="txtUsuario" required>
+                    </div>
+                    <div>
+                        <label for="txtCedula">Cédula:</label>
+                        <input type="text" placeholder="116750638" id="txtCedula" required>
+                    </div>
 
-            <button type="button" id="btnIniciarSesion">Iniciar sesión</button>
-        </form>
+                    <button type="button" id="btnIniciarSesion" class="botonInicio">Iniciar sesión</button>
+                    <button type="button" id="btnCancelar" class="botonInicio">Cancelar</button>
+                </fieldset>
+            </form>
+        </div>
     </main>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>
     <script src="js/login/controladorLogin.js"></script>
