@@ -7,7 +7,10 @@ module.exports.registrar = function (req, res) {
         nombre: req.body.nombre,
         provincia: req.body.provincia,
         canton: req.body.canton,
-        distrito: req.body.distrito
+        distrito: req.body.distrito,
+        longitudSede:req.body.longitudSede,
+        latitudSede: req.body.latitudSede
+        
 
     });
 
