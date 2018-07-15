@@ -3,7 +3,7 @@
 let listaSedes = obtenerSedes();
 mostrarListaSedes()
 
-document.getElementById("defaultOpen").click();
+document.getElementById("buscar").click();
 
 let inputNombre = document.querySelector('#txtNombre');
 let inputProvincia = document.querySelector('#txtProvincia');
@@ -21,9 +21,11 @@ let sListaProvincias = [];
 let sListaCantones = [];
 let sListaDistritos = [];
 
+
 sListaProvincias = obtenerProvincias();
 sListaCantones = obtenerCantones();
 sListaDistritos = obtenerDistritos();
+
 
 mostrarProvincias();
 mostrarCantones();
@@ -35,7 +37,7 @@ botonRegistrar.addEventListener('click', obtenerDatos);
 
 let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
 
-function obtenerDatos(){
+function obtenerDatos() {
     let sNombre = inputNombre.value;
     let sProvincia = inputProvincia.value;
     let sCanton = inputCanton.value;
@@ -60,6 +62,7 @@ function obtenerDatos(){
                 confirmButtonText: 'Entendido'
             });
             listaSedes = obtenerSedes();
+            document.getElementById("buscar").click();
         } else {
             swal({
                 title: 'Registro incorrecto',
@@ -70,6 +73,7 @@ function obtenerDatos(){
         }
     }
     mostrarListaSedes();
+
 };
 
 function validar() {
@@ -88,24 +92,24 @@ function validar() {
         inputNombre.classList.remove('errorInput');
     }
     // Validación del input para provincia
-    if (sProvincia == '' ){
+    if (sProvincia == '') {
         inputProvincia.classList.add('errorInput');
         bError = true;
-    }else{
+    } else {
         inputProvincia.classList.remove('errorInput');
     }
     // Validación del input para canton
-    if (sCanton == '' ){
+    if (sCanton == '') {
         inputCanton.classList.add('errorInput');
         bError = true;
-    }else{
+    } else {
         inputCanton.classList.remove('errorInput');
     }
     // Validación del input para distrito
-    if (sDistrito == '' ){
+    if (sDistrito == '') {
         inputDistrito.classList.add('errorInput');
         bError = true;
-    }else{
+    } else {
         inputDistrito.classList.remove('errorInput');
     }
     return bError;
@@ -184,3 +188,36 @@ function setNumeroCanton() {
     mostrarDistritos();
 };
 
+var map;
+var latitudSede;
+var longitudSede;
+
+//Funcion del api de Google Maps que crea el mapa 
+function initMap() {
+
+
+
+    //configuracion del mapa (tendra zoom de 7) y se centrara en la posicion guardada
+    let opciones = {
+        zoom: 7,
+        center: { lat: 9.934739, lng: -84.087502 }
+    }
+
+    //Creacion de mapa
+    let mapa = new google.maps.Map(document.getElementById('mapaSede'), opciones);
+
+    //Marker (la posicion del marker es la misma posicion que donde se centra el mapa y hace que el marker sea arrastrable)
+    let marker = new google.maps.Marker({
+        position: { lat: 9.934739, lng: -84.087502 },
+        map: mapa,
+        draggable: true
+    });
+
+    google.maps.event.addListener(marker, 'dragend', function () {
+        latitudSede = marker.getPosition().lat();
+        longitudSede = marker.getPosition().lng();
+    });
+};
+function onMakerMove(marker) {
+    $("#coordenadas").val(marker.getPosition().toString().replace('(', '').replace(')', ''));
+};

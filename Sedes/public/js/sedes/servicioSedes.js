@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarSede (pNombre, pProvincia, pCanton, pDistrito) {
+function registrarSede (pNombre, pProvincia, pCanton, pDistrito, pLongitudSede, pLatitudSede) {
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_sede',
@@ -12,7 +12,9 @@ function registrarSede (pNombre, pProvincia, pCanton, pDistrito) {
             nombre: pNombre,
             provincia: pProvincia,
             canton: pCanton,
-            distrito: pDistrito
+            distrito: pDistrito,
+            longitud: pLongitudSede,
+            latitud: pLatitudSede
         }
     });
 
