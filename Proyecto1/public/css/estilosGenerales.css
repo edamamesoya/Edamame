@@ -141,3 +141,9 @@ table tbody tr td a:hover{
     color:  rgba(82, 8, 41, 0.719);
 }
 /* Fin estilos tabla */
+
+/*Estilo escondido*/
+
+.esconder{
+    display: none;
+}

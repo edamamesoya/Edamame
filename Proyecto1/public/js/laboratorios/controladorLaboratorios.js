@@ -53,7 +53,9 @@ function obtenerDatos() {
             });
         }
         limpiarFormulario();
+        mostrarBusquedaLaboratorios();
         mostrarListaLaboratorios();
+        document.getElementById("buscar").click();
     }
 };
 

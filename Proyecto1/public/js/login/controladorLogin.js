@@ -41,12 +41,12 @@ function verificarCredenciales(psUsuario, psCedula) {
                 });
             };
         } else {
-//            swal({
-  //              title: 'Inicio Fallido',
-    //            text: 'No se pudo iniciar sesión. La combinación de correo electrónico y cédula no coinciden.',
-      //          type: 'warning',
-        //        confirmButtonText: 'Entendido'
-          //  });
+            swal({
+                title: 'Inicio Fallido',
+                text: 'No se pudo iniciar sesión. La combinación de correo electrónico y cédula no coinciden.',
+                type: 'warning',
+                confirmButtonText: 'Entendido'
+            });
         };
     };
     switch (sRol) {
@@ -78,7 +78,7 @@ function limpiarFormulario() {
     inputCedula.value = '';
 };
 
-function cancelar(){
+function cancelar() {
     localStorage.removeItem('correoUsuarioActivo');
     localStorage.removeItem('rolUsuarioActivo');
 

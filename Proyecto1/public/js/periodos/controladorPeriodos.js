@@ -52,7 +52,9 @@ function obtenerDatos() {
             });
         }
         limpiarFormulario();
+        mostrarBusquedaPeriodos();
         mostrarListaPeriodos();
+        document.getElementById("buscar").click();
     }
 };
 
@@ -70,10 +72,19 @@ function mostrarListaPeriodos() {
         let celdaFechaConclusion = fila.insertCell();
         let celdaEstado = fila.insertCell();
 
+        let dFechaInicio = new Date(listaPeriodos[i]['fechainicio']);
+        let nMesInicio = dFechaInicio.getUTCMonth() + 1;
+        let nDiaInicio = dFechaInicio.getUTCDate();
+        let nAnnoInicio = dFechaInicio.getUTCFullYear();
         celdaCodigo.innerHTML = listaPeriodos[i]['codigo'];
         celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
-        celdaFechaInicio.innerHTML = listaPeriodos[i]['fechainicio'];
-        celdaFechaConclusion.innerHTML = listaPeriodos[i]['fechaconclusion'];
+        celdaFechaInicio.innerHTML = nDiaInicio + '/' + nMesInicio + '/' +nAnnoInicio;
+
+        let dFechaConclusion = new Date(listaPeriodos[i]['fechaconclusion']);
+        let nMesConclusion = dFechaConclusion.getUTCMonth() + 1;
+        let nDiaConclusion = dFechaConclusion.getUTCDate();
+        let nAnnoConclusion = dFechaConclusion.getUTCFullYear();
+        celdaFechaConclusion.innerHTML = nDiaConclusion + '/' + nMesConclusion + '/' + nAnnoConclusion;
 
         let bEstado = listaPeriodos[i]['estado'];
         if (bEstado) {

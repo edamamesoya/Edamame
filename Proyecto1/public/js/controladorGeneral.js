@@ -7,7 +7,7 @@ botonSalir.addEventListener('click', salir);
  * Hace click a la opción de 'Acciones' para que se muestre
  * por default al cargar o recargar la página.
  */
-document.getElementById("defaultOpen").click();
+document.getElementById("buscar").click();
 
 /**
  * Descripción: Muestra una función según el botón presionado
@@ -31,9 +31,26 @@ function abrirFuncion(evt, funcion) {
     evt.currentTarget.className += " active";
 };
 
-function salir(){
+function salir() {
     localStorage.removeItem('correoUsuarioActivo');
     localStorage.removeItem('rolUsuarioActivo');
 
     window.location.href = 'login.html';
-}
+};
+
+
+let sRol = localStorage.getItem('rolUsuarioActivo');
+
+switch (sRol) {
+    case '':
+        window.location.href = 'login.html';
+        break;
+    case 'asistente':
+        document.getElementById(registrarSolocitudes);
+        registrarSolocitudes.className.style.display = "none";
+        document.getElementById(solicitudes);
+        solicitudes.className = "none";
+        document.getElementById
+    break;
+    case '':
+};
