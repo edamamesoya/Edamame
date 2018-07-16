@@ -54,7 +54,7 @@
         <div class="tab">
             <h2>Menú</h2>
             <button class="tablinks" onclick="abrirFuncion(event, 'registrarLaboratorio')">Registrar laboratorio</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'listarLaboratorio')" id="buscar">Listar laboratorios</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarLaboratorio')" id="buscar">Listar laboratorios</button>
         </div>
 
         <div id="registrarLaboratorio" class="tabcontent">
@@ -85,9 +85,13 @@
                     </div>
                     <div>
                         <label for="txtSede">Sede:</label>
-                        <input type="text" id="txtSede">
+                        <i class="fas fa-list"></i>
+                        <input list="lstSedes" id="txtSede" placeholder="Seleccione una sede" required>
+
+                        <datalist id="lstSedes"></datalist>
                         <label for="txtSede" class="labelError">*</label>
                     </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
                     <button type="button" id="btnRegistrar">Registrar</button>
                 </fieldset>
             </form>
@@ -156,6 +160,7 @@
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/laboratorios/servicioLaboratorios.js"></script>
     <script src="js/controladorGeneral.js"></script>
+    <script src="js/sedes/servicioSedes.js"></script>
     <script src="js/laboratorios/controladorLaboratorios.js"></script>
 </body>
 

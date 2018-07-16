@@ -19,6 +19,9 @@ let regexNombre = /^[a-zA-Z ]+$/;
 let regexCupo = /^[0-9]+$/;
 //Fin Regex//
 
+inputBuscar.value = '';
+mostrarBusquedaLaboratorios();
+
 function obtenerDatos() {
     let bError = false;
     let sCodigo = inputCodigo.value;
@@ -44,6 +47,10 @@ function obtenerDatos() {
                 type: 'success',
                 confirmButtonText: 'Entendido'
             });
+            limpiarFormulario();
+            mostrarBusquedaLaboratorios();
+            mostrarListaLaboratorios();
+            document.getElementById("buscar").click();
         } else {
             swal({
                 title: 'Registro incorrecto',
@@ -52,10 +59,7 @@ function obtenerDatos() {
                 confirmButtonText: 'Entendido'
             });
         }
-        limpiarFormulario();
-        mostrarBusquedaLaboratorios();
-        mostrarListaLaboratorios();
-        document.getElementById("buscar").click();
+
     }
 };
 
@@ -88,8 +92,8 @@ function mostrarListaLaboratorios() {
 };
 
 function mostrarSedes() {
-    let listaSedes = listar_sedes();
-    let selectSede = document.querySelector('#lstSede');
+    let listaSedes = obtenerSedes();
+    let selectSede = document.querySelector('#lstSedes');
     for (let i = 0; i < listaSedes.length; i++) {
         let nuevaOpcion = new Option(listaSedes[i]['nombre']);
         nuevaOpcion.value = listaSedes[i]['nombre'];

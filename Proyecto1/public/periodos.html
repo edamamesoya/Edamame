@@ -52,8 +52,8 @@
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
-            <button class="tablinks" onclick="abrirFuncion(event, 'registrarPeriodo')" >Registrar periodo</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'listarPeriodo')" id="buscar">Listar periodos</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarPeriodo')">Registrar periodo</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarPeriodo')" id="buscar">Listar periodos</button>
         </div>
 
 
@@ -96,44 +96,41 @@
         </div>
 
         <div id="buscarPeriodo" class="tabcontent">
-            <h2>Lista de Periodos</h2>
+            <h2>Lista de periodos</h2>
             <p>Aquí se encuentran listadas todas as entrardas pertenecientes a la sección "Periodos". Ingrese el nombre completo,
                 parcial, o el código del periodo en "Filtrar". Para buscar entre periodos activos o inactivos, selecciónelo
                 desde el menú desplegable junto a "Filtrar".
             </p>
-            <fieldset class="fieldset">
-                <legend>Buscar:</legend>
-                <form>
-                    <div>
-                        <label for="txtBuscarCodigo">Filtrar:</label>
-                        <input type="text" id="txtBuscarCodigo">
-                    </div>
-                </form>
+            <form>
+                <div>
+                    <label for="txtBuscarCodigo">Filtrar:</label>
+                    <input type="text" id="txtBuscarCodigo">
+                </div>
+            </form>
 
-                <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Fecha de Conclusión</th>
-                            <th>Estado</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Conclusión</th>
+                        <th>Estado</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    </tbody>
-                </table>
-            </fieldset>
+                </tbody>
+            </table>
         </div>
 
         <div id="listarPeriodo" class="tabcontent">
-                <h2>Lista de periodos</h2>
-                <p>
-                    Aquí se encuentran listados todos los periodos que se encuentren registrados en este momento.
-                </p>
+            <h2>Lista de periodos</h2>
+            <p>
+                Aquí se encuentran listados todos los periodos que se encuentren registrados en este momento.
+            </p>
             <table id="tblPeriodos" class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
                 <thead>
                     <tr>

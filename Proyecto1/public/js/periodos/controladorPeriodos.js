@@ -14,16 +14,19 @@ botonRegistrar.addEventListener('click', obtenerDatos);
 inputBuscar.addEventListener('keyup', mostrarBusquedaPeriodos);
 
 //Regex//
-let regexCodigo = /^[a-zA-Z0-9]+$/;
+let regexCodigo = /^[a-zA-Z0-9/-_//]+$/;
 let regexNombre = /^[a-zA-Z ]+$/;
 //Fin Regex//
+
+inputBuscar.value = '';
+mostrarBusquedaPeriodos();
 
 function obtenerDatos() {
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
-    let nFechaInicio = new Date(inputFechaInicio.value);
-    let nFechaConclusion = new Date(inputFechaConclusion.value)
+    let dFechaInicio = new Date(inputFechaInicio.value);
+    let dFechaConclusion = new Date(inputFechaConclusion.value)
     let bEstado = true;
     bError = validar();
 
@@ -35,7 +38,7 @@ function obtenerDatos() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarPeriodo(sCodigo, sNombre, nFechaInicio, nFechaConclusion, bEstado);
+        let respuesta = registrarPeriodo(sCodigo, sNombre, dFechaInicio, dFechaConclusion, bEstado);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro correcto',
@@ -99,8 +102,9 @@ function validar() {
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
-    let nFechaInicio = inputFechaInicio.value;
-    let nFechaConclusion = inputFechaConclusion.value;
+    let dFechaInicio = new Date(inputFechaInicio.value);
+    let dFechaConclusion = new Date(inputFechaConclusion.value);
+    let dFechaActual = new Date();
 
     if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)) {
         inputCodigo.classList.add('errorInput');
@@ -116,7 +120,7 @@ function validar() {
         inputNombre.classList.remove('errorInput');
     }
 
-    if (nFechaInicio == 0 || nFechaInicio < Date.now()) {
+    if (dFechaInicio == 0 || dFechaInicio < dFechaActual) {
         inputFechaInicio.classList.add('errorInput');
         bError = true
     } else {
@@ -125,7 +129,7 @@ function validar() {
 
 
 
-    if (nFechaConclusion == 0 || nFechaConclusion < Date.now()) {
+    if (dFechaConclusion == 0 || dFechaConclusion < dFechaActual) {
         inputFechaConclusion.classList.add('errorInput');
         bError = true
     } else {
@@ -154,8 +158,20 @@ function mostrarBusquedaPeriodos() {
 
         celdaCodigo.innerHTML = listaPeriodos[i]['codigo'];
         celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
-        celdaFechaInicio.innerHTML = listaPeriodos[i]['fechainicio'];
-        celdaFechaConclusion.innerHTML = listaPeriodos[i]['fechaconclusion']
+        
+        let dFechaInicio = new Date(listaPeriodos[i]['fechainicio']);
+        let nMesInicio = dFechaInicio.getUTCMonth() + 1;
+        let nDiaInicio = dFechaInicio.getUTCDate();
+        let nAnnoInicio = dFechaInicio.getUTCFullYear();
+        celdaCodigo.innerHTML = listaPeriodos[i]['codigo'];
+        celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
+        celdaFechaInicio.innerHTML = nDiaInicio + '/' + nMesInicio + '/' +nAnnoInicio;
+
+        let dFechaConclusion = new Date(listaPeriodos[i]['fechaconclusion']);
+        let nMesConclusion = dFechaConclusion.getUTCMonth() + 1;
+        let nDiaConclusion = dFechaConclusion.getUTCDate();
+        let nAnnoConclusion = dFechaConclusion.getUTCFullYear();
+        celdaFechaConclusion.innerHTML = nDiaConclusion + '/' + nMesConclusion + '/' + nAnnoConclusion;
 
         let bEstado = listaPeriodos[i]['estado'];
         if (bEstado) {

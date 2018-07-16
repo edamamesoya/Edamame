@@ -52,5 +52,4 @@ switch (sRol) {
         solicitudes.className = "none";
         document.getElementById
     break;
-    case '':
 };
