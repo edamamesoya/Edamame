@@ -1,5 +1,9 @@
 'use strict'
 
+let sUsuario = localStorage.getItem('correoUsuarioActivo');
+
+verificarAcceso(sUsuario);
+
 const botonSalir = document.querySelector('#bLogOut');
 
 botonSalir.addEventListener('click', salir);
@@ -39,17 +43,25 @@ function salir() {
 };
 
 
-let sRol = localStorage.getItem('rolUsuarioActivo');
 
-switch (sRol) {
-    case '':
-        window.location.href = 'login.html';
-        break;
-    case 'asistente':
-        document.getElementById("registrarSolocitudes");
-        registrarSolocitudes.className.style.display = "none";
-        document.getElementById("solicitudes");
-        solicitudes.className = "none";
-        document.getElementById
-    break;
+
+function verificarAcceso(psUsuario) {
+    let listaPersonas = obtenerUsuarios();
+    if (window.location == 'login.html') {
+
+    } else {
+        let bError = true;
+        for (let i = 0; i < listaPersonas.length; i++) {
+            if (psUsuario == listaPersonas[i]['correo']) {
+                bError = false;
+            }                
+            
+        };
+
+        if(bError){
+            window.location.href = 'login.html'
+        }else{
+
+        }
+    };
 };
