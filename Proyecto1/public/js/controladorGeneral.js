@@ -1,17 +1,16 @@
 'use strict'
 
 /**
- * Hace click a la opción de 'Acciones' para que se muestre
- * por default al cargar o recargar la página.
+ * Hace click a la opción de 'Menu' para que se muestre
+ * por default el listar al cargar o recargar la página.
  */
-document.getElementById("defaultOpen").click();
+document.getElementById("buscar").click();
 
 /**
  * Descripción: Muestra una función según el botón presionado
- * en el panel de 'Acciones' y deshabilita las otras funciones
+ * en el panel 'Menu' y deshabilita las otras funciones
  * para que no se muestren.
- * @param: {String} evento, {String} funcion
- * @return: n/a
+ * @param: {String} evt, {String} funcion
  */
 function abrirFuncion(evt, funcion) {
     let i, tabcontent, tablinks;

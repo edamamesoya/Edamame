@@ -4,7 +4,6 @@ const grupoModel = require('./grupo.model');
 module.exports.registrar = function (req, res) {
     let nuevoGrupo = new grupoModel({
         numeroGrupo: req.body.numeroGrupo,
-        numeroLaboratorio: req.body.numeroLaboratorio,
         nombreProfesor: req.body.nombreProfesor,
         numeroEstudiantes: req.body.numeroEstudiantes,
         horarioDomingo: req.body.horarioDomingo,
@@ -29,7 +28,7 @@ module.exports.registrar = function (req, res) {
 };
 //listar grupos
 module.exports.listar_todos = function (req, res) {
-    grupoModel.find().sort({ numeroLaboratorio: 'asc' }).then(
+    grupoModel.find().sort({ numeroGrupo: 'asc' }).then(
         function (grupos) {
             res.send(grupos);
         }
@@ -56,6 +55,28 @@ module.exports.agregar_curso = function(req, res){
                 res.json({success : false, msg : 'No se pudo registrar el curso, ocurrió el siguiente error' + error});
             }else{
                 res.json({success : true, msg : 'El curso se registró con éxito'});
+            }
+        }
+    )
+};
+
+//agregar laboratorio al grupo
+module.exports.agregar_laboratorio = function(req, res){
+    
+    grupoModel.update(
+        {_id: req.body._id}, 
+        {$push: 
+            {'laboratorios':
+                {
+                    codigo : req.body.codigo,
+                }
+            }
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo registrar el laboratorio, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'El laboratorio se registró con éxito'});
             }
         }
     )

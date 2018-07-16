@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/estilosGenerales.css">
-    <link rel="stylesheet" href="css/laboratorios.css">
+    <link rel="stylesheet" href="css/funciones.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
@@ -22,7 +22,8 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <img src="" alt="img usuario">
+                <i class="fas fa-user-tie fa-5x"></i>
+                <!-- <img src="" alt="img usuario"> -->
                 <a href="index.html" class="fas fa-sign-out-alt" id="bLogOut"></a>
                 <label for="bLogOut">Salir</label>
             </div>
@@ -31,21 +32,21 @@
         <!--Menú general (arriba)-->
         <div class="menuGeneral">
             <a href="index.html" class="w3-bar-item w3-button">Inicio</a>
-            <a href="index.html" class="w3-bar-item w3-button">Perfil</a>
-            <a href="index.html" class="w3-bar-item w3-button">Solicitudes</a>
+            <a href="#" class="w3-bar-item w3-button">Perfil</a>
+            <a href="#" class="w3-bar-item w3-button">Solicitudes</a>
             <div class="w3-dropdown-hover">
                 <button class="w3-bar-item w3-button">Funciones</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
                     <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
                     <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
-                    <a href="#" class="w3-bar-item w3-button">Sedes</a>
+                    <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
                     <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
                     <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
                     <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
-                    <a href="#" class="w3-bar-item w3-button">Bitácoras</a>
                 </div>
             </div>
+            <a href="#" class="w3-bar-item w3-button">Bitácoras</a>
             <a href="#" class="w3-bar-item w3-button">Reportes</a>
             <a href="#" class="w3-bar-item w3-button">Configuración</a>
         </div>
@@ -53,8 +54,8 @@
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
-            <button class="tablinks" onclick="abrirFuncion(event, 'registrarLaboratorio')" id="defaultOpen">Registrar laboratorio</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'listarLaboratorio')">Listar laboratorios</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarLaboratorio')">Registrar laboratorio</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarLaboratorio')" id="buscar">Listar laboratorios</button>
         </div>
 
         <div id="registrarLaboratorio" class="tabcontent">
@@ -64,31 +65,36 @@
             </p>
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
-                    <legend>Registro de laboratorio</legend>
                     <div>
                         <label for="txtCodigo">Código:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtCodigo">
+                        <input type="text" id="txtCodigo" placeholder="Ej, Lab01">
                         <label for="txtCodigo" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtNombre">Nombre:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtNombre">
+                        <input type="text" id="txtNombre" placeholder="Ej, Laboratorio 01">
                         <label for="txtNombre" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtCupos">Cupo:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="number" id="txtCupos" min="0">
+                        <input type="number" id="txtCupos" min="0" placeholder="Ej, 30">
                         <label for="txtCupos" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtSede">Sede:</label>
-                        <input type="text" id="txtSede">
+                        <i class="fas fa-list"></i>
+                        <input list="lstSedes" id="txtSede" placeholder="Seleccione una sede" required>
+
+                        <datalist id="lstSedes">
+
+                        </datalist>
                         <label for="txtSede" class="labelError">*</label>
                     </div>
-                    <button type="button" id="btnRegistrar">Registrar</button>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
+                    <button type="button" id="btnRegistrar" class="button">Registrar</button>
                 </fieldset>
             </form>
         </div>
@@ -96,35 +102,29 @@
         <div id="buscarLaboratorio" class="tabcontent">
             <h2>Lista de laboratorios</h2>
             <p>Aquí se encuentran listadas todas las entrardas pertenecientes a la sección "Laboratorios". Ingrese el nombre
-                completo, parcial, o el código del laboratorio en "Filtrar". Para buscar entre Laboratorios activos o inactivos,
-                selecciónelo desde el menú desplegable junto a "Filtrar".
+                completo, parcial, o el código del laboratorio en "Filtrar".
             </p>
-            <fieldset class="fieldset">
-                <legend>Buscar</legend>
-                <form>
-                    <div>
-                        <label for="txtBuscarCodigo">Filtrar:</label>
-                        <input type="text" id="txtBuscarCodigo">
-                    </div>
-                </form>
+            <div>
+                <label for="txtBuscar">Filtrar:</label>
+                <input type="text" id="txtBuscar">
+            </div>
 
-                <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Cupos</th>
-                            <th>Sede</th>
-                            <th>Estado</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Cupos</th>
+                        <th>Sede</th>
+                        <th>Estado</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    </tbody>
-                </table>
-            </fieldset>
+                </tbody>
+            </table>
         </div>
 
         <div id="listarLaboratorio" class="tabcontent">
@@ -150,12 +150,12 @@
             </table>
         </div>
     </main>
-
-
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/laboratorios/servicioLaboratorios.js"></script>
     <script src="js/controladorGeneral.js"></script>
+    <script src="js/sedes/servicioSedes.js"></script>
     <script src="js/laboratorios/controladorLaboratorios.js"></script>
 </body>
 

@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarGrupo(id, pNumeroGrupo, pNumeroLaboratorio, pNombreProfesor, pNumeroEstudiantes, pHorarioDomingo, pHorarioLunes, pHorarioMartes, pHorarioMiercoles, pHorarioJueves, pHorarioViernes, pHorarioSabado, pHorarioVirtual, pTiempoEntrada, pTiempoSalida) {
+function registrarGrupo(id, idLab, pNumeroGrupo, pNombreProfesor, pNumeroEstudiantes, pHorarioDomingo, pHorarioLunes, pHorarioMartes, pHorarioMiercoles, pHorarioJueves, pHorarioViernes, pHorarioSabado, pHorarioVirtual, pTiempoEntrada, pTiempoSalida) {
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_grupo',
@@ -10,8 +10,8 @@ function registrarGrupo(id, pNumeroGrupo, pNumeroLaboratorio, pNombreProfesor, p
         async: false,
         data: {
             _id: id,
+            _idLab: idLab,
             numeroGrupo: pNumeroGrupo,
-            numeroLaboratorio: pNumeroLaboratorio,
             nombreProfesor: pNombreProfesor,
             numeroEstudiantes: pNumeroEstudiantes,
             horarioDomingo: pHorarioDomingo,

@@ -19,7 +19,9 @@ html p{
 
 /* Inicio estilos header */
 div.header {
-    background-color: #5c1865;
+    background: url("../img/bg-pattern.png"), #7b4397;
+    background: url("../img/bg-pattern.png"), -webkit-linear-gradient(to left, #7b4397, #dc2430);
+    background: url("../img/bg-pattern.png"), linear-gradient(to left, #7b4397, #dc2430);
     color: white;
     height: 100px;
     overflow: hidden;
@@ -27,6 +29,13 @@ div.header {
     position: relative;
     text-decoration: none;
     width: 100%;
+}
+
+div.header i{
+    margin-right: 15px;
+}
+div.header label{
+    margin-right: 10px;
 }
 /* Fin estilos header */
 
@@ -44,7 +53,7 @@ div.menuGeneral a {
     text-align: center;
     padding: 14px;
     text-decoration: none;
-    width: 15%;
+    width: 13%;
 }
 
 div.menuGeneral div {
@@ -135,9 +144,12 @@ table th, table td{
     text-align: center;
 }
 table thead tr th{
-    background-color: #712d7bde;
+    background-color: #722d7b;
 }
 table tbody tr td a:hover{
     color:  rgba(82, 8, 41, 0.719);
+}
+table {
+    margin-bottom: 50px;
 }
 /* Fin estilos tabla */

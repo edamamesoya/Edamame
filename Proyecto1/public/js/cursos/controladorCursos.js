@@ -14,7 +14,7 @@ let inputNombre = document.querySelector('#txtNombre');
 let inputCreditos = document.querySelector('#txtCreditos');
 let inputCarrera = document.querySelector('#txtCarrera');
 let botonRegistrar = document.querySelector('#btnRegistrar');
-let inputBuscar = document.querySelector('#txtBuscarCodigo');
+let inputBuscar = document.querySelector('#txtBuscar');
 
 /**
  * Declaración de eventos relacionados a elementos HTML.
@@ -32,9 +32,7 @@ let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9 ]+$/;
 let regexCreditos = /^[0-9]+$/;
 
 /**
- * Descripción: breve descripción sobre la funcionalidad
- * @param: n/a
- * @return: n/a
+ * Descripción: Registra un curso con los datos obtenidos del usuario.
  */
 function obtenerDatos(){
     let sCodigo = inputCodigo.value;
@@ -91,7 +89,6 @@ function obtenerDatos(){
  * Descripción: Valida los campos del registro y devuelve 'false'
  * en caso de que todos sean válidos o devuelve 'true' en caso de
  * que al menos uno no lo sea.
- * @param: n/a
  * @return: {boolean} bError
  */
 function validarRegistro(){
@@ -129,12 +126,9 @@ function validarRegistro(){
 }
 
 /**
- * Descripción: Envía como parámetro el String al servicio para
- * obtener una lista de carreras cuyo nombre haga match, y las 
- * muestra en una tabla junto con las opciones para editar y 
- * eliminar.
- * @param: n/a
- * @return: n/a
+ * Descripción: Filtra los cursos de una lista de cursos registradas cuyo nombre haga match, 
+ * y las muestra en una tabla junto con las opciones para editar y eliminar.
+ * @param: pFiltro
  */
 function mostrarBusqueda(pFiltro){
     let tbody = document.querySelector('#tblBusqueda tbody');
@@ -160,7 +154,23 @@ function mostrarBusqueda(pFiltro){
             celdaNombre.innerHTML = sListaCursos[i]['nombre'];
             celdaCreditos.innerHTML = sListaCursos[i]['creditos'];
             celdaCarrera.innerHTML = sListaCursos[i]['carrera'];
-            celdaRequisitos.innerHTML = sListaCursos[i]['requisitos'];
+
+            let sRequisitos = '';
+            sRequisitos = sListaCursos[i]['requisitos'].toString().replace("[", "");
+            sRequisitos = sRequisitos.toString().replace("]", "");
+            for(let j = 0; j < sRequisitos.length; j++) {
+                sRequisitos = sRequisitos.toString().replace("\"", "");
+            }
+
+            if(sListaCursos[i]['requisitos'] == '[]'){
+                celdaRequisitos.innerHTML = 'No tiene';
+            }else{
+                // for(let j = 0; j < sListaCursos[i]['requisitos'].length; j++){
+                //     sRequisitos = sRequisitos + sListaCursos[i]['requisitos'][j];
+                //     sRequisitos = sRequisitos + ', ';
+                // }
+                celdaRequisitos.innerHTML = sRequisitos;
+            }
 
             let botonEditar = document.createElement('a');
             botonEditar.href = '';
@@ -180,8 +190,6 @@ function mostrarBusqueda(pFiltro){
 /**
  * Descripción: Limpia los inputs del formulario de registro
  * podiendo '' en cada uno de los campos.
- * @param: n/a
- * @return: n/a
  */
 function limpiarFormulario(){
     inputCodigo.value = '';
@@ -190,6 +198,9 @@ function limpiarFormulario(){
     inputCarrera.value = '';
 };
 
+/**
+ * Descripción: Agrega al html una lista de las carreras registradas.
+ */
 function mostrarCarreras(){
     let selectCarreras = document.querySelector('#lstCarreras');
     selectCarreras.innerHTML = '';
@@ -200,6 +211,9 @@ function mostrarCarreras(){
     }
 };
 
+/**
+ * Descripción: Agrega al html una lista de cursos registrados.
+ */
 function mostrarRequisitos() {     
     let selectRequisitos = document.querySelector('#lstRequisitos');
     selectRequisitos.innerHTML = '';
@@ -219,4 +233,4 @@ function mostrarRequisitos() {
     document.getElementById('lstRequisitos').appendChild(requisito);
     document.getElementById('lstRequisitos').appendChild(etiquetaRequisito);
     }
-}
+};

@@ -39,7 +39,6 @@ function registrarCurso(pCodigo, pNombre, pCreditos, pCarrera, pRequisitos){
 /**
  * Descripción: Realiza una petición tipo 'get' a la base de datos
  * para obtener un arreglo de los cursos registradas.
- * @param: n/a
  * @return: {any} listaCursos
  */
 function obtenerCursos(){

@@ -13,8 +13,8 @@ router.route('/listar_carreras')
         carreraApi.listar_todos(req, res);
     });
 
-router.route('/buscar_carrera')
+router.route('/enlazar_curso')
     .post(function(req, res){
-        carreraApi.buscar_carrera(req, res);
+    carreraApi.agregar_curso(req, res);
     });
 module.exports = router;

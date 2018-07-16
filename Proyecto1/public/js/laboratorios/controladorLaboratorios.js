@@ -1,6 +1,8 @@
-'use strict'
+'use strict';
 
-mostrarListaLaboratorios()
+let listaSedes = obtenerSedes();
+mostrarSedes();
+mostrarListaLaboratorios();
 
 let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputCodigo = document.querySelector('#txtCodigo');
@@ -8,16 +10,19 @@ let inputNombre = document.querySelector('#txtNombre');
 let inputCupo = document.querySelector('#txtCupos');
 let selectSede = document.querySelector('#txtSede');
 let inputEstado = document.querySelector('#rdEstado');
-let inputBuscar = document.querySelector('#txtBuscarCodigo');
+let inputBuscar = document.querySelector('#txtBuscar');
 
 botonRegistrar.addEventListener('click', obtenerDatos);
 inputBuscar.addEventListener('keyup', mostrarBusquedaLaboratorios);
 
 //Regex//
 let regexCodigo = /^[a-zA-Z0-9 -_]+$/;
-let regexNombre = /^[a-zA-Z ]+$/;
+let regexNombre = /^[a-zA-Z0-9 ]+$/;
 let regexCupo = /^[0-9]+$/;
 //Fin Regex//
+
+inputBuscar.value = '';
+mostrarBusquedaLaboratorios();
 
 function obtenerDatos() {
     let bError = false;
@@ -44,6 +49,10 @@ function obtenerDatos() {
                 type: 'success',
                 confirmButtonText: 'Entendido'
             });
+            limpiarFormulario();
+            mostrarBusquedaLaboratorios();
+            mostrarListaLaboratorios();
+            document.getElementById("buscar").click();
         } else {
             swal({
                 title: 'Registro incorrecto',
@@ -52,8 +61,7 @@ function obtenerDatos() {
                 confirmButtonText: 'Entendido'
             });
         }
-        limpiarFormulario();
-        mostrarListaLaboratorios();
+
     }
 };
 
@@ -86,8 +94,7 @@ function mostrarListaLaboratorios() {
 };
 
 function mostrarSedes() {
-    let listaSedes = listar_sedes();
-    let selectSede = document.querySelector('#lstSede');
+    let selectSede = document.querySelector('#lstSedes');
     for (let i = 0; i < listaSedes.length; i++) {
         let nuevaOpcion = new Option(listaSedes[i]['nombre']);
         nuevaOpcion.value = listaSedes[i]['nombre'];

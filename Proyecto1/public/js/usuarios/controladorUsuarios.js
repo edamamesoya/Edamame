@@ -25,7 +25,7 @@ let inputPrimerApellidoContacto = document.querySelector('#txtPrimerApellidoCont
 let inputSegundoApellidoContacto = document.querySelector('#txtSegundoApellidoContacto');
 let inputTelefonoContacto = document.querySelector('#txtTelefonoContacto');
 
-let inputBuscar = document.querySelector('#txtBuscarNombre');
+let inputBuscar = document.querySelector('#txtBuscar');
 let botonRegistrar = document.querySelector('#btnRegistrar');
 
 /**
@@ -67,9 +67,7 @@ let regexNumeros = /^[0-9]+$/;
 let regexCorreo = /[a-zA-ZÑñáéíóúÁÉÍÓÚ]+@ucenfotec+\.ac\.cr+/;
 
 /**
- * Descripción: breve descripción sobre la funcionalidad
- * @param: n/a
- * @return: n/a
+ * Descripción: Registra un usuario con los datos obtenidos del usuario.
  */
 function obtenerDatos(){
     let sPrimerNombre = inputPrimerNombre.value;
@@ -129,7 +127,6 @@ function obtenerDatos(){
  * Descripción: Valida los campos del registro y devuelve 'false'
  * en caso de que todos sean válidos o devuelve 'true' en caso de
  * que al menos uno no lo sea.
- * @param: n/a
  * @return: {boolean} bError
  */
 function validarRegistro(){
@@ -205,7 +202,7 @@ function validarRegistro(){
         inputFechaIngreso.classList.remove('errorInput');
     }
     // Validación del input para teléfono
-    if(nTelefono == 0 || (regexNumeros.test(nTelefono) == false) || (nTelefono < 10000000) || (nTelefono > 99999999) ){
+    if(nTelefono == 0 || (regexNumeros.test(nTelefono) == false) || (nTelefono < 10000000) || (nTelefono > 9999999999) ){
         inputTelefono.classList.add('errorInput');
         bError = true;
     }else{
@@ -279,12 +276,9 @@ function validarRegistro(){
 }
 
 /**
- * Descripción: Envía como parámetro el String al servicio para
- * obtener una lista de carreras cuyo nombre haga match, y las 
- * muestra en una tabla junto con las opciones para editar y 
- * eliminar.
- * @param: n/a
- * @return: n/a
+ * Descripción: Filtra los usuarios de una lista de usuarios registrados cuyo nombre haga match, 
+ * y las muestra en una tabla junto con las opciones para editar y eliminar.
+ * @param: pFiltro
  */
 function mostrarBusqueda(pFiltro){
     let tbody = document.querySelector('#tblBusqueda tbody');
@@ -337,8 +331,6 @@ function mostrarBusqueda(pFiltro){
 /**
  * Descripción: Limpia los inputs del formulario de registro
  * podiendo en '' cada uno de los campos.
- * @param: n/a
- * @return: n/a
  */
 function limpiarFormulario(){
     inputPrimerNombre.value = '';
@@ -361,6 +353,9 @@ function limpiarFormulario(){
     inputTelefonoContacto.value = '';
 };
 
+/**
+ * Descripción: Muestra una lista de las provincias de Costa Rica.
+ */
 function mostrarProvincias(){
     let selectProvincias = document.querySelector('#lstProvincias');
     selectProvincias.innerHTML = '';
@@ -371,6 +366,10 @@ function mostrarProvincias(){
     }
 };
 
+/**
+ * Descripción: Muestra una lista de los cantones de Costa Rica, según la provincia que
+ * esté seleccionada.
+ */
 function mostrarCantones(){
     let selectCantones = document.querySelector('#lstCantones');
     selectCantones.innerHTML = '';
@@ -383,6 +382,10 @@ function mostrarCantones(){
     }
 };
 
+/**
+ * Descripción: Muestra una lista de los distritos de Costa Rica, según el cantón que
+ * esté seleccionado.
+ */
 function mostrarDistritos(){
 
     let selectDistritos = document.querySelector('#lstDistritos');
@@ -396,6 +399,9 @@ function mostrarDistritos(){
     }
 };
 
+/**
+ * Descripción: Obtiene el número de la provincia que está seleccionada.
+ */
 function setNumeroProvincia(){
     let sProvincia = inputProvincia.value;
     for(let i=0; i < sListaProvincias.length; i++){
@@ -406,6 +412,9 @@ function setNumeroProvincia(){
     mostrarCantones();
 };
 
+/**
+ * Descripción: Obtiene el número del cantón que está seleccionado.
+ */
 function setNumeroCanton(){
     let sCanton = inputCanton.value;
     for(let i=0; i < sListaCantones.length; i++){

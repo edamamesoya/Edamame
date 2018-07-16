@@ -15,6 +15,7 @@ let usuarioSchema = new mongoose.Schema({
     telefono : {type : Number, required : true},
     correo : {type : String, required : true, unique : true},
     rol : {type : String, required : true},
+    contrasenna : {type : String},
     primerNombreContacto : {type : String, required : true},
     segundoNombreContacto : {type : String, required : false},
     primerApellidoContacto : {type : String, required : true},

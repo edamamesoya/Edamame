@@ -66,31 +66,32 @@ function obtenerCarreras(){
 
 /**
  * Descripción: Realiza una petición tipo 'post' a la base de datos
- * para obtener un arreglo de las carreras cuyo nombre coincida con
- * el parámetro 'pBuscar'.
- * @param: {String} pBuscar
- * @return: {any} listaCarreras
+ * para agregar un subdocumento a una carrera registrada.
+ * @param: {String} id, {String} pCodigoCurso, {String} pNombreCurso.
+ * @return: {String} respuesta
  */
-function obtenerBusqueda(pBuscar){
-  let listaCarreras = [];
+function agregarCurso(id, pCodigoCurso, pNombreCurso){
+  let respuesta = '';
   let peticion = $.ajax({
-    url: 'http://localhost:4000/api/buscar_carrera',
-    type: 'post',
-    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-    dataType : 'json',
-    async:false,
-    data:{
-      codigo : pBuscar
-    }
-  });
+      url : 'http://localhost:4000/api/enlazar_curso',
+      type : 'post',
+      contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+      dataType : 'json',
+      async : false,
+      data:{
+          _id : id,
+          codigoCurso : pCodigoCurso,
+          nombreCurso : pNombreCurso
+      }
+    });
   
-  peticion.done(function(response){
-    listaCarreras = response;
-  });
+    peticion.done(function(response){
+     respuesta = response;
+    });
   
-  peticion.fail(function(){
-      
-  });
+    peticion.fail(function(response){
+     
+    });
 
-  return listaCarreras;
-};
+    return respuesta;
+}

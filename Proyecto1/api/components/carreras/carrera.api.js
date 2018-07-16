@@ -27,12 +27,23 @@ module.exports.listar_todos = function(req, res){
     );
 };
 
-module.exports.buscar_carrera = function(req, res){
-    let sCodigo = req.body.codigo;
-    let sOrdenamiento = req.body.ordenamiento;
-    carreraModel.find({ "codigo": { "$regex": sCodigo, "$options": "i" } }).sort({codigo : 'asc'}).then(
-        function(carreras){
-            res.send(carreras); 
+module.exports.agregar_curso = function(req, res){  
+    carreraModel.update(
+        {_id: req.body._id}, 
+        {$push: 
+            {'cursosAsignados':
+                {
+                    codigoCurso: req.body.codigoCurso, 
+                    nombreCurso: req.body.nombreCurso
+                }
+            }
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo el curso a esta carrera, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'El curso se asignó con éxito'});
+            }
         }
-    );
+    )
 };

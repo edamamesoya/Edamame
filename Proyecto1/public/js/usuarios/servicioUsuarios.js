@@ -1,11 +1,13 @@
 'use strict';
 
 /**
- * Descripción: Realiza una petición tipo 'post' a la base de datos
- * para registrar una carrera nueva en caso de éxito, y devolver un 
- * mensaje ya sea de error o confirmación.
- * @param: {String} pCodigo, {String} pNombre, {int} pCreditos,
- * {Date} pFechaCreacion, {boolean} pEstado
+ * Descripción: Realiza una petición tipo 'post' a la base de datos para registrar un usuario nuevo en caso 
+ * de éxito, y devolver un mensaje ya sea de error o confirmación.
+ * @param: {String} pPrimerNombre, {String} pSegundoNombre, {String} pPrimerApellido,
+ * {int} pCedula, {String} pProvincia, {String} pCanton, {String} pDistrito, {String} pDireccion,
+ * {Date} pFechaIngreso, {int} pTelefono, {String} pCorreo, {String} pRol, {String} pPrimerNombreContacto,
+ * {String} pSegundoNombreContacto, {String} pPrimerApellidoContacto, {String} pSegundoApellidoContacto,
+ * {int} pTelefonoContacto
  * @return: {String} repuesta
  */
 function registrarUsuario(pPrimerNombre, pSegundoNombre, pPrimerApellido, pSegundoApellido, pCedula, pProvincia, pCanton, pDistrito, pDireccion, pFechaIngreso, pTelefono, pCorreo, pRol, pPrimerNombreContacto, pSegundoNombreContacto, pPrimerApellidoContacto, pSegundoApellidoContacto, pTelefonoContacto){
@@ -51,10 +53,8 @@ function registrarUsuario(pPrimerNombre, pSegundoNombre, pPrimerApellido, pSegun
  
 
 /**
- * Descripción: Realiza una petición tipo 'get' a la base de datos
- * para obtener un arreglo de las carreras registradas.
- * @param: n/a
- * @return: {any} listaCarreras
+ * Descripción: Realiza una petición tipo 'get' a la base de datos para obtener un arreglo de los usuarios registrados.
+ * @return: {any} listaUsuarios
  */
 function obtenerUsuarios(){
   let listaUsuarios = [];

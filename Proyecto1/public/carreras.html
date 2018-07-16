@@ -8,7 +8,7 @@
     <!--Páginas de estilo css-->
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/estilosGenerales.css">
-    <link rel="stylesheet" href="css/carreras.css">
+    <link rel="stylesheet" href="css/funciones.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
@@ -23,7 +23,8 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <img src="" alt="img usuario">
+                <i class="fas fa-user-tie fa-5x"></i>
+                <!-- <img src="" alt="img usuario"> -->
                 <a href="index.html" class="fas fa-sign-out-alt" id="bLogOut"></a>
                 <label for="bLogOut">Salir</label>
             </div>
@@ -32,21 +33,21 @@
         <!--Menú general (arriba)-->
         <div class="menuGeneral">
             <a href="index.html" class="w3-bar-item w3-button">Inicio</a>
-            <a href="index.html" class="w3-bar-item w3-button">Perfil</a>
-            <a href="index.html" class="w3-bar-item w3-button">Solicitudes</a>
+            <a href="#" class="w3-bar-item w3-button">Perfil</a>
+            <a href="#" class="w3-bar-item w3-button">Solicitudes</a>
             <div class="w3-dropdown-hover">
                 <button class="w3-bar-item w3-button">Funciones</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
                     <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
                     <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
-                    <a href="#" class="w3-bar-item w3-button">Sedes</a>
+                    <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
                     <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
                     <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
                     <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
-                    <a href="#" class="w3-bar-item w3-button">Bitácoras</a>
                 </div>
             </div>
+            <a href="#" class="w3-bar-item w3-button">Bitácoras</a>
             <a href="#" class="w3-bar-item w3-button">Reportes</a>
             <a href="#" class="w3-bar-item w3-button">Configuración</a>
         </div>
@@ -55,13 +56,12 @@
         <div class="tab">
             <h2>Menú</h2>
             <button class="tablinks" onclick="abrirFuncion(event, 'registrarCarrera')" id="defaultOpen">Registrar carrera</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'buscarCarrera')" id="buscar">Buscar carrera</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'listarCarrera')">Listar carreras</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'listarCarrera')">Enlazar cursos</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarCarrera')" id="buscar">Listar carreras</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'enlazarCursos')">Cursos asignados a carrera</button>
         </div>
-
+    
         <!--Función registrar carreras-->
-        <div id="registrarCarrera" class="tabcontent">
+        <section id="registrarCarrera" class="tabcontent">
             <h2>Registrar carreras</h2>
             <p>Ingrese la información solicitada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
                 para guardar los datos.
@@ -95,27 +95,22 @@
                         <label for="txtFecha" class="labelError">*</label>
                     </div>
                     <label for="" id="labelRequerido">*: campos requeridos</label>
-                    <button type="button" id="btnRegistrar">Registrar</button>
                 </fieldset>
+                <button type="button" class="button" id="btnRegistrar">Registrar</button>
             </form>
-        </div>
+        </section>
 
         <!--Función buscar carreras-->
-        <div id="buscarCarrera" class="tabcontent">
+        <section id="buscarCarrera" class="tabcontent">
             <h2>Lista de carreras</h2>
             <p>Despliegue total de registros para la sección "Carreras". Para búsquedas específicas, ingrese el nombre completo,
-                parcial, o el código de la carrera en "Filtrar". Para buscar entre carreras activas o inactivas, selecciónelo
-                desde el menú desplegable junto a "Filtrar".
+                parcial, o el código de la carrera en "Filtrar".
             </p>
 
-            <form>
-                <div>
-                    <label for="txtBuscarCodigo">Filtrar:</label>
-                    <input type="text" id="txtBuscarCodigo">
-                    <a id="btnOrdenarDesc" class="fas fa-sort-alpha-up"></a>
-                    <a id="btnOrdenarAsc" class="fas fa-sort-alpha-down"></a>
-                </div>
-            </form>
+            <div>
+                <label for="txtBuscar">Filtrar:</label>
+                <input type="text" id="txtBuscar">
+            </div>
 
             <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
@@ -133,33 +128,54 @@
 
                 </tbody>
             </table>
-        </div>
+        </section>
 
-        <!--Función listar carreras-->
-        <div id="listarCarrera" class="tabcontent">
-            <table id="tblCarreras" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Créditos</th>
-                        <th>Fecha de creación</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <!--Función enlazar cursos-->
+        <section id="enlazarCursos" class="tabcontent">
+            <h2>Cursos asignados a carreras</h2>
+            <p>Seleccione una carrera de la lista. Podrá ver los cursos pertenecientes a esa carrera seleccionando el botón "Cursos asignados"
+                o bien asignar nuevos cursos al seleccionar el botón "Cursos sin asignar", donde puede seleccionar los cursos deseados de la lista
+                y luego agregarlos al presionar "Asignar".
+            </p>
 
-                </tbody>
-            </table>
-        </div>
+            <form action="" id="formRegistro" autocomplete="off">
+                <fieldset class="fieldset">
+                    <div>
+                        <label for="txtCarrera">Carrera:</label>
+                        <i class="fas fa-list"></i>
+                        <input list="lstCarreras" id="txtCarrera" placeholder="Seleccione una opción de la lista" required>
+                        <datalist id="lstCarreras">
+                        </datalist> 
+                        <label for="lstCarreras" class="labelError">*</label>
+                    </div>
 
+                    <div id="btnPestanna" class="invisible">
+                        <button type="button" id="btnCursosAsignados">Cursos asignados</button>
+                        <button type="button" id="btnAsignarCursos">Cursos sin asignar</button>
+                    </div>
+
+                    <div id="pestannaAsignados" class="invisible">
+                        <div id="lstCursosAsignados">
+                        </div>
+                    </div>
+
+                    <div id="pestannaAsignar" class="invisible">
+                        <div id="lstCursosPorAsignar">
+                        </div>
+
+                        <button type="button" id="btnAsignar" class="button">Asignar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
     </main>
 
     <!--Scripts-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/controladorGeneral.js"></script>
     <script src="js/carreras/servicioCarreras.js"></script>
+    <script src="js/cursos/servicioCursos.js"></script>
+    <script src="js/controladorGeneral.js"></script>
     <script src="js/carreras/controladorCarreras.js"></script>
 </body>
 

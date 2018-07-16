@@ -16,6 +16,7 @@ module.exports.registrar = function(req, res) {
         telefono : req.body.telefono,
         correo : req.body.correo,
         rol : req.body.rol,
+        contrasenna : req.body.cedula,
         primerNombreContacto : req.body.primerNombreContacto,
         segundoNombreContacto : req.body.segundoNombreContacto,
         primerApellidoContacto : req.body.primerApellidoContacto,

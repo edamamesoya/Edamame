@@ -1,13 +1,15 @@
 'use strict';
+
 let sListaCursos = obtenerCursos();
+let sListaLaboratorios = obtenerLaboratorios();
 
-mostrarListaGrupos()
-mostrarCursos()
+mostrarListaGrupos();
+mostrarCursos();
+mostrarLaboratorios();
 
-document.getElementById("defaultOpen").click();
+document.getElementById("buscar").click();
 
 let inputNumeroGrupo = document.querySelector('#txtNumeroGrupo');
-let inputNumeroLaboratorio = document.querySelector('#txtNumeroLab');
 let inputNombreProfesor = document.querySelector('#txtNombrePro');
 let inputNumeroEstudiantes = document.querySelector('#txtNumeroEst');
 let inputHorarioDomingo = document.querySelector('#txtHorarioGrupoDomingo');
@@ -21,14 +23,13 @@ let inputHorarioVirtual = document.querySelector('#txtHorarioGrupoVirtual');
 let inputTiempoEntrada = document.querySelector('#txtTiempoGrupoEntrada');
 let inputTiempoSalida = document.querySelector('#txtTiempoGrupoSalida');
 let selectCursos = document.querySelector('#txtCurso');
+let selectLaboratorios = document.querySelector('#txtLaboratorio');
 let botonRegistrar = document.querySelector('#btnRegistrar');
-let inputBuscar = document.querySelector('#txtBuscarCodigo');
+
 botonRegistrar.addEventListener('click', obtenerDatos);
-inputBuscar.addEventListener('keyup', mostrarBusqueda);
 
 
 let nNumeroGrupo = 0;
-let nNumeroLaboratorio = 0;
 let sNombreProfesor = '';
 let nNumeroEstudiantes = 0;
 let reglaLetras = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
@@ -38,8 +39,8 @@ let reglaNumeros = /^[0-9]+$/;
 function obtenerDatos() {
 
     let id = selectCursos.value;
+    let idLab = selectLaboratorios.value;
     let nNumeroGrupo = inputNumeroGrupo.value;
-    let nNumeroLaboratorio = inputNumeroLaboratorio.value;
     let sNombreProfesor = inputNombreProfesor.value;
     let nNumeroEstudiantes = inputNumeroEstudiantes.value;
     let sHorarioDomingo = inputHorarioDomingo.value;
@@ -63,7 +64,7 @@ function obtenerDatos() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarGrupo(id, nNumeroGrupo, nNumeroLaboratorio, sNombreProfesor, nNumeroEstudiantes, sHorarioDomingo, sHorarioLunes, sHorarioMartes, sHorarioMiercoles, sHorarioJueves, sHorarioViernes, sHorarioSabado, sHorarioVirtual, sTiempoEntrada, sTiempoSalida);
+        let respuesta = registrarGrupo(id, idLab, nNumeroGrupo, sNombreProfesor, nNumeroEstudiantes, sHorarioDomingo, sHorarioLunes, sHorarioMartes, sHorarioMiercoles, sHorarioJueves, sHorarioViernes, sHorarioSabado, sHorarioVirtual, sTiempoEntrada, sTiempoSalida);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro Correcto',
@@ -71,6 +72,8 @@ function obtenerDatos() {
                 type: 'success',
                 confirmButtonText: 'Entendido'
             });
+            mostrarListaGrupos();
+            document.getElementById("buscar").click();
         } else {
             swal({
                 title: 'Registro incorrecto',
@@ -80,7 +83,6 @@ function obtenerDatos() {
             });
         }
     }
-    mostrarListaGrupos();
 }
 
 function validar() {
@@ -89,7 +91,6 @@ function validar() {
     let bError = false;
 
     nNumeroGrupo = Number(inputNumeroGrupo.value);
-    nNumeroLaboratorio = Number(inputNumeroLaboratorio.value);
     sNombreProfesor = inputNombreProfesor.value;
     nNumeroEstudiantes = Number(inputNumeroEstudiantes.value);
 
@@ -107,13 +108,6 @@ function validar() {
         bError = true;
     } else {
         inputNumeroGrupo.classList.remove('errorInput');
-    }
-    //validar numero de Laboratorio
-    if (nNumeroLaboratorio == '' || (reglaNumeros.test(nNumeroLaboratorio) == false)) {
-        inputNumeroLaboratorio.classList.add('errorInput');
-        bError = true;
-    } else {
-        inputNumeroLaboratorio.classList.remove('errorInput');
     }
     //Validar numero de Estudiantes
     if (nNumeroEstudiantes == '' || (reglaNumeros.test(nNumeroEstudiantes) == false)) {
@@ -135,55 +129,18 @@ function mostrarListaGrupos() {
         let fila = tbody.insertRow();
 
         let celdaNumeroGrupo = fila.insertCell();
-        let celdaNumeroLaboratorio = fila.insertCell();
         let celdaNombreProfesor = fila.insertCell();
         let celdaNumeroEstudiantes = fila.insertCell();
         let celdaTiempoEntrada = fila.insertCell();
         let celdaTiempoSalida = fila.insertCell();
 
         celdaNumeroGrupo.innerHTML = listaGrupos[i]['numeroGrupo'];
-        celdaNumeroLaboratorio.innerHTML = listaGrupos[i]['numeroLaboratorio'];
         celdaNombreProfesor.innerHTML = listaGrupos[i]['nombreProfesor'];
         celdaNumeroEstudiantes.innerHTML = listaGrupos[i]['numeroEstudiantes'];
         celdaTiempoEntrada.innerHTML = listaGrupos[i]['tiempoEntrada'];
         celdaTiempoSalida.innerHTML = listaGrupos[i]['tiempoSalida'];
     }
 }
-
-function mostrarBusqueda(){
-    let listaGrupos = obtenerBusqueda(inputBuscar.value);
-
-    let tbody = document.querySelector('#tblBusqueda tbody');
-    tbody.innerHTML = '';
-
-    for(let i = 0; i < listaGrupos.length; i++){
-        let fila = tbody.insertRow();
-
-        let celdaNumeroGrupo = fila.insertCell();
-        let celdaNumeroLaboratorio = fila.insertCell();
-        let celdaNombreProfesor = fila.insertCell();
-        let celdaNumeroEstudiantes = fila.insertCell();
-        let celdadiasSemana = fila.insertCell();
-
-        celdaNumeroGrupo.innerHTML = listaGrupos[i]['numeroGrupo'];
-        celdaNumeroLaboratorio.innerHTML = listaGrupos[i]['numeroLaboratorio'];
-        celdaNombreProfesor.innerHTML = listaGrupos[i]['nombreProfesor'];
-        celdaNumeroEstudiantes.innerHTML = listaGrupos[i]['numeroEstudiantes'];
-        celdadiasSemana.innerHTML = listaGrupos[i]['diasSemana'];
-          
-        let botonEditar = document.createElement('a');
-        botonEditar.href = '#';
-        botonEditar.classList.add('far');
-        botonEditar.classList.add('fa-edit');
-        celdaEditar.appendChild(botonEditar);
-
-        let botonEliminar = document.createElement('a');
-        botonEliminar.href = '#';
-        botonEliminar.classList.add('far');
-        botonEliminar.classList.add('fa-trash-alt');
-        celdaEliminar.appendChild(botonEliminar);
-    }
-};
 
 function abrirFuncion(evt, funcion) {
     let i, tabcontent, tablinks;
@@ -207,5 +164,15 @@ function mostrarCursos(){
         let nuevaOpcion = new Option(sListaCursos[i]['nombre']);
         nuevaOpcion.value = sListaCursos[i]['nombre'];
         selectCursos.appendChild(nuevaOpcion);
+    }
+};
+
+function mostrarLaboratorios(){
+    let selectLaboratorios = document.querySelector('#lstLaboratorios');
+    selectLaboratorios.innerHTML = '';
+    for(let i=0; i < sListaLaboratorios.length; i++){
+        let nuevaOpcion = new Option(sListaLaboratorios[i]['nombre']);
+        nuevaOpcion.value = sListaLaboratorios[i]['nombre'];
+        selectLaboratorios.appendChild(nuevaOpcion);
     }
 };
