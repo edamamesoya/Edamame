@@ -22,38 +22,55 @@ function obtenerDatos() {
 function verificarCredenciales(psUsuario, psContrasenna) {
     let listaPersonas = obtenerUsuarios();
     let sRol = '';
+    let bError = true;
 
     for (let i = 0; i < listaPersonas.length; i++) {
         if (psUsuario == listaPersonas[i]['correo'] || localStorage.getItem('correoUsuarioActivo') == listaPersonas[i]['correo']) {
             if (psContrasenna == listaPersonas[i]['contrasenna'] || localStorage.getItem('correoUsuarioActivo') == listaPersonas[i]['correo']) {
-
                 sRol = listaPersonas[i]['rol'];
 
+                bError = false;
                 localStorage.setItem('correoUsuarioActivo', listaPersonas[i]['correo']);
                 localStorage.setItem('rolUsuarioActivo', sRol);
 
-                swal({
-                    title: 'Inicio Correcto',
-                    text: 'Sesión iniciada correctamente.',
-                    type: 'success'
-                });
+                // swal({
+                //     title: 'Inicio Correcto',
+                //     text: 'Sesión iniciada correctamente.',
+                //     type: 'success'
+                // });
             } else {
-                swal({
-                    title: 'Inicio Fallido',
-                    text: 'No se pudo iniciar sesión. La combinación de correo electrónico y cédula no coinciden.',
-                    type: 'warning',
-                    confirmButtonText: 'Entendido'
-                });
+                // swal({
+                //     title: 'Inicio Fallido',
+                //     text: 'No se pudo iniciar sesión. La combinación de correo electrónico y contraseña no coinciden.',
+                //     type: 'warning',
+                //     confirmButtonText: 'Entendido'
+                // });
             };
         } else {
-            swal({
-                title: 'Inicio Fallido',
-                text: 'No se pudo iniciar sesión. La combinación de correo electrónico y cédula no coinciden.',
-                type: 'warning',
-                confirmButtonText: 'Entendido'
-            });
+            // swal({
+            //     title: 'Inicio Fallido',
+            //     text: 'No se pudo iniciar sesión. La combinación de correo electrónico y contraseña no coinciden.',
+            //     type: 'warning',
+            //     confirmButtonText: 'Entendido'
+            // });
         };
     };
+
+    if(bError){
+        swal({
+            title: 'Inicio Fallido',
+            text: 'No se pudo iniciar sesión. La combinación de correo electrónico y contraseña no coinciden.',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    }else{
+        swal({
+            title: 'Inicio Correcto',
+            text: 'Sesión iniciada correctamente.',
+            type: 'success'
+        });
+    }
+    
     switch (sRol) {
         case 'administrador':
             window.location.href = 'perfil.html';
@@ -74,6 +91,7 @@ function verificarCredenciales(psUsuario, psContrasenna) {
             window.location.href = 'perfil.html';
             break;
     }
+
 
     limpiarFormulario();
 };

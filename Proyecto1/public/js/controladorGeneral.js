@@ -1,6 +1,9 @@
 'use strict';
 
 permisosRol();
+let sUsuario = localStorage.getItem('correoUsuarioActivo');
+
+verificarAcceso(sUsuario);
 
 const botonSalir = document.querySelector('#bLogOut');
 botonSalir.addEventListener('click', salir);
@@ -42,6 +45,27 @@ function salir() {
     window.location.href = 'login.html';
 };
 
+function verificarAcceso(psUsuario) {
+    let listaPersonas = obtenerUsuarios();
+    if (window.location == 'login.html') {
+
+    } else {
+        let bError = true;
+        for (let i = 0; i < listaPersonas.length; i++) {
+            if (psUsuario == listaPersonas[i]['correo']) {
+                bError = false;
+            }
+
+        };
+
+        if(bError){
+            window.location.href = 'login.html'
+        }else{
+
+        }
+    };
+};
+
 function permisosRol() {
     switch(localStorage.getItem('rolUsuarioActivo')) {
         case 'administrador':
@@ -67,7 +91,14 @@ function permisosRol() {
             document.getElementById('menuConfiguracion').remove();
             break;
         case 'asistente':
-            //
+            document.getElementById('menuPerfil').classList.add('w3-mobile');
+            document.getElementById('menuPerfil').style.width = '45%';
+            document.getElementById('menuBitacoras').classList.add('w3-mobile');
+            document.getElementById('menuBitacoras').style.width = '45%';
+            document.getElementById('menuSolicitudes').remove();
+            document.getElementById('menuFunciones').remove();
+            document.getElementById('menuReportes').remove();
+            document.getElementById('menuConfiguracion').remove();
             break;
     }
 };

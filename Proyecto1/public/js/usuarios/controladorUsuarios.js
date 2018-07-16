@@ -62,7 +62,7 @@ inputBuscar.addEventListener('keyup' , function(){
  */
 let regexCodigo = /^[a-zA-Z0-9]+$/;
 let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ]+$/;
-let regexDireccion = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9 ]+$/;
+let regexDireccion = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9\(\)\@\"\'\:\.\,\;\-\#\_\\\/\?\¿\!\¡ ]+$/;
 let regexNumeros = /^[0-9]+$/;
 let regexCorreo = /[a-zA-ZÑñáéíóúÁÉÍÓÚ]+@ucenfotec+\.ac\.cr+/;
 
@@ -181,7 +181,7 @@ function validarRegistro(){
         inputSegundoApellido.classList.remove('errorInput');
     }
     // Validación del input para cédula
-    if(nCedula == 0 || (regexNumeros.test(nCedula) == false) ){
+    if(nCedula == 0 || (regexNumeros.test(nCedula) == false)){
         inputCedula.classList.add('errorInput');
         bError = true;
     }else{

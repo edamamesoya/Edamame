@@ -63,6 +63,7 @@ function verificarAcceso(psUsuario) {
     };
 };
 
+
 function permisosRol() {
     switch(localStorage.getItem('rolUsuarioActivo')) {
         case 'administrador':
@@ -88,7 +89,14 @@ function permisosRol() {
             document.getElementById('menuConfiguracion').remove();
             break;
         case 'asistente':
-            //
+            document.getElementById('menuPerfil').classList.add('w3-mobile');
+            document.getElementById('menuPerfil').style.width = '45%';
+            document.getElementById('menuBitacoras').classList.add('w3-mobile');
+            document.getElementById('menuBitacoras').style.width = '45%';
+            document.getElementById('menuSolicitudes').remove();
+            document.getElementById('menuFunciones').remove();
+            document.getElementById('menuReportes').remove();
+            document.getElementById('menuConfiguracion').remove();
             break;
     }
 };
