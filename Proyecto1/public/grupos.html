@@ -25,7 +25,8 @@
             <div class="w3-display-right">
                 <i class="fas fa-user-tie fa-5x"></i>
                 <!-- <img src="" alt="img usuario"> -->
-                <a href="index.html" class="fas fa-sign-out-alt" id="bLogOut"></a>
+                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                </a>
                 <label for="bLogOut">Salir</label>
             </div>
         </div>
@@ -34,7 +35,7 @@
         <div class="menuGeneral">
             <a href="index.html" class="w3-bar-item w3-button">Inicio</a>
             <a href="#" class="w3-bar-item w3-button">Perfil</a>
-            <a href="#" class="w3-bar-item w3-button">Solicitudes</a>
+            <a href="solicitudes.html" class="w3-bar-item w3-button">Solicitudes</a>
             <div class="w3-dropdown-hover">
                 <button class="w3-bar-item w3-button">Funciones</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
@@ -143,9 +144,16 @@
         <!--listado de los grupos-->
         <section id="listarGrupo" class="tabcontent">
             <h2>Lista de grupos</h2>
-            <p>Despliegue total de registros para la sección "Grupos".
+            <p>Despliegue total de registros para la sección "Grupos". Para búsquedas específicas, ingrese el nombre completo o
+                parcial del nombre del profesor en "Filtrar".
             </p>
-            <table id="tblGrupos" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+
+            <div>
+                <label for="txtBuscar">Filtrar:</label>
+                <input type="text" id="txtBuscar">
+            </div>
+
+            <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
                         <th>Número del Grupo</th>
@@ -163,6 +171,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/grupos/servicioGrupos.js"></script>
+    <script src="js/usuarios/servicioUsuarios.js"></script>
     <script src="js/cursos/servicioCursos.js"></script>
     <script src="js/laboratorios/servicioLaboratorios.js"></script>
     <script src="js/grupos/controladorGrupos.js"></script>

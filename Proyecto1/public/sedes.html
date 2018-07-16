@@ -25,32 +25,33 @@
             <div class="w3-display-right">
                 <i class="fas fa-user-tie fa-5x"></i>
                 <!-- <img src="" alt="img usuario"> -->
-                <a href="index.html" class="fas fa-sign-out-alt" id="bLogOut"></a>
+                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                </a>
                 <label for="bLogOut">Salir</label>
             </div>
         </div>
 
        <!--Menú general (arriba)-->
-        <div class="menuGeneral">
-            <a href="index.html" class="w3-bar-item w3-button">Inicio</a>
-            <a href="#" class="w3-bar-item w3-button">Perfil</a>
-            <a href="#" class="w3-bar-item w3-button">Solicitudes</a>
-            <div class="w3-dropdown-hover">
-                <button class="w3-bar-item w3-button">Funciones</button>
-                <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
-                    <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
-                    <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
-                    <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
-                    <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
-                    <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
-                    <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
-                    <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
-                </div>
+       <div class="menuGeneral">
+        <a href="index.html" class="w3-bar-item w3-button">Inicio</a>
+        <a href="#" class="w3-bar-item w3-button">Perfil</a>
+        <a href="solicitudes.html" class="w3-bar-item w3-button">Solicitudes</a>
+        <div class="w3-dropdown-hover">
+            <button class="w3-bar-item w3-button">Funciones</button>
+            <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
+                <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
+                <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
+                <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
+                <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
+                <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
+                <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
+                <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
             </div>
-            <a href="#" class="w3-bar-item w3-button">Bitácoras</a>
-            <a href="#" class="w3-bar-item w3-button">Reportes</a>
-            <a href="#" class="w3-bar-item w3-button">Configuración</a>
         </div>
+        <a href="#" class="w3-bar-item w3-button">Bitácoras</a>
+        <a href="#" class="w3-bar-item w3-button">Reportes</a>
+        <a href="#" class="w3-bar-item w3-button">Configuración</a>
+    </div>
 
         <!--Menú de acciones (lateral)-->
         <div class="tab">
@@ -112,9 +113,16 @@
         <div id="listarSedes" class="tabcontent">
             <h2>Lista de sedes</h2>
             <p>
-                Aquí se encuentran listados todas las Sedes que se encuentren registradas en este momento.
+                Aquí se encuentran listados todas las Sedes que se encuentren registradas en este momento. Para búsquedas específicas, ingrese el nombre completo o
+                parcial de la sede en "Filtrar".
             </p>
-            <table id="tblSedes" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+
+            <div>
+                <label for="txtBuscar">Filtrar:</label>
+                <input type="text" id="txtBuscar">
+            </div>
+
+            <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -134,6 +142,7 @@
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/controladorGeneral.js"></script>
     <script src="js/servicioUbicacion.js"></script>
+    <script src="js/usuarios/servicioUsuarios.js"></script>
     <script src="js/sedes/servicioSedes.js"></script>
     <script src="js/sedes/controladorSedes.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF0irly13UZBvBzBJVFx0Arrve0bXZwe4&callback=initMap" async

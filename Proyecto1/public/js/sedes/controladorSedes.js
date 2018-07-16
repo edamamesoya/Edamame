@@ -1,7 +1,7 @@
 'use strict';
 
-let listaSedes = obtenerSedes();
-mostrarListaSedes()
+let sListaSedes = obtenerSedes();
+mostrarBusqueda();
 
 document.getElementById("buscar").click();
 
@@ -10,6 +10,10 @@ let inputProvincia = document.querySelector('#txtProvincia');
 let inputCanton = document.querySelector('#txtCanton');
 let inputDistrito = document.querySelector('#txtDistrito');
 let botonRegistrar = document.querySelector('#btnRegistrar');
+let inputBuscar = document.querySelector('#txtBuscar');
+inputBuscar.addEventListener('keyup', function(){
+    mostrarBusqueda(inputBuscar.value)
+});
 
 
 let sNombre = '';
@@ -61,7 +65,9 @@ function obtenerDatos() {
                 type: 'success',
                 confirmButtonText: 'Entendido'
             });
-            listaSedes = obtenerSedes();
+            sListaSedes = obtenerSedes();
+            mostrarBusqueda();
+            limpiarFormulario();
             document.getElementById("buscar").click();
         } else {
             swal({
@@ -72,7 +78,7 @@ function obtenerDatos() {
             });
         }
     }
-    mostrarListaSedes();
+    // mostrarListaSedes();
 
 };
 
@@ -115,24 +121,27 @@ function validar() {
     return bError;
 };
 
-function mostrarListaSedes() {
-    let listaSedes = obtenerSedes();
-    let tbody = document.querySelector('#tblSedes tbody');
+function mostrarBusqueda(pFiltro){
+    let tbody = document.querySelector('#tblBusqueda tbody');
+    if(!pFiltro){
+        pFiltro = '';
+    }
     tbody.innerHTML = '';
 
-    for (let i = 0; i < listaSedes.length; i++) {
-        let fila = tbody.insertRow();
+    for (let i = 0; i < sListaSedes.length; i++) {
+        if( (sListaSedes[i]['nombre'].toLowerCase()).includes(pFiltro.toLowerCase()) || (sListaSedes[i]['provincia'].toLowerCase()).includes(pFiltro.toLowerCase())){
+            let fila = tbody.insertRow();
+            
+            let celdaNombre = fila.insertCell();
+            let celdaProvincia = fila.insertCell();
+            let celdaCanton = fila.insertCell();
+            let celdaDistrito = fila.insertCell();
 
-
-        let celdaNombre = fila.insertCell();
-        let celdaProvincia = fila.insertCell();
-        let celdaCanton = fila.insertCell();
-        let celdaDistrito = fila.insertCell();
-
-        celdaNombre.innerHTML = listaSedes[i]['nombre'];
-        celdaProvincia.innerHTML = listaSedes[i]['provincia'];
-        celdaCanton.innerHTML = listaSedes[i]['canton'];
-        celdaDistrito.innerHTML = listaSedes[i]['distrito'];
+            celdaNombre.innerHTML = sListaSedes[i]['nombre'];
+            celdaProvincia.innerHTML = sListaSedes[i]['provincia'];
+            celdaCanton.innerHTML = sListaSedes[i]['canton'];
+            celdaDistrito.innerHTML = sListaSedes[i]['distrito'];
+        }
     }
 };
 
@@ -189,6 +198,13 @@ function setNumeroCanton() {
         }
     }
     mostrarDistritos();
+};
+
+function limpiarFormulario(){
+    inputNombre.value = '';
+    inputProvincia.value = '';
+    inputCanton.value = '';
+    inputDistrito.value = '';
 };
 
 var map;

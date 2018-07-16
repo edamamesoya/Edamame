@@ -1,9 +1,10 @@
 'use strict';
 
+let sListaGrupos = obtenerGrupos();
 let sListaCursos = obtenerCursos();
 let sListaLaboratorios = obtenerLaboratorios();
 
-mostrarListaGrupos();
+mostrarBusqueda();
 mostrarCursos();
 mostrarLaboratorios();
 
@@ -24,9 +25,13 @@ let inputTiempoEntrada = document.querySelector('#txtTiempoGrupoEntrada');
 let inputTiempoSalida = document.querySelector('#txtTiempoGrupoSalida');
 let selectCursos = document.querySelector('#txtCurso');
 let selectLaboratorios = document.querySelector('#txtLaboratorio');
+let inputBuscar = document.querySelector('#txtBuscar');
 let botonRegistrar = document.querySelector('#btnRegistrar');
 
 botonRegistrar.addEventListener('click', obtenerDatos);
+inputBuscar.addEventListener('keyup', function(){
+    mostrarBusqueda(inputBuscar.value)
+});
 
 
 let nNumeroGrupo = 0;
@@ -72,7 +77,10 @@ function obtenerDatos() {
                 type: 'success',
                 confirmButtonText: 'Entendido'
             });
-            mostrarListaGrupos();
+            // mostrarListaGrupos();
+            sListaGrupos = obtenerGrupos();
+            limpiarFormulario();
+            mostrarBusqueda();
             document.getElementById("buscar").click();
         } else {
             swal({
@@ -120,27 +128,39 @@ function validar() {
     return bError;
 };
 
-function mostrarListaGrupos() {
-    let listaGrupos = obtenerGrupos();
-    let tbody = document.querySelector('#tblGrupos tbody');
+function mostrarBusqueda(pFiltro){
+    let tbody = document.querySelector('#tblBusqueda tbody');
+    if(!pFiltro){
+        pFiltro = '';
+    }
     tbody.innerHTML = '';
 
-    for (let i = 0; i < listaGrupos.length; i++) {
-        let fila = tbody.insertRow();
+    for (let i = 0; i < sListaGrupos.length; i++) {
+        if( (sListaGrupos[i]['nombreProfesor'].toLowerCase()).includes(pFiltro.toLowerCase()) ){
+            let fila = tbody.insertRow();
 
-        let celdaNumeroGrupo = fila.insertCell();
-        let celdaNombreProfesor = fila.insertCell();
-        let celdaNumeroEstudiantes = fila.insertCell();
-        let celdaTiempoEntrada = fila.insertCell();
-        let celdaTiempoSalida = fila.insertCell();
+            let celdaNumeroGrupo = fila.insertCell();
+            let celdaNombreProfesor = fila.insertCell();
+            let celdaNumeroEstudiantes = fila.insertCell();
+            let celdaTiempoEntrada = fila.insertCell();
+            let celdaTiempoSalida = fila.insertCell();
 
-        celdaNumeroGrupo.innerHTML = listaGrupos[i]['numeroGrupo'];
-        celdaNombreProfesor.innerHTML = listaGrupos[i]['nombreProfesor'];
-        celdaNumeroEstudiantes.innerHTML = listaGrupos[i]['numeroEstudiantes'];
-        celdaTiempoEntrada.innerHTML = listaGrupos[i]['tiempoEntrada'];
-        celdaTiempoSalida.innerHTML = listaGrupos[i]['tiempoSalida'];
+            celdaNumeroGrupo.innerHTML = sListaGrupos[i]['numeroGrupo'];
+            celdaNombreProfesor.innerHTML = sListaGrupos[i]['nombreProfesor'];
+            celdaNumeroEstudiantes.innerHTML = sListaGrupos[i]['numeroEstudiantes'];
+            celdaTiempoEntrada.innerHTML = sListaGrupos[i]['tiempoEntrada'];
+            celdaTiempoSalida.innerHTML = sListaGrupos[i]['tiempoSalida'];
+        }
     }
-}
+};
+
+function limpiarFormulario(){
+    inputNumeroGrupo.value = '';
+    inputNombreProfesor.value = '';
+    inputNumeroEstudiantes.value = '';
+    selectCursos.value = '';
+    selectLaboratorios.value = '';
+};
 
 function abrirFuncion(evt, funcion) {
     let i, tabcontent, tablinks;
