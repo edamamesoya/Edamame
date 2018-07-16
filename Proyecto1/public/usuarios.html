@@ -32,10 +32,10 @@
 
         <!--Menú general (arriba)-->
         <div class="menuGeneral">
-            <a href="index.html" class="w3-bar-item w3-button">Inicio</a>
-            <a href="#" class="w3-bar-item w3-button">Perfil</a>
-            <a href="solicitudes.html" class="w3-bar-item w3-button">Solicitudes</a>
-            <div class="w3-dropdown-hover">
+            <!-- <a href="index.html" class="w3-bar-item w3-button" id="menuInicio">Inicio</a> -->
+            <a href="perfil.html" class="w3-bar-item w3-button" id="menuPerfil">Perfil</a>
+            <a href="solicitudes.html" class="w3-bar-item w3-button" id="menuSolicitudes">Solicitudes</a>
+            <div class="w3-dropdown-hover" id="menuFunciones">
                 <button class="w3-bar-item w3-button">Funciones</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
                     <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
@@ -47,9 +47,9 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="#" class="w3-bar-item w3-button">Bitácoras</a>
-            <a href="#" class="w3-bar-item w3-button">Reportes</a>
-            <a href="#" class="w3-bar-item w3-button">Configuración</a>
+            <a href="#" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="#" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="#" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
         <!--Menú de acciones (lateral)-->
@@ -167,31 +167,31 @@
                 <fieldset class="fieldset">
                     <h3>Información de contacto de emergencia</h3>
                     <div>
-                        <label for="txtPrimerNombreContacto">Primer nombre de contacto:</label>
+                        <label for="txtPrimerNombreContacto">Primer nombre del contacto:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtPrimerNombreContacto" placeholder="Ej, Daniel" required>
                         <label for="txtNombreContacto" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtSegundoNombreContacto">Segundo nombre de contacto:</label>
+                        <label for="txtSegundoNombreContacto">Segundo nombre del contacto:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtSegundoNombreContacto" placeholder="Ej, José" required>
                         <label for="txtSegundoNombreContacto" class="labelError"></label>
                     </div>
                     <div>
-                        <label for="txtPrimerApellidoContacto">Primer apellido de contacto:</label>
+                        <label for="txtPrimerApellidoContacto">Primer apellido del contacto:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtPrimerApellidoContacto" placeholder="Ej, Herrera" required>
                         <label for="txtPrimerApellidoContacto" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtSegundoApellidoContacto">Segundo apellido de contacto:</label>
+                        <label for="txtSegundoApellidoContacto">Segundo apellido del contacto:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtSegundoApellidoContacto" placeholder="Ej, Peraza" required>
                         <label for="txtSegundoApellidoContacto" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtTelefonoContacto">Número de teléfono de contacto:</label>
+                        <label for="txtTelefonoContacto">Número de teléfono del contacto:</label>
                         <i class="fas fa-phone"></i>
                         <input type="tel" id="txtTelefonoContacto" placeholder="Ej, 88634447" required>
                         <label for="txtTelefonoContacto" class="labelError">*</label>

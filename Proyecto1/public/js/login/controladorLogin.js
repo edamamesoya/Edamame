@@ -56,22 +56,22 @@ function verificarCredenciales(psUsuario, psContrasenna) {
     };
     switch (sRol) {
         case 'administrador':
-            window.location.href = 'usuarios.html';
+            window.location.href = 'perfil.html';
             break;
         case 'asistente':
-            window.location.href = 'periodos.html';
+            window.location.href = 'perfil.html';
             break;
         case 'profesor':
-            window.location.href = 'grupos.html';
+            window.location.href = 'perfil.html';
             break;
         case 'rectoria':
-            window.location.href = 'laboratorios.html';
+            window.location.href = 'perfil.html';
             break;
         case 'decanatura':
-            window.location.href = 'sedes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'asistDecanatura':
-            window.location.href = 'carreras.html';
+            window.location.href = 'perfil.html';
             break;
     }
 
@@ -114,22 +114,22 @@ function autoLogin(psUsuario) {
     };
     switch (sRol) {
         case 'administrador':
-            window.location.href = 'usuarios.html';
+            window.location.href = 'perfil.html';
             break;
         case 'asistente':
-            window.location.href = 'periodos.html';
+            window.location.href = 'perfil.html';
             break;
         case 'profesor':
-            window.location.href = 'grupos.html';
+            window.location.href = 'perfil.html';
             break;
         case 'rectoria':
-            window.location.href = 'laboratorios.html';
+            window.location.href = 'perfil.html';
             break;
         case 'decanatura':
-            window.location.href = 'sedes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'asistDecanatura':
-            window.location.href = 'carreras.html';
+            window.location.href = 'perfil.html';
             break;
     }
 };

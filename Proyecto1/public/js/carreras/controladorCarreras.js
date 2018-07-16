@@ -70,7 +70,8 @@ function obtenerDatos(){
             sListaCarreras = obtenerCarreras();
             limpiarFormulario();
             mostrarBusqueda();
-            mostrarCursosAsignados()
+            mostrarCursosAsignados();
+            mostrarCarreras();
             document.getElementById("buscar").click();
         }else{
             swal({
@@ -202,6 +203,8 @@ function limpiarFormulario(){
  * Descripción: Agrega al html una lista de las carreras registradas.
  */
 function mostrarCarreras(){
+    sListaCarreras = obtenerCarreras();
+    
     let selectCarreras = document.querySelector('#lstCarreras');
     selectCarreras.innerHTML = '';
     for(let i=0; i < sListaCarreras.length; i++){

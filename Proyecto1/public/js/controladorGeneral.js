@@ -1,4 +1,6 @@
-'use strict'
+'use strict';
+
+permisosRol();
 
 const botonSalir = document.querySelector('#bLogOut');
 botonSalir.addEventListener('click', salir);
@@ -38,4 +40,34 @@ function salir() {
     localStorage.removeItem('rolUsuarioActivo');
 
     window.location.href = 'login.html';
+};
+
+function permisosRol() {
+    switch(localStorage.getItem('rolUsuarioActivo')) {
+        case 'administrador':
+            break;
+        case 'rectoria':
+            //
+            break;
+        case 'decanatura':
+            //
+            break;
+        case 'asistDecanatura':
+            //
+            break;
+        case 'profesor':
+            document.getElementById('menuPerfil').classList.add('w3-mobile');
+            document.getElementById('menuPerfil').style.width = '30%';
+            document.getElementById('menuSolicitudes').classList.add('w3-mobile');
+            document.getElementById('menuSolicitudes').style.width = '30%';
+            document.getElementById('menuBitacoras').classList.add('w3-mobile');
+            document.getElementById('menuBitacoras').style.width = '30%';
+            document.getElementById('menuFunciones').remove();
+            document.getElementById('menuReportes').remove();
+            document.getElementById('menuConfiguracion').remove();
+            break;
+        case 'asistente':
+            //
+            break;
+    }
 };
