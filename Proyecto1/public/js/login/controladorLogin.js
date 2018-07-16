@@ -1,6 +1,6 @@
 'use strict';
 const inputUsuario = document.querySelector('#txtUsuario');
-const inputCedula = document.querySelector('#txtCedula');
+const inputContrasenna = document.querySelector('#txtContrasenna');
 const botonIniciar = document.querySelector('#btnIniciarSesion');
 const botonCancelar = document.querySelector('#btnCancelar');
 
@@ -9,18 +9,18 @@ botonCancelar.addEventListener('click', cancelar);
 
 function obtenerDatos() {
     let sUsuario = inputUsuario.value;
-    let sCedula = inputCedula.value;
+    let sContrasenna = inputContrasenna.value;
 
-    verificarCredenciales(sUsuario, sCedula);
+    verificarCredenciales(sUsuario, sContrasenna);
 }
 
-function verificarCredenciales(psUsuario, psCedula) {
+function verificarCredenciales(psUsuario, psContrasenna) {
     let listaPersonas = obtenerUsuarios();
     let sRol = '';
 
     for (let i = 0; i < listaPersonas.length; i++) {
         if (psUsuario == listaPersonas[i]['correo']) {
-            if (psCedula == listaPersonas[i]['cedula']) {
+            if (psContrasenna == listaPersonas[i]['contrasenna']) {
 
                 sRol = listaPersonas[i]['rol'];
 
@@ -75,7 +75,7 @@ function verificarCredenciales(psUsuario, psCedula) {
 
 function limpiarFormulario() {
     inputUsuario.value = '';
-    inputCedula.value = '';
+    inputContrasenna.value = '';
 };
 
 function cancelar() {

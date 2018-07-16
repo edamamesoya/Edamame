@@ -46,9 +46,9 @@ switch (sRol) {
         window.location.href = 'login.html';
         break;
     case 'asistente':
-        document.getElementById(registrarSolocitudes);
+        document.getElementById("registrarSolocitudes");
         registrarSolocitudes.className.style.display = "none";
-        document.getElementById(solicitudes);
+        document.getElementById("solicitudes");
         solicitudes.className = "none";
         document.getElementById
     break;

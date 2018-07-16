@@ -66,8 +66,19 @@ body main fieldset button {
     font-size: 12px;
 }
 
-.botonInicio{
-    float: left;
-    margin: 3%;
+.botones{
+    width: 100%;
+    padding-left: 25%;
+    padding-right: 25%;
 }
+
+.boton{
+    float: left;
+    border-color: #5c1865;
+}
+
+.loginWindow{
+    margin-top: 3%;
+}
+
 /* Fin estilos form */
