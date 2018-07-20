@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Registro de Grupos</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/estilosGenerales.css">
+    <link rel="stylesheet" href="css/funciones.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <main>
+        <!--Header de la página-->
+        <div class="header">
+            <div class="w3-display-left">
+                <img src="img/logoCenfo.png" alt="Logo U">
+            </div>
+            <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
+            <div class="w3-display-right">
+                <i class="fas fa-user-tie fa-5x"></i>
+                <!-- <img src="" alt="img usuario"> -->
+                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                </a>
+                <label for="bLogOut">Salir</label>
+            </div>
+        </div>
+        
+        <!--Menú general (arriba)-->
+        <div class="menuGeneral">
+            <!-- <a href="index.html" class="w3-bar-item w3-button" id="menuInicio">Inicio</a> -->
+            <a href="perfil.html" class="w3-bar-item w3-button" id="menuPerfil">Perfil</a>
+            <a href="solicitudes.html" class="w3-bar-item w3-button" id="menuSolicitudes">Solicitudes</a>
+            <div class="w3-dropdown-hover" id="menuFunciones">
+                <button class="w3-bar-item w3-button">Funciones</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
+                    <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
+                    <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
+                    <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
+                    <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
+                    <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
+                    <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
+                    <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
+                </div>
+            </div>
+            <a href="#" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="#" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="#" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
+        </div>
+
+        <!--este es el menu del lado izquierdo-->
+        <div class="tab">
+            <h2>Menú</h2>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarGrupo')">Registrar grupo</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarGrupo')" id="buscar">Listar grupos</button>
+        </div>
+
+        <!--registro de los grupos-->
+        <section id="registrarGrupo" class="tabcontent">
+            <h2>Registrar Grupos</h2>
+            <p>
+                Ingrese la información solicitada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar" para guardar
+                los datos.
+            </p>
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <div>
+                        <label for="txtCurso">Cursos:</label>
+                        <i class="fas fa-list"></i>
+                        <input list="lstCursos" id="txtCurso" placeholder="Seleccione una opción de la lista" required>
+
+                        <datalist id="lstCursos">
+                        </datalist> 
+                        <label for="txtCarrera" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for "txtNumeroGru">Número del grupo</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtNumeroGrupo" min="0" required placeholder="Ej, 30">
+                    </div>
+                    <div>
+                        <label for="txtLaboratorio">Laboratorios:</label>
+                        <i class="fas fa-list"></i>
+                        <input list="lstLaboratorios" id="txtLaboratorio" placeholder="Seleccione una opción de la lista" required>
+
+                        <datalist id="lstLaboratorios">
+                        </datalist> 
+                        <label for="txtLaboratorio" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtNombrePro">Nombre de profesor</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNombrePro" required placeholder="Ej, Juan Manuel">
+                    </div>
+                    <div>
+                        <label for="txtNumeroEst">Número de estudiantes matriculados</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtNumeroEst" min="1" required placeholder="Ej, 50">
+                    </div>
+                    <div>
+                        <div id="lstHorarios">   
+                            <h2>Registro de horario</h2> 
+                            <p>Seleccione el día o días de la semana en las que se imparte el curso</p>
+
+                            <input type="checkbox" value="Domingo" id="txtHorarioGrupoDomingo" class="checkbox">
+                            <label for="txtHorarioGrupoDomingo" class="label">Domingo</label>
+
+                            <input type="checkbox" value="Lunes" id="txtHorarioGrupoLunes" class="checkbox">
+                            <label for="txtHorarioGrupoLunes">Lunes</label>
+
+                            <input type="checkbox" value="Martes" id="txtHorarioGrupoMartes" class="checkbox">
+                            <label for="txtHorarioGrupoMartes">Martes</label>
+
+                            <input type="checkbox" value="Miercoles" id="txtHorarioGrupoMiercoles" class="checkbox">
+                            <label for="txtHorarioGrupoMiercoles">Miércoles</label>
+
+                            <input type="checkbox" value="Jueves" id="txtHorarioGrupoJueves" class="checkbox">
+                            <label for="txtHorarioGrupoJueves">Jueves</label>
+
+                            <input type="checkbox" value="Viernes" id="txtHorarioGrupoViernes" class="checkbox">
+                            <label for="txtHorarioGrupoViernes">Viernes</label>
+
+                            <input type="checkbox" value="Sabado" id="txtHorarioGrupoSabado" class="checkbox">
+                            <label for="txtHorarioGrupoSabado">Sábado</label>
+
+                            <input type="checkbox" value="Virtual" id="txtHorarioGrupoVirtual" class="checkbox">
+                            <label for="txtHorarioGrupoVirtual">Virtual</label>
+                        </div>
+                        <div>
+                            <input type="time" id="txtTiempoGrupoEntrada" value=""> Hora de inicio
+                            <input type="time" id="txtTiempoGrupoSalida" value=""> Hora de salida
+                        </div>
+                    </div>
+                    <button type="button" id="btnRegistrar" class="button">Registrar</button>
+                </fieldset>
+            </form>
+        </section>
+        
+        <!--listado de los grupos-->
+        <section id="listarGrupo" class="tabcontent">
+            <h2>Lista de grupos</h2>
+            <p>Despliegue total de registros para la sección "Grupos". Para búsquedas específicas, ingrese el nombre completo o
+                parcial del nombre del profesor en "Filtrar".
+            </p>
+
+            <div>
+                <label for="txtBuscar">Filtrar:</label>
+                <input type="text" id="txtBuscar">
+            </div>
+
+            <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th>Número del Grupo</th>
+                        <th>Nombre del Profesor</th>
+                        <th>Número de estudiantes matriculados</th>
+                        <th>Hora de entrada</th>
+                        <th>Hora de Salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/grupos/servicioGrupos.js"></script>
+    <script src="js/usuarios/servicioUsuarios.js"></script>
+    <script src="js/cursos/servicioCursos.js"></script>
+    <script src="js/laboratorios/servicioLaboratorios.js"></script>
+    <script src="js/grupos/controladorGrupos.js"></script>
+    <script src="js/controladorGeneral.js"></script>
+</body>
+
+</html>
