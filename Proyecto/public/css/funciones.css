@@ -1,0 +1,219 @@
+h2{
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+p {
+    text-align: center;
+    line-height: 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+}
+a{
+    display: inline-block;
+}
+span {
+    cursor: pointer;
+}
+
+textarea {
+    resize: none;
+}
+
+section h2 {
+    font-size: 28px;
+}
+section p {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    line-height: 20px;
+}
+/* Inicio estilos boton */
+.button {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #722d7b;
+    margin-left: 40%;
+    margin-bottom: 20px;
+    width: 20%; 
+}
+
+.button:hover {
+    background-color: #722d7b;
+    color: white;
+}
+/* Fin estilos boton */
+
+/* Inicio estilos Fieldsets */
+fieldset{
+  background-color:#fff;
+  padding: 20px;	
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 20px;
+}
+
+.fieldset {
+    border:2px solid #ccc;;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
+}
+/* Fin estilos fieldset */
+
+/* Inicio estilos form*/
+body main form {
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+}
+body main div #txtBuscar{
+    width: 50%;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+body main fieldset{
+    margin-bottom: 20px;
+}
+body main fieldset label{
+    display: block;
+}
+body main fieldset div #lstRequisitos {
+    width: 100%;
+    display: inline-block;
+    margin-left: 0px;
+}
+body main fieldset div #lstRequisitos label{
+    width: 95%;
+    display: inline-block;
+}
+body main fieldset div #lstRequisitos input{
+    width: 5%;
+    display: inline-block;
+}
+body main fieldset input{
+    border: none;
+    outline-style: none;
+    border-bottom: 1px solid;
+    font-size: 14px;
+    width: 90%;
+}
+body main fieldset div {
+    margin-bottom: 15px;
+    margin-left: 25px;
+}
+body main fieldset #labelRequerido {
+    margin-bottom: 15px;
+    margin-left: 25px;
+    font-size: 10px;
+}
+.labelError{
+    display: inline;
+    font-size: 12px;
+}
+body main fieldset div #lstCursosAsignados {
+    width: 100%;
+    display: inline-block;
+    margin-left: 0px;
+}
+body main fieldset div #lstCursosAsignados label{
+    width: 95%;
+    display: inline-block;
+}
+body main fieldset div #lstCursosAsignados input{
+    width: 5%;
+    display: inline-block;
+}
+body main fieldset div #lstCursosPorAsignar {
+    width: 100%;
+    display: inline-block;
+    margin-left: 0px;
+}
+body main fieldset div #lstCursosPorAsignar label{
+    width: 95%;
+    display: inline-block;
+}
+body main fieldset div #lstCursosPorAsignar input{
+    width: 5%;
+    display: inline-block;
+}
+/* Fin estilos form */
+
+/* Inicio estilos lstRequisitos */
+main div #lstRequisitos{
+    margin-top: 10px;
+}
+/* Fin estilos lstRequisitos */
+
+/* Inicio estilos lstHorarios */
+main div #lstHorarios{
+    margin-top: 10px;
+}
+fieldset div #lstHorarios label{
+    width: 90%;
+    display: inline-block;
+}
+body main .checkbox{
+    width: 5%;
+    display: inline-block;
+}
+/* Fin estilos lstHorarios */
+
+#btnPestanna{
+    width: 90%;
+    margin-left: 5%;
+}
+#btnPestanna button{
+    width: 48%;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+
+.visible {
+    display: block;
+}
+
+.invisible {
+    display: none;
+}
+
+ /* Inicio estilos Mapa */
+ div #mapaSede {
+
+    top: 10%;   
+    width: 100%;
+    height: 300px;
+    border: 1px solid #BEBEBE;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+    animation: grande 1s ease;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+@keyframes grande {
+    0% {
+        transform: scale(0);
+    }
+    10% {
+        transform: scale(1);
+    }
+}
+input#coordenadas {
+  margin: 1px;
+  font-size: 1rem;
+}
+/* Fin estilos Mapa */
+
+/* Inicio estilos footer */
+footer{
+    background-color: #172815;
+    height: 25px;
+    padding: 24px 0px;
+    color: #fff;
+    text-align: center;
+}
+/* Fin estilos footer */
