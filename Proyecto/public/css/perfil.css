@@ -1,0 +1,80 @@
+h2{
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+p {
+    text-align: center;
+    line-height: 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+}
+
+/* Inicio estilos Fieldsets */
+fieldset{
+  background-color:#fff;
+  padding: 20px;	
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 20px;
+}
+
+.fieldset {
+    border:2px solid #ccc;;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
+}
+/* Fin estilos fieldset */
+
+/* Inicio estilos form*/
+body main form {
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+}
+body main #txtBuscarCodigo{
+    width: 50%;
+    margin-bottom: 20px;
+}
+body main fieldset label{
+    display: block;
+}
+body main fieldset input{
+    border: none;
+    outline-style: none;
+    border-bottom: 1px solid;
+    font-size: 14px;
+    width: 90%;
+}
+body main fieldset div {
+    margin-bottom: 15px;
+    margin-left: 25px;
+}
+body main fieldset #labelRequerido {
+    margin-bottom: 15px;
+    margin-left: 25px;
+    font-size: 10px;
+}
+body main fieldset button {
+    margin-bottom: 15px;
+    margin-left: 25px;
+}
+.labelError{
+    display: inline;
+    font-size: 12px;
+}
+
+.listaDatos{
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.dato{
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+/* Fin estilos form */

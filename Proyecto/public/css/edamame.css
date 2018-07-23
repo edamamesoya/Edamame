@@ -1,0 +1,230 @@
+html{
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Inicio estilos sección NAV */
+main #mainNav{
+    width: 100%;
+    height: 80px;
+    background-color: #172815;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+}
+main #mainNav a{
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+}
+main #mainNav a:hover{
+    color: #3E5622;
+}
+main #mainNav #nombreEquipo{
+    font-size: 30px;
+    display: inline-block;
+    padding: 25px;
+    width: 20%;
+}
+main #mainNav #menu{
+    font-size: 18px;
+    display: inline-block;
+    padding: 25px;
+    width: 70%;
+    text-align: right;
+}
+main #mainNav #menu a{
+    padding-left: 50px;
+}
+/* Fin estilos sección NAV */
+
+/* Inicio estilos sección INFO */
+main #info{
+    padding-top: 150px;
+    padding-bottom: 130px;
+    width: 100%;
+    height: 485px;
+    background-color: #3E5622;
+}
+main #info img{
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+    margin-bottom: 30px;
+}
+main #info h1{
+    font-size: 34px;
+    margin-bottom: 10px;
+    color: #fff;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    text-align: center;
+}
+main #info h2{
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #fff;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    text-align: center;
+}
+/* Fin estilo sección INFO */
+
+/* Inicio estilos sección 'Descripción' */
+main #descripcion{
+    padding-top: 100px;
+    padding-bottom: 110px;
+    width: 100%;
+    height: 550px;
+    background-color: #fff;
+}
+main #descripcion h1{
+    font-size: 34px;
+    margin-bottom: 40px;
+    color: #172815;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    text-align: center;
+}
+main #descripcion h2{
+    font-size: 30px;
+    margin-bottom: 40px;
+    color: #172815;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: solid 2px #172815;
+}
+main #descripcion p{
+    font-size: 30px;
+    margin-bottom: 40px;
+    margin-left: 5%;
+    color: #3E5622;
+    text-align: center ;
+    line-height: 35px;
+    width: 90%;
+}
+main #descripcion #mision{
+    margin-bottom: 10px;
+    color: #3E5622;
+    width: 40%;
+    height: 400px;
+    display: inline-block;
+    margin-left: 5%;
+    margin-right: 10%;
+}
+main #descripcion #mision p{
+    font-size: 22px;
+    color: #172815;
+    text-align: justify;
+}
+main #descripcion #vision{
+    margin-bottom: 10px;
+    color: #3E5622;
+    width: 40%;
+    height: 400px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-right: 5%;
+}
+main #descripcion #vision p{
+    font-size: 22px;
+    color: #172815;
+    text-align: justify;
+}
+/* Fin estilos sección 'Descripción' */
+
+/* Inicio estilos sección 'Sobre Nosotros' */
+main #sobreNosotros{
+    padding-top: 100px;
+    padding-bottom: 110px;
+    width: 100%;
+    height: 550px;
+    background-color: #3E5622;
+}
+main #sobreNosotros h1{
+    font-size: 34px;
+    margin-bottom: 60px;
+    color: #fff;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    text-align: center;
+}
+main #sobreNosotros h4{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+/* Fin estilos sección 'Sobre Nosotros' */
+
+/* Inicio estilos sección 'Contacto' */
+main #contacto{
+    padding-top: 80px;
+    padding-bottom: 96px;
+    width: 100%;
+    height: 400px;
+    background-color: #fff;
+}
+main #contacto h1{
+    font-size: 34px;
+    margin-bottom: 40px;
+    color: #172815;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    text-align: center;
+}
+main #contacto a{
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #172815;
+    margin-left: 36%;
+    width: 30%;
+}
+#contacto #imgPlataforma{
+    margin-left: 32.5%;
+    margin-bottom: 20px;
+    height: 316px;
+    width: 35%;
+    border: 2px solid #172815;
+    display: inline-block;
+}
+/* Fin estilos sección 'Contacto' */
+
+/* Inicio estilos footer */
+footer{
+    background-color: #172815;
+    height: 25px;
+    padding: 24px 0px;
+    color: #fff;
+    text-align: center;
+}
+/* Fin estilos footer */
+
+/* Inicio estilos card */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 25%;
+    display: inline-block;
+    margin-left: 6%;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container1 {
+    padding: 5px 16px;
+    background-color: #fff;
+    text-align: center;
+}
+/* Fin estilos card */
+
+.float_left{
+    float: left;
+}

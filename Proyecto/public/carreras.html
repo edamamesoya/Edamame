@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Carreras</title>
+
+    <!--Páginas de estilo css-->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/estilosGenerales.css">
+    <link rel="stylesheet" href="css/funciones.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <main>
+        <!--Header de la página-->
+        <div class="header">
+            <div class="w3-display-left">
+                <img src="img/logoCenfo.png" alt="Logo U">
+            </div>
+            <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
+            <div class="w3-display-right">
+                <i class="fas fa-user-tie fa-5x"></i>
+                <!-- <img src="" alt="img usuario"> -->
+                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                </a>
+                <label for="bLogOut">Salir</label>
+            </div>
+        </div>
+
+        <!--Menú general (arriba)-->
+        <div class="menuGeneral">
+            <!-- <a href="index.html" class="w3-bar-item w3-button" id="menuInicio">Inicio</a> -->
+            <a href="perfil.html" class="w3-bar-item w3-button" id="menuPerfil">Perfil</a>
+            <a href="solicitudes.html" class="w3-bar-item w3-button" id="menuSolicitudes">Solicitudes</a>
+            <div class="w3-dropdown-hover" id="menuFunciones">
+                <button class="w3-bar-item w3-button">Funciones</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
+                    <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
+                    <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
+                    <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
+                    <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
+                    <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
+                    <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
+                    <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
+                </div>
+            </div>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
+        </div>
+
+        <!--Menú de acciones (lateral)-->
+        <div class="tab">
+            <h2>Menú</h2>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarCarrera')" id="defaultOpen">Registrar carrera</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarCarrera')" id="buscar">Listar carreras</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'enlazarCursos')">Cursos asignados a carrera</button>
+        </div>
+    
+        <!--Función registrar carreras-->
+        <section id="registrarCarrera" class="tabcontent">
+            <h2>Registrar carreras</h2>
+            <p>Ingrese la información solicitada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
+                para guardar los datos.
+            </p>
+
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <h3>Información de carrera</h3>
+                    <div>
+                        <label for="txtCodigo">Código:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtCodigo" placeholder="Código de carrera" required autofocus>
+                        <label for="txtCodigo" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtNombre">Nombre:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNombre" placeholder="Nombre de carrera" required>
+                        <label for="txtNombre" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtCreditos">Créditos:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtCreditos" min="0" placeholder="Créditos de carrera" required>
+                        <label for="txtCreditos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtFecha">Fecha de creación:</label>
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" id="txtFecha" placeholder="Fecha de creación" required>
+                        <label for="txtFecha" class="labelError">*</label>
+                    </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
+                </fieldset>
+                <button type="button" class="button" id="btnRegistrar">Registrar</button>
+            </form>
+        </section>
+
+        <!--Función buscar carreras-->
+        <section id="buscarCarrera" class="tabcontent">
+            <h2>Lista de carreras</h2>
+            <p>Despliegue total de registros para la sección "Carreras". Para búsquedas específicas, ingrese el nombre completo,
+                parcial, o el código de la carrera en "Filtrar".
+            </p>
+
+            <div>
+                <label for="txtBuscar">Filtrar:</label>
+                <input type="text" id="txtBuscar">
+            </div>
+
+            <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Créditos</th>
+                        <th>Fecha de creación</th>
+                        <th>Estado</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </section>
+
+        <!--Función enlazar cursos-->
+        <section id="enlazarCursos" class="tabcontent">
+            <h2>Cursos asignados a carreras</h2>
+            <p>Seleccione una carrera de la lista. Podrá ver los cursos pertenecientes a esa carrera seleccionando el botón "Cursos asignados"
+                o bien asignar nuevos cursos al seleccionar el botón "Cursos sin asignar", donde puede seleccionar los cursos deseados de la lista
+                y luego agregarlos al presionar "Asignar".
+            </p>
+
+            <form action="" id="formRegistro" autocomplete="off">
+                <fieldset class="fieldset">
+                    <div>
+                        <label for="txtCarrera">Carrera:</label>
+                        <i class="fas fa-list"></i>
+                        <input list="lstCarreras" id="txtCarrera" placeholder="Seleccione una opción de la lista" required>
+                        <datalist id="lstCarreras">
+                        </datalist> 
+                        <label for="lstCarreras" class="labelError">*</label>
+                    </div>
+
+                    <div id="btnPestanna" class="invisible">
+                        <button type="button" id="btnCursosAsignados">Cursos asignados</button>
+                        <button type="button" id="btnAsignarCursos">Cursos sin asignar</button>
+                    </div>
+
+                    <div id="pestannaAsignados" class="invisible">
+                        <div id="lstCursosAsignados">
+                        </div>
+                    </div>
+
+                    <div id="pestannaAsignar" class="invisible">
+                        <div id="lstCursosPorAsignar">
+                        </div>
+
+                        <button type="button" id="btnAsignar" class="button">Asignar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+    <!--Scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/carreras/servicioCarreras.js"></script>
+    <script src="js/usuarios/servicioUsuarios.js"></script>
+    <script src="js/cursos/servicioCursos.js"></script>
+    <script src="js/controladorGeneral.js"></script>
+    <script src="js/carreras/controladorCarreras.js"></script>
+</body>
+
+</html>
