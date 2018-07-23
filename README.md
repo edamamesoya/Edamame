@@ -1,2 +1,0 @@
-# Edamame
-Proyecto Software I
