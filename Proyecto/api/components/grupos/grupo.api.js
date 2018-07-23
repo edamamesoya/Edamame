@@ -59,7 +59,6 @@ module.exports.agregar_curso = function(req, res){
         }
     )
 };
-
 //agregar laboratorio al grupo
 module.exports.agregar_laboratorio = function(req, res){
     
@@ -77,6 +76,48 @@ module.exports.agregar_laboratorio = function(req, res){
                 res.json({success : false, msg : 'No se pudo registrar el laboratorio, ocurrió el siguiente error' + error});
             }else{
                 res.json({success : true, msg : 'El laboratorio se registró con éxito'});
+            }
+        }
+    )
+};
+//agregar sede al grupo
+module.exports.agregar_sede = function(req, res){
+    
+    grupoModel.update(
+        {_id: req.body._id}, 
+        {$push: 
+            {'sedes':
+                {
+                    nombre : req.body.nombre,
+                }
+            }
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo registrar la sede, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'La Sede se registró con éxito'});
+            }
+        }
+    )
+};
+//agregar Periodo al grupo
+module.exports.agregar_periodo = function(req, res){
+    
+    grupoModel.update(
+        {_id: req.body._id}, 
+        {$push: 
+            {'periodos':
+                {
+                    nombre : req.body.nombre,
+                }
+            }
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo registrar el periodo, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'El Periodo se registró con éxito'});
             }
         }
     )

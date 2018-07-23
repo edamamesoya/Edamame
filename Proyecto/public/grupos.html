@@ -26,11 +26,11 @@
                 <i class="fas fa-user-tie fa-5x"></i>
                 <!-- <img src="" alt="img usuario"> -->
                 <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                    </a>
+                    <label for="bLogOut">Salir</label>
             </div>
         </div>
-        
+
         <!--Menú general (arriba)-->
         <div class="menuGeneral">
             <!-- <a href="index.html" class="w3-bar-item w3-button" id="menuInicio">Inicio</a> -->
@@ -48,9 +48,9 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
+            <a href="#" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="#" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="#" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
         <!--este es el menu del lado izquierdo-->
@@ -70,13 +70,31 @@
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
                     <div>
+                        <label for="txtSede">Sedes:</label>
+                        <i class="fas fa-list"></i>
+                        <input list="lstSedes" id="txtSede" placeholder="Seleccione una opción de la lista" required>
+
+                        <datalist id="lstSedes">
+                        </datalist>
+                        <label for="txtSede" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtPeriodo">Periodos:</label>
+                        <i class="fas fa-list"></i>
+                        <input list="lstPeriodos" id="txtPeriodo" placeholder="Seleccione una opción de la lista" required>
+
+                        <datalist id="lstPeriodos">
+                        </datalist>
+                        <label for="txtPeriodo" class="labelError">*</label>
+                    </div>
+                    <div>
                         <label for="txtCurso">Cursos:</label>
                         <i class="fas fa-list"></i>
                         <input list="lstCursos" id="txtCurso" placeholder="Seleccione una opción de la lista" required>
 
                         <datalist id="lstCursos">
-                        </datalist> 
-                        <label for="txtCarrera" class="labelError">*</label>
+                        </datalist>
+                        <label for="txtCurso" class="labelError">*</label>
                     </div>
                     <div>
                         <label for "txtNumeroGru">Número del grupo</label>
@@ -89,7 +107,7 @@
                         <input list="lstLaboratorios" id="txtLaboratorio" placeholder="Seleccione una opción de la lista" required>
 
                         <datalist id="lstLaboratorios">
-                        </datalist> 
+                        </datalist>
                         <label for="txtLaboratorio" class="labelError">*</label>
                     </div>
                     <div>
@@ -103,8 +121,8 @@
                         <input type="number" id="txtNumeroEst" min="1" required placeholder="Ej, 50">
                     </div>
                     <div>
-                        <div id="lstHorarios">   
-                            <h2>Registro de horario</h2> 
+                        <div id="lstHorarios">
+                            <h2>Registro de horario</h2>
                             <p>Seleccione el día o días de la semana en las que se imparte el curso</p>
 
                             <input type="checkbox" value="Domingo" id="txtHorarioGrupoDomingo" class="checkbox">
@@ -140,12 +158,12 @@
                 </fieldset>
             </form>
         </section>
-        
+
         <!--listado de los grupos-->
         <section id="listarGrupo" class="tabcontent">
             <h2>Lista de grupos</h2>
-            <p>Despliegue total de registros para la sección "Grupos". Para búsquedas específicas, ingrese el nombre completo o
-                parcial del nombre del profesor en "Filtrar".
+            <p>Despliegue total de registros para la sección "Grupos". Para búsquedas específicas, ingrese el nombre completo
+                o parcial del nombre del profesor en "Filtrar".
             </p>
 
             <div>
@@ -174,6 +192,8 @@
     <script src="js/usuarios/servicioUsuarios.js"></script>
     <script src="js/cursos/servicioCursos.js"></script>
     <script src="js/laboratorios/servicioLaboratorios.js"></script>
+    <script src="js/sedes/servicioSedes.js"></script>
+    <script src="js/periodos/servicioPeriodos.js"></script>
     <script src="js/grupos/controladorGrupos.js"></script>
     <script src="js/controladorGeneral.js"></script>
 </body>

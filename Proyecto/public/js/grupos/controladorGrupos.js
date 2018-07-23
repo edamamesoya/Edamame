@@ -1,12 +1,18 @@
 'use strict';
 
 let sListaGrupos = obtenerGrupos();
+let sListaSedes = obtenerSedes();
+let sListaPeriodos = obtenerPeriodos();
 let sListaCursos = obtenerCursos();
 let sListaLaboratorios = obtenerLaboratorios();
 
+
 mostrarBusqueda();
+mostrarSedes();
+mostrarPeriodos();
 mostrarCursos();
 mostrarLaboratorios();
+
 
 document.getElementById("buscar").click();
 
@@ -25,6 +31,8 @@ let inputTiempoEntrada = document.querySelector('#txtTiempoGrupoEntrada');
 let inputTiempoSalida = document.querySelector('#txtTiempoGrupoSalida');
 let selectCursos = document.querySelector('#txtCurso');
 let selectLaboratorios = document.querySelector('#txtLaboratorio');
+let selectSedes = document.querySelector('#txtSede');
+let selectPeriodos = document.querySelector('#txtPeriodo');
 let inputBuscar = document.querySelector('#txtBuscar');
 let botonRegistrar = document.querySelector('#btnRegistrar');
 
@@ -45,6 +53,8 @@ function obtenerDatos() {
 
     let id = selectCursos.value;
     let idLab = selectLaboratorios.value;
+    let idSed = selectSedes.value;
+    let idPer = selectPeriodos.value;
     let nNumeroGrupo = inputNumeroGrupo.value;
     let sNombreProfesor = inputNombreProfesor.value;
     let nNumeroEstudiantes = inputNumeroEstudiantes.value;
@@ -69,7 +79,7 @@ function obtenerDatos() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarGrupo(id, idLab, nNumeroGrupo, sNombreProfesor, nNumeroEstudiantes, sHorarioDomingo, sHorarioLunes, sHorarioMartes, sHorarioMiercoles, sHorarioJueves, sHorarioViernes, sHorarioSabado, sHorarioVirtual, sTiempoEntrada, sTiempoSalida);
+        let respuesta = registrarGrupo(id, idSed, idPer, idLab, nNumeroGrupo, sNombreProfesor, nNumeroEstudiantes, sHorarioDomingo, sHorarioLunes, sHorarioMartes, sHorarioMiercoles, sHorarioJueves, sHorarioViernes, sHorarioSabado, sHorarioVirtual, sTiempoEntrada, sTiempoSalida);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro Correcto',
@@ -158,6 +168,8 @@ function limpiarFormulario(){
     inputNumeroGrupo.value = '';
     inputNombreProfesor.value = '';
     inputNumeroEstudiantes.value = '';
+    selectPeriodos.value = '';
+    selectSedes.value = '';
     selectCursos.value = '';
     selectLaboratorios.value = '';
     inputHorarioDomingo.value = '';
@@ -183,6 +195,26 @@ function abrirFuncion(evt, funcion) {
     }
     document.getElementById(funcion).style.display = "block";
     evt.currentTarget.className += " active";
+};
+
+function mostrarSedes(){
+    let selectSedes = document.querySelector('#lstSedes');
+    selectSedes.innerHTML = '';
+    for(let i=0; i < sListaSedes.length; i++){
+        let nuevaOpcion = new Option(sListaSedes[i]['nombre']);
+        nuevaOpcion.value = sListaSedes[i]['nombre'];
+        selectSedes.appendChild(nuevaOpcion);
+    }
+};
+
+function mostrarPeriodos(){
+    let selectPeriodos = document.querySelector('#lstPeriodos');
+    selectPeriodos.innerHTML = '';
+    for(let i=0; i < sListaPeriodos.length; i++){
+        let nuevaOpcion = new Option(sListaPeriodos[i]['nombre']);
+        nuevaOpcion.value = sListaPeriodos[i]['nombre'];
+        selectPeriodos.appendChild(nuevaOpcion);
+    }
 };
 
 function mostrarCursos(){

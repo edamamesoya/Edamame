@@ -15,6 +15,8 @@ let grupoSchema = new mongoose.Schema({
     horarioVirtual: {type : String },
     tiempoEntrada : {type : String },
     tiempoSalida : {type : String },
+    sedes: {type : String},
+    periodos: {type : String},
     cursos : {type : String},
     laboratorios: {type : String}
 });

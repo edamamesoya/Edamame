@@ -8,6 +8,14 @@ router.route('/registrar_solicitud')
         solicitudApi.registrar(req, res);
     });
 
+router.route('/agregar_sedes')
+    .post(function (req, res) {
+        solicitudApi.agregar_sede(req, res);
+    });
+router.route('/agregar_periodos')
+    .post(function (req, res) {
+        solicitudApi.agregar_periodo(req, res);
+    });
 router.route('/agregar_cursos')
     .post(function (req, res) {
         solicitudApi.agregar_curso(req, res);

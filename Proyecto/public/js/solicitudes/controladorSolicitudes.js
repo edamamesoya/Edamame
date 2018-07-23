@@ -1,14 +1,22 @@
 'use strict';
 
+
+let sListaSedes = obtenerSedes();
+let sListaPeriodos = obtenerPeriodos();
 let sListaCursos = obtenerCursos();
 
 mostrarListaSolicitudes();
+mostrarSedes();
+mostrarPeriodos();
 mostrarCursos();
+
 
 document.getElementById("buscar").click();
 
 let inputNombre = document.querySelector('#txtNombre');
 let selectCursos = document.querySelector('#txtCurso');
+let selectSedes = document.querySelector('#txtSede');
+let selectPeriodos = document.querySelector('#txtPeriodo');
 let botonRegistrar = document.querySelector('#btnRegistrar')
 
 botonRegistrar.addEventListener('click', obtenerDatos);
@@ -20,6 +28,8 @@ let sNombre = '';
 
 function obtenerDatos(){
     let curso = selectCursos.value;
+    let periodo = selectPeriodos.value;
+    let sede = selectSedes.value;
     let sNombre = inputNombre.value;
 
     let bError = false;
@@ -32,7 +42,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarSolicitud(curso, sNombre);
+        let respuesta = registrarSolicitud(curso, periodo, sede, sNombre);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro Correcto',
@@ -103,6 +113,26 @@ function abrirFuncion(evt, funcion) {
     evt.currentTarget.className += " active";
 };
 
+function mostrarSedes(){
+    let selectSedes = document.querySelector('#lstSedes');
+    selectSedes.innerHTML = '';
+    for(let i=0; i < sListaSedes.length; i++){
+        let nuevaOpcion = new Option(sListaSedes[i]['nombre']);
+        nuevaOpcion.value = sListaSedes[i]['nombre'];
+        selectSedes.appendChild(nuevaOpcion);
+    }
+};
+
+function mostrarPeriodos(){
+    let selectPeriodos = document.querySelector('#lstPeriodos');
+    selectPeriodos.innerHTML = '';
+    for(let i=0; i < sListaPeriodos.length; i++){
+        let nuevaOpcion = new Option(sListaPeriodos[i]['nombre']);
+        nuevaOpcion.value = sListaPeriodos[i]['nombre'];
+        selectPeriodos.appendChild(nuevaOpcion);
+    }
+};
+
 function mostrarCursos(){
     let selectCursos = document.querySelector('#lstCursos');
     selectCursos.innerHTML = '';
@@ -116,4 +146,6 @@ function mostrarCursos(){
 function limpiarFormulario(){
     inputNombre.value = '';
     selectCursos.value = '';
+    selectSedes.value = '';
+    selectPeriodos.value = '';
 };

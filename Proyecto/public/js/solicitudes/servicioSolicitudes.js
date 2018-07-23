@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarSolicitud (pCurso, pNombre) {
+function registrarSolicitud (pCurso, pPeriodo, pSede, pNombre) {
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_solicitud',
@@ -10,7 +10,9 @@ function registrarSolicitud (pCurso, pNombre) {
         async: false,
         data: {
             nombre: pNombre,
-            cursos: pCurso
+            cursos: pCurso,
+            periodos: pPeriodo,
+            sedes: pSede,
         }
     });
 
