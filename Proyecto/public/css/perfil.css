@@ -71,6 +71,10 @@ body main fieldset button {
     margin-left: 30%;
     margin-right: 30%;
 }
+.listaDatos i{
+    width: 100%;
+    text-align: center;
+}
 
 .dato{
     width: 80%;

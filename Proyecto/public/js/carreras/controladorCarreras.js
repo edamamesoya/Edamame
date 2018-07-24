@@ -204,13 +204,16 @@ function limpiarFormulario(){
  */
 function mostrarCarreras(){
     sListaCarreras = obtenerCarreras();
-    
-    let selectCarreras = document.querySelector('#lstCarreras');
+
+    let selectCarreras = document.getElementById('txtCarrera');
     selectCarreras.innerHTML = '';
+
     for(let i=0; i < sListaCarreras.length; i++){
-        let nuevaOpcion = new Option(sListaCarreras[i]['nombre']);
-        nuevaOpcion.value = sListaCarreras[i]['nombre'];
-        selectCarreras.appendChild(nuevaOpcion);
+        let sCarrera = sListaCarreras[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sCarrera;
+        nuevaOpcion.value = sCarrera;
+        selectCarreras.add(nuevaOpcion);
     }
 };
 

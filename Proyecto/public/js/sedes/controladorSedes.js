@@ -32,8 +32,6 @@ sListaDistritos = obtenerDistritos();
 
 
 mostrarProvincias();
-mostrarCantones();
-mostrarDistritos();
 
 inputProvincia.addEventListener('change', setNumeroProvincia);
 inputCanton.addEventListener('change', setNumeroCanton);
@@ -145,37 +143,45 @@ function mostrarBusqueda(pFiltro){
     }
 };
 
-function mostrarProvincias() {
-    let selectProvincias = document.querySelector('#lstProvincias');
+function mostrarProvincias(){
+    let selectProvincias = document.getElementById('txtProvincia');
     selectProvincias.innerHTML = '';
-    for (let i = 0; i < sListaProvincias.length; i++) {
-        let nuevaOpcion = new Option(sListaProvincias[i]['nombre']);
-        nuevaOpcion.value = sListaProvincias[i]['nombre'];
-        selectProvincias.appendChild(nuevaOpcion);
+
+    for(let i=0; i < sListaProvincias.length; i++){
+        let sProvincia = sListaProvincias[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sProvincia;
+        nuevaOpcion.value = sProvincia;
+        selectProvincias.add(nuevaOpcion);
     }
 };
 
-function mostrarCantones() {
-    let selectCantones = document.querySelector('#lstCantones');
+function mostrarCantones(){
+    let selectCantones = document.getElementById('txtCanton');
     selectCantones.innerHTML = '';
-    for (let i = 0; i < sListaCantones.length; i++) {
-        if (nNumeroProvincia == sListaCantones[i]['Provincia_idProvincia']) {
-            let nuevaOpcion = new Option(sListaCantones[i]['nombre']);
-            nuevaOpcion.value = sListaCantones[i]['nombre'];
-            selectCantones.appendChild(nuevaOpcion);
+
+    for(let i=0; i < sListaCantones.length; i++){
+        if (nNumeroProvincia == sListaCantones[i]['Provincia_idProvincia']){
+            let sCanton = sListaCantones[i]['nombre'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sCanton;
+            nuevaOpcion.value = sCanton;
+            selectCantones.add(nuevaOpcion);
         }
     }
 };
 
-function mostrarDistritos() {
-
-    let selectDistritos = document.querySelector('#lstDistritos');
+function mostrarDistritos(){
+    let selectDistritos = document.getElementById('txtDistrito');
     selectDistritos.innerHTML = '';
-    for (let i = 0; i < sListaDistritos.length; i++) {
-        if (nNumeroCanton == sListaDistritos[i]['Canton_idCanton']) {
-            let nuevaOpcion = new Option(sListaDistritos[i]['nombre']);
-            nuevaOpcion.value = sListaDistritos[i]['nombre'];
-            selectDistritos.appendChild(nuevaOpcion);
+
+    for(let i=0; i < sListaDistritos.length; i++){
+        if (nNumeroCanton == sListaDistritos[i]['Canton_idCanton']){
+            let sDistrito = sListaDistritos[i]['nombre'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sDistrito;
+            nuevaOpcion.value = sDistrito;
+            selectDistritos.add(nuevaOpcion);
         }
     }
 };
