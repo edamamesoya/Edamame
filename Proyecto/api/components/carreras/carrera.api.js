@@ -47,3 +47,35 @@ module.exports.agregar_curso = function(req, res){
         }
     )
 };
+
+module.exports.eliminar_carrera = function (req, res) {
+    carreraModel.findByIdAndDelete(req.body._id,
+        function (err, carrera) {
+            if (err) {
+                res.json({ success: false, msg: 'La carrera no se ha podido eliminar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'La carrera se ha eliminado correctamente. ' + res });
+            }
+        });
+};
+
+module.exports.buscar_carrera_id = function (req, res) {
+    carreraModel.findById({ _id: req.body._id }).then(
+        function (carrera) {
+            res.send(carrera);
+        }
+    );
+};
+
+module.exports.modificar_carrera = function (req, res) {
+    carreraModel.findByIdAndUpdate(req.body._id, { $set: req.body },
+        function (err, carrera) {
+            if (err) {
+                res.json({ success: false, msg: 'La carrera no se ha podido modificar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'La carrera se ha actualizado correctamente. '});
+            }
+        });
+};

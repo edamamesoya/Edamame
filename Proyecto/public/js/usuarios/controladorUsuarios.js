@@ -25,6 +25,8 @@ let inputPrimerApellidoContacto = document.querySelector('#txtPrimerApellidoCont
 let inputSegundoApellidoContacto = document.querySelector('#txtSegundoApellidoContacto');
 let inputTelefonoContacto = document.querySelector('#txtTelefonoContacto');
 
+
+inputFechaIngreso.valueAsDate = new Date();
 let inputBuscar = document.querySelector('#txtBuscar');
 let botonRegistrar = document.querySelector('#btnRegistrar');
 
@@ -44,8 +46,6 @@ sListaCantones = obtenerCantones();
 sListaDistritos = obtenerDistritos();
 
 mostrarProvincias();
-mostrarCantones();
-mostrarDistritos();
 
 /**
  * Declaración de eventos relacionados a elementos HTML.
@@ -181,7 +181,7 @@ function validarRegistro(){
         inputSegundoApellido.classList.remove('errorInput');
     }
     // Validación del input para cédula
-    if(nCedula == 0 || (regexNumeros.test(nCedula) == false)){
+    if(nCedula == 0 || (regexNumeros.test(nCedula) == false) || (nCedula < 100000000) || (nCedula > 999999999)){
         inputCedula.classList.add('errorInput');
         bError = true;
     }else{
@@ -202,7 +202,7 @@ function validarRegistro(){
         inputFechaIngreso.classList.remove('errorInput');
     }
     // Validación del input para teléfono
-    if(nTelefono == 0 || (regexNumeros.test(nTelefono) == false) || (nTelefono < 10000000) || (nTelefono > 9999999999) ){
+    if(nTelefono == 0 || (regexNumeros.test(nTelefono) == false) || (nTelefono < 10000000) || (nTelefono > 99999999) ){
         inputTelefono.classList.add('errorInput');
         bError = true;
     }else{
@@ -357,12 +357,15 @@ function limpiarFormulario(){
  * Descripción: Muestra una lista de las provincias de Costa Rica.
  */
 function mostrarProvincias(){
-    let selectProvincias = document.querySelector('#lstProvincias');
+    let selectProvincias = document.getElementById('txtProvincia');
     selectProvincias.innerHTML = '';
+
     for(let i=0; i < sListaProvincias.length; i++){
-        let nuevaOpcion = new Option(sListaProvincias[i]['nombre']);
-        nuevaOpcion.value = sListaProvincias[i]['nombre'];
-        selectProvincias.appendChild(nuevaOpcion);
+        let sProvincia = sListaProvincias[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sProvincia;
+        nuevaOpcion.value = sProvincia;
+        selectProvincias.add(nuevaOpcion);
     }
 };
 
@@ -371,13 +374,16 @@ function mostrarProvincias(){
  * esté seleccionada.
  */
 function mostrarCantones(){
-    let selectCantones = document.querySelector('#lstCantones');
+    let selectCantones = document.getElementById('txtCanton');
     selectCantones.innerHTML = '';
+
     for(let i=0; i < sListaCantones.length; i++){
         if (nNumeroProvincia == sListaCantones[i]['Provincia_idProvincia']){
-            let nuevaOpcion = new Option(sListaCantones[i]['nombre']);
-            nuevaOpcion.value = sListaCantones[i]['nombre'];
-            selectCantones.appendChild(nuevaOpcion);
+            let sCanton = sListaCantones[i]['nombre'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sCanton;
+            nuevaOpcion.value = sCanton;
+            selectCantones.add(nuevaOpcion);
         }
     }
 };
@@ -387,14 +393,16 @@ function mostrarCantones(){
  * esté seleccionado.
  */
 function mostrarDistritos(){
-
-    let selectDistritos = document.querySelector('#lstDistritos');
+    let selectDistritos = document.getElementById('txtDistrito');
     selectDistritos.innerHTML = '';
+
     for(let i=0; i < sListaDistritos.length; i++){
         if (nNumeroCanton == sListaDistritos[i]['Canton_idCanton']){
-            let nuevaOpcion = new Option(sListaDistritos[i]['nombre']);
-            nuevaOpcion.value = sListaDistritos[i]['nombre'];
-            selectDistritos.appendChild(nuevaOpcion);
+            let sDistrito = sListaDistritos[i]['nombre'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sDistrito;
+            nuevaOpcion.value = sDistrito;
+            selectDistritos.add(nuevaOpcion);
         }
     }
 };

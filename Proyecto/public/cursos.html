@@ -72,31 +72,30 @@
                 <fieldset class="fieldset">
                     <h3>Información de curso</h3>
                     <div>
-                        <label for="txtCodigo">Código:</label>
+                        <label for="txtCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtCodigo" placeholder="Ej, INF03" required autofocus>
-                        <label for="txtCodigo" class="labelError">*</label>
+                        <input type="text" id="txtCodigo" placeholder="Ej, INF03" required>
+                        <!-- <label for="txtCodigo" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtNombre">Nombre:</label>
+                        <label for="txtNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" placeholder="Ej, Fundamentos de bases de datos" required>
-                        <label for="txtNombre" class="labelError">*</label>
+                        <!-- <label for="txtNombre" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtCreditos">Créditos:</label>
+                        <label for="txtCreditos">Créditos *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="number" id="txtCreditos" min="0" placeholder="Ej, 4" required>
-                        <label for="txtCreditos" class="labelError">*</label>
+                        <!-- <label for="txtCreditos" class="labelError">*</label> -->
                     </div>
-                    <div>
-                        <label for="txtCarrera">Carrera:</label>
+                    <div class="inputLargo">
+                        <label for="txtCarrera">Carrera *</label>
                         <i class="fas fa-list"></i>
-                        <input list="lstCarreras" id="txtCarrera" placeholder="Seleccione una opción de la lista" required>
-
-                        <datalist id="lstCarreras">
-                        </datalist> 
-                        <label for="txtCarrera" class="labelError">*</label>
+                        <select id="txtCarrera" required>
+                    
+                        </select>
+                        <!-- <label for="txtCarrera" class="labelError">*</label> -->
                     </div>
                     <div>
                         <label for="btnRequisitos">Seleccione uno, varios, o ningún curso requisito:</label>
@@ -124,13 +123,13 @@
             <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Créditos</th>
-                        <th>Carreras</th>
-                        <th>Requisitos</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
+                        <th width="10%">Código</th>
+                        <th width="30%">Nombre</th>
+                        <th width="10%">Créditos</th>
+                        <th width="30%">Carreras</th>
+                        <th width="10%">Requisitos</th>
+                        <th width="5%">Editar</th>
+                        <th width="5%">Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>

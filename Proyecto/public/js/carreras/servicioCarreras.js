@@ -94,4 +94,80 @@ function agregarCurso(id, pCodigoCurso, pNombreCurso){
     });
 
     return respuesta;
-}
+};
+
+function obtenerCarreraPorId(pId){
+    let usuario = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/buscar_carrrera_id',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pId
+        }
+      });
+    
+      peticion.done(function(response){
+        usuario = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return usuario;
+};
+
+function actualizarCarrera(pId, pCodigo, pNombre, pCreditos, pEstado){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/modificar_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: pId,
+            codigo : pCodigo,
+            nombre : pNombre,
+            creditos : pCreditos,
+            estado : pEstado
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+};
+
+function eliminarCarrera(pId){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/eliminar_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: pId
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+};

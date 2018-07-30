@@ -71,83 +71,79 @@
                 <fieldset class="fieldset">
                     <h3>Información de usuario</h3>
                     <div>
-                        <label for="txtPrimerNombre">Primer nombre:</label>
+                        <label for="txtPrimerNombre">Primer nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtPrimerNombre" placeholder="Ej, Daniel" required autofocus>
-                        <label for="txtPrimerNombre" class="labelError">*</label>
+                        <input type="text" id="txtPrimerNombre" placeholder="Ej, Daniel" required>
+                        <!-- <label for="txtPrimerNombre" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtSegundoNombre">Segundo nombre:</label>
+                        <label for="txtSegundoNombre">Segundo nombre</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtSegundoNombre" placeholder="Ej, José">
                         <label for="txtSegundoNombre" class="labelError"></label>
                     </div>
                     <div>
-                        <label for="txtPrimerApellido">Primer apellido:</label>
+                        <label for="txtPrimerApellido">Primer apellido *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtPrimerApellido" placeholder="Ej, Herrera" required>
-                        <label for="txtPrimerApellido" class="labelError">*</label>
+                        <!-- <label for="txtPrimerApellido" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtSegundoApellido">Segundo apellido:</label>
+                        <label for="txtSegundoApellido">Segundo apellido *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtSegundoApellido" placeholder="Ej, Peraza" required>
-                        <label for="txtSegundoApellido" class="labelError">*</label>
+                        <!-- <label for="txtSegundoApellido" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtCedula">Número de cédula:</label>
+                        <label for="txtCedula">Número de cédula *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="number" id="txtCedula" placeholder="Ej, 115800345" required>
-                        <label for="txtCedula" class="labelError">*</label>
+                        <!-- <label for="txtCedula" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtProvincia">Provincia:</label>
+                        <label for="txtProvincia">Provincia *</label>
                         <i class="fas fa-list"></i>
-                        <input list="lstProvincias" id="txtProvincia" placeholder="Seleccione una opción de la lista" required>
-
-                        <datalist id="lstProvincias">
-                        </datalist> 
-                        <label for="txtProvincia" class="labelError">*</label>
+                        <select id="txtProvincia" required>
+                    
+                        </select>
+                        <!-- <label for="txtProvincia" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtCanton">Cantón:</label>
+                        <label for="txtCanton">Cantón *</label>
                         <i class="fas fa-list"></i>
-                        <input list="lstCantones" id="txtCanton" placeholder="Primero seleccione una provincia de la lista" required>
-
-                        <datalist id="lstCantones">
-                        </datalist> 
-                        <label for="txtCanton" class="labelError">*</label>
+                        <select id="txtCanton" required>
+                    
+                        </select>
+                        <!-- <label for="txtCanton" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtDistrito">Distrito:</label>
+                        <label for="txtDistrito">Distrito *</label>
                         <i class="fas fa-list"></i>
-                        <input list="lstDistritos" id="txtDistrito" placeholder="Primero seleccione un cantón de la lista" required>
-
-                        <datalist id="lstDistritos">
-                        </datalist> 
-                        <label for="txtDistrito" class="labelError">*</label>
+                        <select id="txtDistrito" required>
+                    
+                        </select>
+                        <!-- <label for="txtDistrito" class="labelError">*</label> -->
+                    </div>
+                    <div class="inputLargo">
+                        <label for="txtDireccion">Dirección exacta</label>
+                        <textarea id="txtDireccion" placeholder="Dirección exacta"> </textarea>
                     </div>
                     <div>
-                        <label for="txtDireccion">Dirección exacta:</label>
-                        <textarea id="txtDireccion" rows="5" cols="55" placeholder="Dirección exacta"> </textarea>
-                    </div>
-                    <div>
-                        <label for="txtFechaIngreso">Fecha de ingreso:</label>
+                        <label for="txtFechaIngreso">Fecha de ingreso</label>
                         <i class="far fa-calendar-alt"></i>
-                        <input type="date" id="txtFechaIngreso" required>
-                        <label for="txtFechaIngreso" class="labelError">*</label>
+                        <input type="date" id="txtFechaIngreso" required disabled>
                     </div>
                     <div>
-                        <label for="txtTelefono">Número de teléfono:</label>
+                        <label for="txtTelefono">Número de teléfono *</label>
                         <i class="fas fa-phone"></i>
                         <input type="tel" id="txtTelefono" placeholder="Ej, 88634447" min="10000000" max="99999999" required>
-                        <label for="txtTelefono" class="labelError">*</label>
+                        <!-- <label for="txtTelefono" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtCorreo">Correo electrónico:</label>
+                        <label for="txtCorreo">Correo electrónico *</label>
                         <i class="far fa-envelope"></i>
                         <input type="email" id="txtCorreo" placeholder="Ej, dherrerap@ucenfotec.ac.cr" required>
-                        <label for="txtCorreo" class="labelError">*</label>
+                        <!-- <label for="txtCorreo" class="labelError">*</label> -->
                     </div>
                     <div>
                         <label for="txtRol">Rol:</label>
@@ -158,43 +154,42 @@
                             <option value="asistDecanatura">Asist. Decanatura</option>
                             <option value="decanatura">Decanatura</option>
                             <option value="rectoria">Rectoría</option>
-                            <option value="administrador">Administrador</option>
                         </select>
-                        <label for="txtRol" class="labelError">*</label>
+                        <!-- <label for="txtRol" class="labelError">*</label> -->
                     </div>
                     <label for="" id="labelRequerido">*: campos requeridos</label>
                 </fieldset>
                 <fieldset class="fieldset">
                     <h3>Información de contacto de emergencia</h3>
                     <div>
-                        <label for="txtPrimerNombreContacto">Primer nombre del contacto:</label>
+                        <label for="txtPrimerNombreContacto">Primer nombre del contacto *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtPrimerNombreContacto" placeholder="Ej, Daniel" required>
-                        <label for="txtNombreContacto" class="labelError">*</label>
+                        <!-- <label for="txtNombreContacto" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtSegundoNombreContacto">Segundo nombre del contacto:</label>
+                        <label for="txtSegundoNombreContacto">Segundo nombre del contacto</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtSegundoNombreContacto" placeholder="Ej, José" required>
                         <label for="txtSegundoNombreContacto" class="labelError"></label>
                     </div>
                     <div>
-                        <label for="txtPrimerApellidoContacto">Primer apellido del contacto:</label>
+                        <label for="txtPrimerApellidoContacto">Primer apellido del contacto *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtPrimerApellidoContacto" placeholder="Ej, Herrera" required>
-                        <label for="txtPrimerApellidoContacto" class="labelError">*</label>
+                        <!-- <label for="txtPrimerApellidoContacto" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtSegundoApellidoContacto">Segundo apellido del contacto:</label>
+                        <label for="txtSegundoApellidoContacto">Segundo apellido del contacto *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtSegundoApellidoContacto" placeholder="Ej, Peraza" required>
-                        <label for="txtSegundoApellidoContacto" class="labelError">*</label>
+                        <!-- <label for="txtSegundoApellidoContacto" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtTelefonoContacto">Número de teléfono del contacto:</label>
+                        <label for="txtTelefonoContacto">Número de teléfono del contacto *</label>
                         <i class="fas fa-phone"></i>
                         <input type="tel" id="txtTelefonoContacto" placeholder="Ej, 88634447" required>
-                        <label for="txtTelefonoContacto" class="labelError">*</label>
+                        <!-- <label for="txtTelefonoContacto" class="labelError">*</label> -->
                     </div>
                     <label for="" id="labelRequerido">*: campos requeridos</label>
                 </fieldset>
@@ -217,13 +212,13 @@
             <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Número de cédula</th>
-                        <th>Número de teléfono</th>
-                        <th>Correo electrónico</th>
-                        <th>Contacto emergencia</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
+                        <th width="25%">Nombre</th>
+                        <th width="15%">Número de cédula</th>
+                        <th width="15%">Número de teléfono</th>
+                        <th width="25%">Correo electrónico</th>
+                        <th width="10%">Contacto emergencia</th>
+                        <th width="5%">Editar</th>
+                        <th width="5%">Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
