@@ -50,7 +50,7 @@ module.exports.buscar_laboratorio = function (req, res) {
 
 
 module.exports.buscar_laboratorio_por_id = function (req, res) {
-    userModel.findById({ _id: req.body._id }).then(
+    laboratorioModel.findById({ _id: req.body._id }).then(
         function (laboratorio) {
             res.send(laboratorio);
         }
@@ -58,8 +58,8 @@ module.exports.buscar_laboratorio_por_id = function (req, res) {
 };
 
 module.exports.modificar_laboratorio = function (req, res) {
-    userModel.findByIdAndUpdate(req.body._id, { $set: req.body },
-        function (err, user) {
+    laboratorioModel.findByIdAndUpdate(req.body._id, { $set: req.body },
+        function (err, laboratorio) {
             if (err) {
                 res.json({ success: false, msg: 'El laboratorio no se ha podido modificar. ' + handleError(err) });
 
@@ -68,3 +68,11 @@ module.exports.modificar_laboratorio = function (req, res) {
             }
         });
 };
+
+module.exports.eliminar_laboratorios = function (req, res) {
+    laboratorioModel.findByIdAndRemove(req.body._id, function (err, laboratorio) {
+        if (err) {
+            res.json({success: false, msg: 'El laboratorio no se ha podido eliminar.' + handleError(err)});
+        }
+    })
+}

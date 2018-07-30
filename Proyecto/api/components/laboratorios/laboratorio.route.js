@@ -18,14 +18,19 @@ router.route('/buscar_laboratorio')
     .post(function (req, res) {
         laboratorioApi.buscar_laboratorio(req, res);
     });
+
 router.route('/buscar_laboratorio_id')
     .post(function (req, res) {
-        users.buscar_laboratorio_por_id(req, res);
+        laboratorioApi.buscar_laboratorio_por_id(req, res);
     });
 
 router.route('/modificar_laboratorio')
     .post(function (req, res) {
-        users.modificar_laboratorio(req, res);
+        laboratorioApi.modificar_laboratorio(req, res);
     });
 
+router.route('/eliminar_laboratorio')
+    .post(function (req, res) {
+        laboratorioApi.eliminar_laboratorio(req, res);
+});
 module.exports = router;
