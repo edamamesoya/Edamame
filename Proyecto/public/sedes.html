@@ -79,25 +79,28 @@
                     <div>
                         <label for="txtProvincia">Provincia:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtProvincia" required>
-                    
-                        </select>
+                        <input list="lstProvincias" id="txtProvincia" placeholder="Seleccione una opción de la lista" required>
+
+                        <datalist id="lstProvincias">
+                        </datalist>
                         <label for="txtProvincia" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtCanton">Cantón:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtCanton" required>
-                    
-                        </select>
+                        <input list="lstCantones" id="txtCanton" placeholder="Primero seleccione una provincia de la lista" required>
+
+                        <datalist id="lstCantones">
+                        </datalist>
                         <label for="txtCanton" class="labelError">*</label>
                     </div>
                     <div>
                         <label for="txtDistrito">Distrito:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtDistrito" required>
-                    
-                        </select>
+                        <input list="lstDistritos" id="txtDistrito" placeholder="Primero seleccione un cantón de la lista" required>
+
+                        <datalist id="lstDistritos">
+                        </datalist>
                         <label for="txtDistrito" class="labelError">*</label>
                     </div>
                 </fieldset>

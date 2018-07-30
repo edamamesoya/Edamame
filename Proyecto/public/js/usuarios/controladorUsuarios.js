@@ -25,8 +25,6 @@ let inputPrimerApellidoContacto = document.querySelector('#txtPrimerApellidoCont
 let inputSegundoApellidoContacto = document.querySelector('#txtSegundoApellidoContacto');
 let inputTelefonoContacto = document.querySelector('#txtTelefonoContacto');
 
-
-inputFechaIngreso.valueAsDate = new Date();
 let inputBuscar = document.querySelector('#txtBuscar');
 let botonRegistrar = document.querySelector('#btnRegistrar');
 
@@ -46,6 +44,8 @@ sListaCantones = obtenerCantones();
 sListaDistritos = obtenerDistritos();
 
 mostrarProvincias();
+mostrarCantones();
+mostrarDistritos();
 
 /**
  * Declaración de eventos relacionados a elementos HTML.
@@ -357,15 +357,12 @@ function limpiarFormulario(){
  * Descripción: Muestra una lista de las provincias de Costa Rica.
  */
 function mostrarProvincias(){
-    let selectProvincias = document.getElementById('txtProvincia');
+    let selectProvincias = document.querySelector('#lstProvincias');
     selectProvincias.innerHTML = '';
-
     for(let i=0; i < sListaProvincias.length; i++){
-        let sProvincia = sListaProvincias[i]['nombre'];
-        let nuevaOpcion = document.createElement('option');
-        nuevaOpcion.text = sProvincia;
-        nuevaOpcion.value = sProvincia;
-        selectProvincias.add(nuevaOpcion);
+        let nuevaOpcion = new Option(sListaProvincias[i]['nombre']);
+        nuevaOpcion.value = sListaProvincias[i]['nombre'];
+        selectProvincias.appendChild(nuevaOpcion);
     }
 };
 
@@ -374,16 +371,13 @@ function mostrarProvincias(){
  * esté seleccionada.
  */
 function mostrarCantones(){
-    let selectCantones = document.getElementById('txtCanton');
+    let selectCantones = document.querySelector('#lstCantones');
     selectCantones.innerHTML = '';
-
     for(let i=0; i < sListaCantones.length; i++){
         if (nNumeroProvincia == sListaCantones[i]['Provincia_idProvincia']){
-            let sCanton = sListaCantones[i]['nombre'];
-            let nuevaOpcion = document.createElement('option');
-            nuevaOpcion.text = sCanton;
-            nuevaOpcion.value = sCanton;
-            selectCantones.add(nuevaOpcion);
+            let nuevaOpcion = new Option(sListaCantones[i]['nombre']);
+            nuevaOpcion.value = sListaCantones[i]['nombre'];
+            selectCantones.appendChild(nuevaOpcion);
         }
     }
 };
@@ -393,16 +387,14 @@ function mostrarCantones(){
  * esté seleccionado.
  */
 function mostrarDistritos(){
-    let selectDistritos = document.getElementById('txtDistrito');
-    selectDistritos.innerHTML = '';
 
+    let selectDistritos = document.querySelector('#lstDistritos');
+    selectDistritos.innerHTML = '';
     for(let i=0; i < sListaDistritos.length; i++){
         if (nNumeroCanton == sListaDistritos[i]['Canton_idCanton']){
-            let sDistrito = sListaDistritos[i]['nombre'];
-            let nuevaOpcion = document.createElement('option');
-            nuevaOpcion.text = sDistrito;
-            nuevaOpcion.value = sDistrito;
-            selectDistritos.add(nuevaOpcion);
+            let nuevaOpcion = new Option(sListaDistritos[i]['nombre']);
+            nuevaOpcion.value = sListaDistritos[i]['nombre'];
+            selectDistritos.appendChild(nuevaOpcion);
         }
     }
 };

@@ -2,77 +2,47 @@
 
 const laboratorioModel = require('./laboratorio.model');
 
-module.exports.registrar = function (req, res) {
+module.exports.registrar = function(req, res) {
     let nuevoLaboratorio = new laboratorioModel({
-        codigo: req.body.codigo,
-        nombre: req.body.nombre,
-        cupo: req.body.cupo,
-        sede: req.body.sede,
-        estado: req.body.estado
+        codigo : req.body.codigo,
+        nombre : req.body.nombre,
+        cupo : req.body.cupo,
+        sede : req.body.sede,
+        estado : req.body.estado
     });
 
-    nuevoLaboratorio.save(function (error) {
-        if (error) {
-            res.json({ success: false, msg: 'No se pudo registrar la laboratorio' + error });
-        } else {
-            res.json({ success: true, msg: 'El laboratorio se registró con éxito' });
+    nuevoLaboratorio.save(function(error){
+        if(error){
+            res.json({success : false, msg : 'No se pudo registrar la laboratorio' + error});
+        }else{
+            res.json({success : true, msg : 'El laboratorio se registró con éxito'});
         }
     });
 };
 
-module.exports.listar_laboratorio = function (req, res) {
-    laboratorioModel.find().sort({ nombre: 'asc' }).then(
-        function (laboratorios) {
+module.exports.listar_laboratorio = function(req, res){
+    laboratorioModel.find().sort({nombre : 'asc'}).then(
+        function(laboratorios){
             res.send(laboratorios);
         }
     );
 };
 
-module.exports.buscar_laboratorio = function (req, res) {
+module.exports.buscar_laboratorio = function(req, res){
     let sCodigo = req.body.codigo;
     let sNombre = req.body.nombre;
     laboratorioModel.find({
-        'codigo': { '$regex': sCodigo, '$options': 'i' }
+        'codigo': {'$regex': sCodigo, '$options': 'i'}
     }).then(
-        function (laboratorios) {
+        function(laboratorios){
             res.send(laboratorios);
         }
     );
     laboratorioModel.find({
-        'nombre': { '$regex': sNombre, '$options': 'i' }
+        'nombre': {'$regex': sNombre, '$options': 'i'}  
     }).then(
-        function (laboratorios) {
+        function(laboratorios){
             res.send(laboratorios);
         }
     );
-
 };
-
-
-module.exports.buscar_laboratorio_por_id = function (req, res) {
-    laboratorioModel.findById({ _id: req.body._id }).then(
-        function (laboratorio) {
-            res.send(laboratorio);
-        }
-    );
-};
-
-module.exports.modificar_laboratorio = function (req, res) {
-    laboratorioModel.findByIdAndUpdate(req.body._id, { $set: req.body },
-        function (err, laboratorio) {
-            if (err) {
-                res.json({ success: false, msg: 'El laboratorio no se ha podido modificar. ' + handleError(err) });
-
-            } else {
-                res.json({ success: true, msg: 'Se ha actualizado correctamente. ' + res });
-            }
-        });
-};
-
-module.exports.eliminar_laboratorios = function (req, res) {
-    laboratorioModel.findByIdAndRemove(req.body._id, function (err, laboratorio) {
-        if (err) {
-            res.json({success: false, msg: 'El laboratorio no se ha podido eliminar.' + handleError(err)});
-        }
-    })
-}

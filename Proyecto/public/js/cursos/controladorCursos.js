@@ -202,15 +202,12 @@ function limpiarFormulario(){
  * Descripción: Agrega al html una lista de las carreras registradas.
  */
 function mostrarCarreras(){
-    let selectCarreras = document.getElementById('txtCarrera');
+    let selectCarreras = document.querySelector('#lstCarreras');
     selectCarreras.innerHTML = '';
-
     for(let i=0; i < sListaCarreras.length; i++){
-        let sCarrera = sListaCarreras[i]['nombre'];
-        let nuevaOpcion = document.createElement('option');
-        nuevaOpcion.text = sCarrera;
-        nuevaOpcion.value = sCarrera;
-        selectCarreras.add(nuevaOpcion);
+        let nuevaOpcion = new Option(sListaCarreras[i]['nombre']);
+        nuevaOpcion.value = sListaCarreras[i]['nombre'];
+        selectCarreras.appendChild(nuevaOpcion);
     }
 };
 

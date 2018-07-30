@@ -73,22 +73,22 @@ function verificarCredenciales(psUsuario, psContrasenna) {
     
     switch (sRol) {
         case 'administrador':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'asistente':
-            window.location.href = 'bitacoras.html';
+            window.location.href = 'perfil.html';
             break;
         case 'profesor':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'rectoria':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'decanatura':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'asistDecanatura':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
     }
 
@@ -132,22 +132,22 @@ function autoLogin(psUsuario) {
     };
     switch (sRol) {
         case 'administrador':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'asistente':
-            window.location.href = 'bitacoras.html';
+            window.location.href = 'perfil.html';
             break;
         case 'profesor':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'rectoria':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'decanatura':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
         case 'asistDecanatura':
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'perfil.html';
             break;
     }
 };

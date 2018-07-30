@@ -5,13 +5,15 @@ let sListaCursos = obtenerCursos();
 mostrarListaSolicitudes();
 mostrarCursos();
 
+document.getElementById("buscar").click();
+
 let inputNombre = document.querySelector('#txtNombre');
-let selectCursos = document.querySelector('#txtCursos');
+let selectCursos = document.querySelector('#txtCurso');
 let botonRegistrar = document.querySelector('#btnRegistrar')
 
 botonRegistrar.addEventListener('click', obtenerDatos);
 
-let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
+let reglaLetras = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
 
 
 let sNombre = '';
@@ -58,7 +60,7 @@ function validar() {
     sNombre = inputNombre.value;
 
     //validar nombre
-    if (sNombre == '' || (regexNombre.test(sNombre) == false)) {
+    if (sNombre == '' || (reglaLetras.test(sNombre) == false)) {
         inputNombre.classList.add('errorInput');
         bError = true;
     } else {
@@ -86,16 +88,28 @@ function mostrarListaSolicitudes() {
     }
 };
 
-function mostrarCursos(){
-    let selectCursos = document.getElementById('txtCursos');
-    selectCursos.innerHTML = '';
+function abrirFuncion(evt, funcion) {
+    let i, tabcontent, tablinks;
 
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(funcion).style.display = "block";
+    evt.currentTarget.className += " active";
+};
+
+function mostrarCursos(){
+    let selectCursos = document.querySelector('#lstCursos');
+    selectCursos.innerHTML = '';
     for(let i=0; i < sListaCursos.length; i++){
-        let sCurso = sListaCursos[i]['nombre'];
-        let nuevaOpcion = document.createElement('option');
-        nuevaOpcion.text = sCurso;
-        nuevaOpcion.value = sCurso;
-        selectCursos.add(nuevaOpcion);
+        let nuevaOpcion = new Option(sListaCursos[i]['nombre']);
+        nuevaOpcion.value = sListaCursos[i]['nombre'];
+        selectCursos.appendChild(nuevaOpcion);
     }
 };
 
