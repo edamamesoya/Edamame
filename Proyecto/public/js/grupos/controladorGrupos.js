@@ -8,8 +8,6 @@ mostrarBusqueda();
 mostrarCursos();
 mostrarLaboratorios();
 
-document.getElementById("buscar").click();
-
 let inputNumeroGrupo = document.querySelector('#txtNumeroGrupo');
 let inputNombreProfesor = document.querySelector('#txtNombrePro');
 let inputNumeroEstudiantes = document.querySelector('#txtNumeroEst');
@@ -170,37 +168,28 @@ function limpiarFormulario(){
     inputHorarioVirtual.value = '';
 };
 
-function abrirFuncion(evt, funcion) {
-    let i, tabcontent, tablinks;
-
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(funcion).style.display = "block";
-    evt.currentTarget.className += " active";
-};
-
 function mostrarCursos(){
-    let selectCursos = document.querySelector('#lstCursos');
+    let selectCursos = document.getElementById('txtCurso');
     selectCursos.innerHTML = '';
+
     for(let i=0; i < sListaCursos.length; i++){
-        let nuevaOpcion = new Option(sListaCursos[i]['nombre']);
-        nuevaOpcion.value = sListaCursos[i]['nombre'];
-        selectCursos.appendChild(nuevaOpcion);
+        let sCurso = sListaCursos[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sCurso;
+        nuevaOpcion.value = sCurso;
+        selectCursos.add(nuevaOpcion);
     }
 };
 
 function mostrarLaboratorios(){
-    let selectLaboratorios = document.querySelector('#lstLaboratorios');
+    let selectLaboratorios = document.getElementById('txtLaboratorio');
     selectLaboratorios.innerHTML = '';
+
     for(let i=0; i < sListaLaboratorios.length; i++){
-        let nuevaOpcion = new Option(sListaLaboratorios[i]['nombre']);
-        nuevaOpcion.value = sListaLaboratorios[i]['nombre'];
-        selectLaboratorios.appendChild(nuevaOpcion);
+        let sLaboratorio = sListaLaboratorios[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sLaboratorio;
+        nuevaOpcion.value = sLaboratorio;
+        selectLaboratorios.add(nuevaOpcion);
     }
 };

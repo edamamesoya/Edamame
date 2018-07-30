@@ -71,13 +71,39 @@ function permisosRol() {
         case 'administrador':
             break;
         case 'rectoria':
-            //
+            document.getElementById('menuPerfil').classList.add('w3-mobile');
+            document.getElementById('menuPerfil').style.width = '19%';
+            document.getElementById('menuSolicitudes').classList.add('w3-mobile');
+            document.getElementById('menuSolicitudes').style.width = '19%';
+            document.getElementById('menuFunciones').classList.add('w3-mobile');
+            document.getElementById('menuFunciones').style.width = '19%';
+            document.getElementById('menuReportes').classList.add('w3-mobile');
+            document.getElementById('menuReportes').style.width = '19%';
+            document.getElementById('menuConfiguracion').classList.add('w3-mobile');
+            document.getElementById('menuConfiguracion').style.width = '19%';
+            document.getElementById('menuBitacoras').remove();
             break;
         case 'decanatura':
-            //
+            document.getElementById('menuPerfil').classList.add('w3-mobile');
+            document.getElementById('menuPerfil').style.width = '30%';
+            document.getElementById('menuSolicitudes').classList.add('w3-mobile');
+            document.getElementById('menuSolicitudes').style.width = '30%';
+            document.getElementById('menuFunciones').classList.add('w3-mobile');
+            document.getElementById('menuFunciones').style.width = '30%';
+            document.getElementById('menuBitacoras').remove();
+            document.getElementById('menuReportes').remove();
+            document.getElementById('menuConfiguracion').remove();
             break;
         case 'asistDecanatura':
-            //
+            document.getElementById('menuPerfil').classList.add('w3-mobile');
+            document.getElementById('menuPerfil').style.width = '30%';
+            document.getElementById('menuSolicitudes').classList.add('w3-mobile');
+            document.getElementById('menuSolicitudes').style.width = '30%';
+            document.getElementById('menuFunciones').classList.add('w3-mobile');
+            document.getElementById('menuFunciones').style.width = '30%';
+            document.getElementById('menuBitacoras').remove();
+            document.getElementById('menuReportes').remove();
+            document.getElementById('menuConfiguracion').remove();
             break;
         case 'profesor':
             document.getElementById('menuPerfil').classList.add('w3-mobile');

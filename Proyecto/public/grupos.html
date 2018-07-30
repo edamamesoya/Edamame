@@ -48,9 +48,9 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="#" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="#" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
-            <a href="#" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
         <!--este es el menu del lado izquierdo-->
@@ -72,11 +72,10 @@
                     <div>
                         <label for="txtCurso">Cursos:</label>
                         <i class="fas fa-list"></i>
-                        <input list="lstCursos" id="txtCurso" placeholder="Seleccione una opción de la lista" required>
-
-                        <datalist id="lstCursos">
-                        </datalist> 
-                        <label for="txtCarrera" class="labelError">*</label>
+                        <select id="txtCurso" required>
+                    
+                        </select>
+                        <label for="txtCurso" class="labelError">*</label>
                     </div>
                     <div>
                         <label for "txtNumeroGru">Número del grupo</label>
@@ -86,10 +85,9 @@
                     <div>
                         <label for="txtLaboratorio">Laboratorios:</label>
                         <i class="fas fa-list"></i>
-                        <input list="lstLaboratorios" id="txtLaboratorio" placeholder="Seleccione una opción de la lista" required>
-
-                        <datalist id="lstLaboratorios">
-                        </datalist> 
+                        <select id="txtLaboratorio" required>
+                    
+                        </select>
                         <label for="txtLaboratorio" class="labelError">*</label>
                     </div>
                     <div>
