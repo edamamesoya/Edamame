@@ -96,7 +96,7 @@ body main fieldset div #lstRequisitos input{
 body main fieldset input{
     border: none;
     outline-style: none;
-    border-bottom: 1.5px solid #130f40;
+    border-bottom: 1.5px solid #260536;
     font-size: 14px;
     width: 95%;
     display: inline-block;
@@ -312,3 +312,7 @@ footer{
   }
 
   /********************************* ********************************************/
+
+  .listaVacia {
+      display: none;
+  }

@@ -78,3 +78,93 @@ function obtenerUsuarios(){
 
   return listaUsuarios;
 };
+
+function obtenerUsuarioPorId(pId){
+  let usuario = '';
+  let peticion = $.ajax({
+      url : 'http://localhost:4000/api/buscar_usuario_id',
+      type : 'post',
+      contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+      dataType : 'json',
+      async : false,
+      data:{
+          _id : pId
+      }
+    });
+  
+    peticion.done(function(response){
+      usuario = response;
+    });
+  
+    peticion.fail(function(response){
+     
+    });
+
+    return usuario;
+};
+
+function actualizarUsuario(pId, pPrimerNombre, pSegundoNombre, pPrimerApellido, pSegundoApellido, pCedula, pProvincia, pCanton, pDistrito, pDireccion, pFechaIngreso, pCorreo, pRol, pPrimerNombreContacto, pSegundoNombreContacto, pPrimerApellidoContacto, pSegundoApellidoContacto, pTelefonoContacto, pEstado){
+  let respuesta = '';
+  let peticion = $.ajax({
+      url : 'http://localhost:4000/api/modificar_usuario',
+      type : 'post',
+      contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+      dataType : 'json',
+      async : false,
+      data:{
+          _id : pId,
+          primerNombre : pPrimerNombre,
+          segundoNombre : pSegundoNombre,
+          primerApellido : pPrimerApellido,
+          segundoApellido : pSegundoApellido,
+          cedula : pCedula,
+          provincia : pProvincia,
+          canton : pCanton,
+          distrito : pDistrito,
+          direccion : pDireccion,
+          fechaIngreso : pFechaIngreso,
+          correo : pCorreo,
+          rol : pRol,
+          primerNombreContacto : pPrimerNombreContacto,
+          segundoNombreContacto : pSegundoNombreContacto,
+          primerApellidoContacto : pPrimerApellidoContacto,
+          segundoApellidoContacto : pSegundoApellidoContacto,
+          telefonoContacto : pTelefonoContacto,
+          estado : pEstado
+      }
+    });
+  
+    peticion.done(function(response){
+     respuesta = response;
+    });
+  
+    peticion.fail(function(response){
+     
+    });
+
+    return respuesta;
+};
+
+function eliminarUsuario(pId){
+  let respuesta = '';
+  let peticion = $.ajax({
+      url : 'http://localhost:4000/api/eliminar_usuario',
+      type : 'post',
+      contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+      dataType : 'json',
+      async : false,
+      data:{
+          _id: pId
+      }
+    });
+  
+    peticion.done(function(response){
+     respuesta = response;
+    });
+  
+    peticion.fail(function(response){
+     
+    });
+
+    return respuesta;
+};

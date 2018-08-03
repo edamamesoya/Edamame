@@ -87,6 +87,19 @@
                         <!-- <label for="txtNombre" class="labelError">*</label> -->
                     </div>
                     <div>
+                        <label for="txtGrado">Grado *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtGrado" required>
+                            <option value="Maestría">Maestría</option>
+                            <option value="Licenciatura">Licenciatura</option>
+                            <option value="Postgrado">Postgrado</option>
+                            <option value="Bachillerato">Bachillerato</option>
+                            <option value="Diplomado">Diplomado</option>
+                            <option value="Técnico">Técnico</option>
+                        </select>
+                        <!-- <label for="txtRol" class="labelError">*</label> -->
+                    </div>
+                    <div>
                         <label for="txtCreditos">Créditos *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="number" id="txtCreditos" min="0" placeholder="Ej, 170" required>
@@ -132,6 +145,7 @@
 
                 </tbody>
             </table>
+            <h3 id="mensajeLista">No existen carreras registradas</h3>
         </section>
 
         <!--Función enlazar cursos-->
@@ -187,25 +201,33 @@
                         <label for="txtEditarNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtEditarNombre" required>
-                        <!-- <label for="txtEditarNombre" class="labelError">*</label> -->
                     </div>
                     <div>
                         <label for="txtEditarCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtEditarCodigo" required>
-                        <!-- <label for="txtEditarCodigo" class="labelError">*</label> -->
+                    </div>
+                    <div>
+                        <label for="txtEditarGrado">Grado *</label>
+                        <i class="fas fa-user-lock"></i>
+                        <select id="txtEditarGrado" required>
+                            <option value="Maestría">Maestría</option>
+                            <option value="Licenciatura">Licenciatura</option>
+                            <option value="Postgrado">Postgrado</option>
+                            <option value="Bachillerato">Bachillerato</option>
+                            <option value="Diplomado">Diplomado</option>
+                            <option value="Técnico">Técnico</option>
+                        </select>
                     </div>
                     <div>
                         <label for="txtEditarCreditos">Créditos *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="number" id="txtEditarCreditos" min="0" required>
-                        <!-- <label for="txtEditarCreditos" class="labelError">*</label> -->
                     </div>
                     <div>
                         <label for="txtEditarFecha">Fecha de creación *</label>
                         <i class="far fa-calendar-alt"></i>
-                        <input type="date" id="txtEditarFecha" required disabled>
-                        <!-- <label for="txtEditarFecha" class="labelError">*</label> -->
+                        <input type="date" id="txtEditarFecha" required>
                     </div>
                     <div class="inputLargo">
                         <label class="switch">

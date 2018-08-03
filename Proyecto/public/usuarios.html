@@ -52,10 +52,13 @@
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
+        <input type="text" id="txtId" hidden>
+
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
             <button class="tablinks" onclick="abrirFuncion(event, 'registrarUsuario')" id="defaultOpen">Registrar usuario</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarUsuario')" id="modificar">Modificar usuario</button>
             <button class="tablinks" onclick="abrirFuncion(event, 'buscarUsuario')" id="buscar">Listar usuarios</button>
             <!-- <button class="tablinks" onclick="abrirFuncion(event, 'buscarUsuario')">Enlazar usuario</button> -->
         </div>
@@ -146,7 +149,7 @@
                         <!-- <label for="txtCorreo" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtRol">Rol:</label>
+                        <label for="txtRol">Rol *</label>
                         <i class="fas fa-user-lock"></i>
                         <select id="txtRol" required>
                             <option value="asistente">Asistente</option>
@@ -212,8 +215,8 @@
             <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
-                        <th width="25%">Nombre</th>
                         <th width="15%">Número de cédula</th>
+                        <th width="25%">Nombre</th>
                         <th width="15%">Número de teléfono</th>
                         <th width="25%">Correo electrónico</th>
                         <th width="10%">Contacto emergencia</th>
@@ -225,6 +228,134 @@
                     
                 </tbody>
             </table>
+            <h3 id="mensajeLista">No existen usuarios registrados</h3>
+        </section>
+
+        <!--Función modificar usuario-->
+        <section id="modificarUsuario" class="tabcontent">
+            <h2>Modificar usuario</h2>
+            <p>Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
+                para guardar los datos.
+            </p>
+
+            <form action="" id="formRegistro" autocomplete="off">
+                <fieldset class="fieldset">
+                    <h3>Información de usuario</h3>
+                    <div>
+                        <label for="txtEditarPrimerNombre">Primer nombre *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarPrimerNombre" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarSegundoNombre">Segundo nombre</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarSegundoNombre">
+                    </div>
+                    <div>
+                        <label for="txtEditarPrimerApellido">Primer apellido *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarPrimerApellido" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarSegundoApellido">Segundo apellido *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarSegundoApellido" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarCedula">Número de cédula *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtEditarCedula" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarProvincia">Provincia *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarProvincia" required>
+                    
+                        </select>
+                    </div>
+                    <div>
+                        <label for="txtEditarCanton">Cantón *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarCanton" required>
+                    
+                        </select>
+                    </div>
+                    <div>
+                        <label for="txtEditarDistrito">Distrito *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarDistrito" required>
+                    
+                        </select>
+                    </div>
+                    <div class="inputLargo">
+                        <label for="txtEditarDireccion">Dirección exacta</label>
+                        <textarea id="txtEditarDireccion"> </textarea>
+                    </div>
+                    <div>
+                        <label for="txtEditarFechaIngreso">Fecha de ingreso</label>
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" id="txtEditarFechaIngreso" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarTelefono">Número de teléfono *</label>
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="txtEditarTelefono" min="10000000" max="99999999" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarCorreo">Correo electrónico *</label>
+                        <i class="far fa-envelope"></i>
+                        <input type="email" id="txtEditarCorreo" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarRol">Rol *</label>
+                        <i class="fas fa-user-lock"></i>
+                        <select id="txtEditarRol" required>
+                            <option value="asistente">Asistente</option>
+                            <option value="profesor">Profesor</option>
+                            <option value="asistDecanatura">Asist. Decanatura</option>
+                            <option value="decanatura">Decanatura</option>
+                            <option value="rectoria">Rectoría</option>
+                        </select>
+                    </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
+                </fieldset>
+                <fieldset class="fieldset">
+                    <h3>Información de contacto de emergencia</h3>
+                    <div>
+                        <label for="txtEditarPrimerNombreContacto">Primer nombre del contacto *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarPrimerNombreContacto" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarSegundoNombreContacto">Segundo nombre del contacto</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarSegundoNombreContacto" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarPrimerApellidoContacto">Primer apellido del contacto *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarPrimerApellidoContacto" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarSegundoApellidoContacto">Segundo apellido del contacto *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarSegundoApellidoContacto" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarTelefonoContacto">Número de teléfono del contacto *</label>
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="txtEditarTelefonoContacto" required>
+                    </div>
+                    <div class="inputLargo">
+                        <label class="switch">
+                            <input type="checkbox" id="chkEstado">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
+                </fieldset>
+                <button type="button" class="button" id="btnEditar">Registrar</button>
+            </form>
         </section>
     </main>
     

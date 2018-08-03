@@ -20,7 +20,8 @@ let usuarioSchema = new mongoose.Schema({
     segundoNombreContacto : {type : String, required : false},
     primerApellidoContacto : {type : String, required : true},
     segundoApellidoContacto : {type : String, required : true},
-    telefonoContacto : {type : Number, required : true}
+    telefonoContacto : {type : Number, required : true},
+    estado : {type : Boolean, required : true}
 });
 
 module.exports = mongoose.model('Usuario', usuarioSchema);

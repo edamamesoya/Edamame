@@ -1,25 +1,31 @@
 'use strict';
 
 let sListaCursos = obtenerCursos();
-let sListaCarreras = obtenerCarreras();
 mostrarBusqueda();
-mostrarCarreras();
-mostrarRequisitos();
 
 /**
  * Declaración de variables.
  */
-let inputCodigo = document.querySelector('#txtCodigo');
-let inputNombre = document.querySelector('#txtNombre');
-let inputCreditos = document.querySelector('#txtCreditos');
-let inputCarrera = document.querySelector('#txtCarrera');
-let botonRegistrar = document.querySelector('#btnRegistrar');
-let inputBuscar = document.querySelector('#txtBuscar');
+const inputCodigo = document.querySelector('#txtCodigo');
+const inputNombre = document.querySelector('#txtNombre');
+const inputCreditos = document.querySelector('#txtCreditos');
+
+const inputEditarCodigo = document.querySelector('#txtEditarCodigo');
+const inputEditarNombre = document.querySelector('#txtEditarNombre');
+const inputEditarCreditos = document.querySelector('#txtEditarCreditos');
+const chkEstado = document.querySelector('#chkEstado');
+
+const inputId = document.querySelector('#txtId');
+
+const botonRegistrar = document.querySelector('#btnRegistrar');
+const botonModificar = document.querySelector('#btnEditar');
+const inputBuscar = document.querySelector('#txtBuscar');
 
 /**
  * Declaración de eventos relacionados a elementos HTML.
  */
 botonRegistrar.addEventListener('click', obtenerDatos);
+botonModificar.addEventListener('click', modificarDatos);
 inputBuscar.addEventListener('keyup', function(){
     mostrarBusqueda(inputBuscar.value)
 });
@@ -27,9 +33,9 @@ inputBuscar.addEventListener('keyup', function(){
 /**
  * Declaración de expresiones regulares.
  */
-let regexCodigo = /^[a-zA-Z0-9\-]+$/;
-let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9 ]+$/;
-let regexCreditos = /^[0-9]+$/;
+const regexCodigo = /^[a-zA-Z0-9\-]+$/;
+const regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9 ]+$/;
+const regexCreditos = /^[0-9]+$/;
 
 /**
  * Descripción: Registra un curso con los datos obtenidos del usuario.
@@ -38,17 +44,16 @@ function obtenerDatos(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCreditos = inputCreditos.value;
-    let sCarrera = inputCarrera.value;
-    let sListaRequisitos = [];
+    // let sListaRequisitos = [];
 
-    let requisito = document.querySelectorAll('#lstRequisitos input[type=checkbox]');
-    for (let i=0; i < requisito.length; i++) {
-        if (requisito[i].checked){
-            sListaRequisitos.push(requisito[i].value);
-        }
-    }
-    console.log(sListaRequisitos);
-    let a = JSON.stringify(sListaRequisitos);
+    // let requisito = document.querySelectorAll('#lstRequisitos input[type=checkbox]');
+    // for (let i=0; i < requisito.length; i++) {
+    //     if (requisito[i].checked){
+    //         sListaRequisitos.push(requisito[i].value);
+    //     }
+    // }
+    // console.log(sListaRequisitos);
+    // let a = JSON.stringify(sListaRequisitos);
 
     let bError = false;
     bError = validarRegistro();
@@ -61,7 +66,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
         });
     }else{
-        let respuesta = registrarCurso(sCodigo , sNombre, nCreditos, sCarrera, a);
+        let respuesta = registrarCurso(sCodigo , sNombre, nCreditos);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -71,7 +76,6 @@ function obtenerDatos(){
             });
             sListaCursos = obtenerCursos();
             mostrarBusqueda();
-            mostrarRequisitos();
             limpiarFormulario();
             document.getElementById("buscar").click();
         }else{
@@ -82,6 +86,48 @@ function obtenerDatos(){
                 confirmButtonText: 'Entendido'
             });
         }
+    }
+};
+
+function modificarDatos(){
+    let sCodigo = inputEditarCodigo.value;
+    let sNombre = inputEditarNombre.value;
+    let nCreditos = inputEditarCreditos.value;
+
+    let sEstado = chkEstado.checked;
+    let sId = inputId.value;
+
+    let bError = false;
+    bError = validarRegistroModificar();
+    
+    if(bError == true){
+        swal({
+            title: 'Modificación incorrecta',
+            text: 'No se pudo modificar el curso, revise los campos en rojo',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+          });
+    }else{
+        let respuesta = actualizarCurso(sId, sCodigo , sNombre, nCreditos, sEstado);
+        if(respuesta.success == true){
+            swal({
+                title: 'Modificación correcta',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            sListaCursos = obtenerCursos();
+            limpiarFormularioModificar();
+            mostrarBusqueda();
+            document.getElementById("buscar").click();
+        }else{
+            swal({
+                title: 'Registro incorrecto',
+                text: respuesta.msg,
+                type: 'error',
+                confirmButtonText: 'Entendido'
+              });
+        }   
     }
 };
 
@@ -96,7 +142,6 @@ function validarRegistro(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCreditos = inputCreditos.value;
-    let sCarrera = inputCarrera.value;
 
     // Validación del input para código
     if (sCodigo == '' || (regexCodigo.test(sCodigo) == false) ){
@@ -121,9 +166,41 @@ function validarRegistro(){
     }else{
         inputCreditos.classList.remove('errorInput');
     }
-//Validar Carrera
     return bError;
-}
+};
+
+function validarRegistroModificar(){
+    let bError = false;
+    let sCodigo = inputEditarCodigo.value;
+    let sNombre = inputEditarNombre.value;
+    let nCreditos = Number(inputEditarCreditos.value);
+
+    // Validación del input para código
+    if (sCodigo == '' || (regexCodigo.test(sCodigo) == false) ){
+        inputEditarCodigo.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarCodigo.classList.remove('errorInput');
+    }
+
+    // Validación del input para nombre
+    if (sNombre == '' || (regexNombre.test(sNombre) == false) ){
+        inputEditarNombre.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarNombre.classList.remove('errorInput');
+    }
+
+    // Validación del input para créditos
+    if(nCreditos == 0 || (regexCreditos.test(nCreditos) == false) ){
+        inputEditarCreditos.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarCreditos.classList.remove('errorInput');
+    }
+
+    return bError;
+};
 
 /**
  * Descripción: Filtra los cursos de una lista de cursos registradas cuyo nombre haga match, 
@@ -131,6 +208,7 @@ function validarRegistro(){
  * @param: pFiltro
  */
 function mostrarBusqueda(pFiltro){
+    let cursosEncontrados = 0;
     let tbody = document.querySelector('#tblBusqueda tbody');
     if(!pFiltro){
         pFiltro = '';
@@ -145,46 +223,64 @@ function mostrarBusqueda(pFiltro){
             let celdaCodigo = fila.insertCell();
             let celdaNombre = fila.insertCell();
             let celdaCreditos = fila.insertCell();
-            let celdaCarrera = fila.insertCell();
-            let celdaRequisitos = fila.insertCell();
+            let celdaEstado = fila.insertCell();
             let celdaEditar = fila.insertCell();
             let celdaEliminar = fila.insertCell();
 
             celdaCodigo.innerHTML = sListaCursos[i]['codigo'];
             celdaNombre.innerHTML = sListaCursos[i]['nombre'];
             celdaCreditos.innerHTML = sListaCursos[i]['creditos'];
-            celdaCarrera.innerHTML = sListaCursos[i]['carrera'];
 
-            let sRequisitos = '';
-            sRequisitos = sListaCursos[i]['requisitos'].toString().replace("[", "");
-            sRequisitos = sRequisitos.toString().replace("]", "");
-            for(let j = 0; j < sRequisitos.length; j++) {
-                sRequisitos = sRequisitos.toString().replace("\"", "");
-            }
+            // let sRequisitos = '';
+            // sRequisitos = sListaCursos[i]['requisitos'].toString().replace("[", "");
+            // sRequisitos = sRequisitos.toString().replace("]", "");
+            // for(let j = 0; j < sRequisitos.length; j++) {
+            //     sRequisitos = sRequisitos.toString().replace("\"", "");
+            // }
 
-            if(sListaCursos[i]['requisitos'] == '[]'){
-                celdaRequisitos.innerHTML = 'No tiene';
+            // if(sListaCursos[i]['requisitos'] == '[]'){
+            //     celdaRequisitos.innerHTML = 'No tiene';
+            // }else{
+            //     celdaRequisitos.innerHTML = sRequisitos;
+            // }
+
+            let bEstado = sListaCursos[i]['estado'];
+            if(bEstado){
+                celdaEstado.innerHTML = 'Activo';
             }else{
-                // for(let j = 0; j < sListaCursos[i]['requisitos'].length; j++){
-                //     sRequisitos = sRequisitos + sListaCursos[i]['requisitos'][j];
-                //     sRequisitos = sRequisitos + ', ';
-                // }
-                celdaRequisitos.innerHTML = sRequisitos;
+                celdaEstado.innerHTML = 'Inactivo';
             }
 
             let botonEditar = document.createElement('a');
-            botonEditar.href = '';
             botonEditar.classList.add('far');
             botonEditar.classList.add('fa-edit');
+
+            botonEditar.dataset.id = sListaCursos[i]['_id'];
+            botonEditar.addEventListener('click', editar);
+
             celdaEditar.appendChild(botonEditar);
 
             let botonEliminar = document.createElement('a');
-            botonEliminar.href = '#';
             botonEliminar.classList.add('far');
             botonEliminar.classList.add('fa-trash-alt');
+
+            botonEliminar.dataset.id = sListaCursos[i]['_id'];
+            botonEliminar.addEventListener('click', eliminar); 
+
             celdaEliminar.appendChild(botonEliminar);
+
+            cursosEncontrados++;
         }
     }
+
+    if(sListaCursos.length == 0){
+        document.getElementById('mensajeLista').classList.remove('listaVacia');
+    }else{
+        document.getElementById('mensajeLista').classList.add('listaVacia');
+    }
+    // if(cursosEncontrados == 0){
+    //     console.log('No existen cursos que cumplan con el criterio de búsqueda');
+    // }
 };
 
 /**
@@ -194,46 +290,70 @@ function mostrarBusqueda(pFiltro){
 function limpiarFormulario(){
     inputCodigo.value = '';
     inputNombre.value = '';
-    inputCreditos = '';
-    inputCarrera.value = '';
+    inputCreditos.value = '';
 };
 
-/**
- * Descripción: Agrega al html una lista de las carreras registradas.
- */
-function mostrarCarreras(){
-    let selectCarreras = document.getElementById('txtCarrera');
-    selectCarreras.innerHTML = '';
-
-    for(let i=0; i < sListaCarreras.length; i++){
-        let sCarrera = sListaCarreras[i]['nombre'];
-        let nuevaOpcion = document.createElement('option');
-        nuevaOpcion.text = sCarrera;
-        nuevaOpcion.value = sCarrera;
-        selectCarreras.add(nuevaOpcion);
-    }
+function limpiarFormularioModificar(){
+    inputEditarCodigo.value = '';
+    inputEditarNombre.value = '';
+    inputEditarCreditos.value = '';
 };
 
-/**
- * Descripción: Agrega al html una lista de cursos registrados.
- */
-function mostrarRequisitos() {     
-    let selectRequisitos = document.querySelector('#lstRequisitos');
-    selectRequisitos.innerHTML = '';
+// function mostrarRequisitos() {     
+//     let selectRequisitos = document.querySelector('#lstRequisitos');
+//     selectRequisitos.innerHTML = '';
 
-    for (let i=0; i < sListaCursos.length; i++) { 
+//     for (let i=0; i < sListaCursos.length; i++) { 
 
-    let etiquetaRequisito = document.createElement('label');
-    let requisito = document.createElement('input');
+//     let etiquetaRequisito = document.createElement('label');
+//     let requisito = document.createElement('input');
 
-    requisito.setAttribute('type', 'checkbox');
-    requisito.setAttribute('name', sListaCursos[i]['nombre']);
-    requisito.setAttribute('value', sListaCursos[i]['codigo']);
+//     requisito.setAttribute('type', 'checkbox');
+//     requisito.setAttribute('name', sListaCursos[i]['nombre']);
+//     requisito.setAttribute('value', sListaCursos[i]['codigo']);
 
-    etiquetaRequisito.innerHTML = sListaCursos[i]['nombre'];
-    etiquetaRequisito.setAttribute('for', sListaCursos[i]['nombre']);
+//     etiquetaRequisito.innerHTML = sListaCursos[i]['nombre'];
+//     etiquetaRequisito.setAttribute('for', sListaCursos[i]['nombre']);
 
-    document.getElementById('lstRequisitos').appendChild(requisito);
-    document.getElementById('lstRequisitos').appendChild(etiquetaRequisito);
-    }
+//     document.getElementById('lstRequisitos').appendChild(requisito);
+//     document.getElementById('lstRequisitos').appendChild(etiquetaRequisito);
+//     }
+// };
+
+function eliminar(){
+    let id = this.dataset.id;
+
+    swal({
+        title: '¿Seguro que desea eliminar el curso?',
+        text: "Esta acción no se puede revertir",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+      }).then((result) => {
+        if (result.value) {
+            eliminarCurso(id);
+            sListaCursos = obtenerCursos();
+            mostrarBusqueda();
+          swal(
+            'Eliminado!',
+            'El curso ha sido eliminado.',
+            'success'
+          )
+        }
+      })
+};
+
+function editar(){
+    let id = this.dataset.id;
+
+    document.getElementById("modificar").click();
+    let curso = obtenerCursoPorId(id);
+
+    inputEditarCodigo.value = curso['codigo'];
+    inputEditarNombre.value = curso['nombre'];
+    inputEditarCreditos.value = curso['creditos'];
+    chkEstado.checked = curso['estado'];
+    inputId.value = curso['_id'];
 };

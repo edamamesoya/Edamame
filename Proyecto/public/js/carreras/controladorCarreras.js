@@ -11,11 +11,13 @@ mostrarPestannas();
  */
 const inputCodigo = document.querySelector('#txtCodigo');
 const inputNombre = document.querySelector('#txtNombre');
+const selectGrado = document.querySelector('#txtGrado');
 const inputCreditos = document.querySelector('#txtCreditos');
 const inputFecha = document.querySelector('#txtFecha');
 
 const inputEditarCodigo = document.querySelector('#txtEditarCodigo');
 const inputEditarNombre = document.querySelector('#txtEditarNombre');
+const selectEditarGrado = document.querySelector('#txtEditarGrado');
 const inputEditarCreditos = document.querySelector('#txtEditarCreditos');
 const inputEditarFecha = document.querySelector('#txtEditarFecha');
 const chkEstado = document.querySelector('#chkEstado');
@@ -57,6 +59,7 @@ let regexCreditos = /^[0-9]+$/;
 function obtenerDatos(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
+    let sGrado = selectGrado.value;
     let nCreditos = inputCreditos.value;
     let dFechaCreacion = inputFecha.value;
 
@@ -71,7 +74,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
           });
     }else{
-        let respuesta = registrarCarrera(sCodigo , sNombre, nCreditos, dFechaCreacion);
+        let respuesta = registrarCarrera(sCodigo , sNombre, sGrado, nCreditos, dFechaCreacion);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -99,8 +102,9 @@ function obtenerDatos(){
 function modificarDatos(){
     let sCodigo = inputEditarCodigo.value;
     let sNombre = inputEditarNombre.value;
+    let sGrado = selectEditarGrado.value;
     let nCreditos = inputEditarCreditos.value;
-    // let dFechaCreacion = inputEditarFecha.value;
+    let dFechaCreacion = inputEditarFecha.value;
     let sEstado = chkEstado.checked;
     let sId = inputId.value;
 
@@ -115,7 +119,7 @@ function modificarDatos(){
             confirmButtonText: 'Entendido'
           });
     }else{
-        let respuesta = actualizarCarrera(sId, sCodigo , sNombre, nCreditos, sEstado);
+        let respuesta = actualizarCarrera(sId, sCodigo , sNombre, sGrado, nCreditos, dFechaCreacion, sEstado);
         if(respuesta.success == true){
             swal({
                 title: 'Modificación correcta',
@@ -150,6 +154,7 @@ function validarRegistro(){
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
+    let sGrado = selectGrado.value;
     let nCreditos = Number(inputCreditos.value);
     let dFechaCreacion = new Date(inputFecha.value);
     let dFechaActual = new Date();
@@ -168,6 +173,14 @@ function validarRegistro(){
         bError = true;
     }else{
         inputNombre.classList.remove('errorInput');
+    }
+
+    // Validación del select grado
+    if (sGrado == ''){
+        selectGrado.classList.add('errorInput');
+        bError = true;
+    }else{
+        selectGrado.classList.remove('errorInput');
     }
 
     // Validación del input para créditos
@@ -192,6 +205,7 @@ function validarRegistroModificar(){
     let bError = false;
     let sCodigo = inputEditarCodigo.value;
     let sNombre = inputEditarNombre.value;
+    let sGrado = selectEditarGrado.value;
     let nCreditos = Number(inputEditarCreditos.value);
     let dFechaCreacion = new Date(inputEditarFecha.value);
     let dFechaActual = new Date();
@@ -212,6 +226,14 @@ function validarRegistroModificar(){
         inputEditarNombre.classList.remove('errorInput');
     }
 
+    // Validación del select grado
+    if (sGrado == ''){
+        selectGrado.classList.add('errorInput');
+        bError = true;
+    }else{
+        selectGrado.classList.remove('errorInput');
+    }
+
     // Validación del input para créditos
     if(nCreditos == 0 || (regexCreditos.test(nCreditos) == false) ){
         inputEditarCreditos.classList.add('errorInput');
@@ -221,12 +243,12 @@ function validarRegistroModificar(){
     }
 
     // Validación del input para fecha
-    // if (dFechaCreacion == '' || dFechaCreacion > dFechaActual ){
-    //     inputEditarFecha.classList.add('errorInput');
-    //     bError = true;
-    // }else{
-    //     inputEditarFecha.classList.remove('errorInput');
-    // }
+    if (dFechaCreacion == '' || dFechaCreacion > dFechaActual ){
+        inputEditarFecha.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarFecha.classList.remove('errorInput');
+    }
     return bError;
 };
 
@@ -289,6 +311,11 @@ function mostrarBusqueda(pFiltro){
 
         celdaEliminar.appendChild(botonEliminar);
         }
+    }
+    if(sListaCarreras.length == 0){
+        document.getElementById('mensajeLista').classList.remove('listaVacia');
+    }else{
+        document.getElementById('mensajeLista').classList.add('listaVacia');
     }
 };
 
@@ -521,8 +548,9 @@ function editar(){
 
     inputEditarCodigo.value = carrera['codigo'];
     inputEditarNombre.value = carrera['nombre'];
+    selectEditarGrado.value = carrera['grado'];
     inputEditarCreditos.value = carrera['creditos'];
-    // inputEditarFecha.value = carrera['fechaCreación'];
+    inputEditarFecha.valueAsDate = new Date(carrera['fechaCreacion']);
     chkEstado.checked = carrera['estado'];
     inputId.value = carrera['_id'];
 };

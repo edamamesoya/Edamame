@@ -53,10 +53,13 @@
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
+        <input type="text" id="txtId" hidden>
+
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
             <button class="tablinks" onclick="abrirFuncion(event, 'registrarCurso')" id="defaultOpen">Registrar curso</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarCurso')" id="modificar">Modificar curso</button>
             <button class="tablinks" onclick="abrirFuncion(event, 'buscarCurso')" id="buscar">Listar cursos</button>
             <!-- <button class="tablinks" onclick="abrirFuncion(event, 'buscarCurso')">Enlazar grupos</button> -->
         </div>
@@ -75,33 +78,22 @@
                         <label for="txtCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtCodigo" placeholder="Ej, INF03" required>
-                        <!-- <label for="txtCodigo" class="labelError">*</label> -->
                     </div>
                     <div>
                         <label for="txtNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" placeholder="Ej, Fundamentos de bases de datos" required>
-                        <!-- <label for="txtNombre" class="labelError">*</label> -->
                     </div>
                     <div>
                         <label for="txtCreditos">Créditos *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="number" id="txtCreditos" min="0" placeholder="Ej, 4" required>
-                        <!-- <label for="txtCreditos" class="labelError">*</label> -->
                     </div>
-                    <div class="inputLargo">
-                        <label for="txtCarrera">Carrera *</label>
-                        <i class="fas fa-list"></i>
-                        <select id="txtCarrera" required>
-                    
-                        </select>
-                        <!-- <label for="txtCarrera" class="labelError">*</label> -->
-                    </div>
-                    <div>
+                    <!-- <div>
                         <label for="btnRequisitos">Seleccione uno, varios, o ningún curso requisito:</label>
                         <div id="lstRequisitos" class="visible">
                         </div>
-                    </div>
+                    </div> -->
                     <label for="" id="labelRequerido">*: campos requeridos</label>
                 </fieldset>
                 <button type="button" class="button" id="btnRegistrar">Registrar</button>
@@ -126,8 +118,7 @@
                         <th width="10%">Código</th>
                         <th width="30%">Nombre</th>
                         <th width="10%">Créditos</th>
-                        <th width="30%">Carreras</th>
-                        <th width="10%">Requisitos</th>
+                        <th width="10%">Estado</th>
                         <th width="5%">Editar</th>
                         <th width="5%">Eliminar</th>
                     </tr>
@@ -136,6 +127,44 @@
 
                 </tbody>
             </table>
+            <h3 id="mensajeLista">No existen cursos registrados</h3>
+        </section>
+
+        <!--Función modificar curso-->
+        <section id="modificarCurso" class="tabcontent">
+            <h2>Modificar curso</h2>
+            <p>Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
+                para guardar los datos.
+            </p>
+
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <h3>Información de curso</h3>
+                    <div>
+                        <label for="txtEditarCodigo">Código *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarCodigo" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarNombre">Nombre *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarNombre" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarCreditos">Créditos *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtEditarCreditos" min="0" required>
+                    </div>
+                    <div class="inputLargo">
+                        <label class="switch">
+                            <input type="checkbox" id="chkEstado">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
+                </fieldset>
+                <button type="button" class="button" id="btnEditar">Registrar</button>
+            </form>
         </section>
     </main>
 

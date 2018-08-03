@@ -8,7 +8,7 @@
  * {Date} pFechaCreacion, {boolean} pEstado
  * @return: {String} repuesta
  */
-function registrarCarrera(pCodigo, pNombre, pCreditos, pFechaCreacion){
+function registrarCarrera(pCodigo, pNombre, pGrado, pCreditos, pFechaCreacion){
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_carrera',
@@ -19,6 +19,7 @@ function registrarCarrera(pCodigo, pNombre, pCreditos, pFechaCreacion){
         data:{
            codigo : pCodigo,
            nombre : pNombre,
+           grado : pGrado,
            creditos : pCreditos,
            fechaCreacion : pFechaCreacion
         }
@@ -120,7 +121,7 @@ function obtenerCarreraPorId(pId){
       return usuario;
 };
 
-function actualizarCarrera(pId, pCodigo, pNombre, pCreditos, pEstado){
+function actualizarCarrera(pId, pCodigo, pNombre, pGrado, pCreditos, pFechaCreacion, pEstado){
     let respuesta = '';
     let peticion = $.ajax({
         url : 'http://localhost:4000/api/modificar_carrera',
@@ -132,7 +133,9 @@ function actualizarCarrera(pId, pCodigo, pNombre, pCreditos, pEstado){
             _id: pId,
             codigo : pCodigo,
             nombre : pNombre,
+            grado : pGrado,
             creditos : pCreditos,
+            fechaCreacion : pFechaCreacion,
             estado : pEstado
         }
       });

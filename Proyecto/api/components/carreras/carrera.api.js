@@ -5,6 +5,7 @@ module.exports.registrar = function(req, res) {
     let nuevaCarrera = new carreraModel({
         codigo : req.body.codigo,
         nombre : req.body.nombre,
+        grado : req.body.grado,
         creditos : req.body.creditos,
         fechaCreacion : req.body.fechaCreacion,
         estado : 'true'
@@ -34,7 +35,8 @@ module.exports.agregar_curso = function(req, res){
             {'cursosAsignados':
                 {
                     codigoCurso: req.body.codigoCurso, 
-                    nombreCurso: req.body.nombreCurso
+                    nombreCurso: req.body.nombreCurso,
+                    requisitos : req.body.requisitos
                 }
             }
         },
