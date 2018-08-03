@@ -5,7 +5,7 @@ module.exports.registrar = function (req, res) {
     let nuevaSolicitud = new solicitudModel({
 
         nombre: req.body.nombre,
-        cursos: req.body.cursos
+        cursos: req.body.cursos,
 
     });
 

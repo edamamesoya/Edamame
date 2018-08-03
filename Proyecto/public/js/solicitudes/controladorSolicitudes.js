@@ -18,9 +18,11 @@ let reglaLetras = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
 
 let sNombre = '';
 
-function obtenerDatos(){
+function obtenerDatos() {
     let curso = selectCursos.value;
     let sNombre = inputNombre.value;
+    let sProfe = localStorage.getItem('correoUsuarioActivo');
+    let sEstado = 'Pendiente: Asistente de Decanatura'
 
     let bError = false;
     bError = validar();
@@ -32,7 +34,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarSolicitud(curso, sNombre);
+        let respuesta = registrarSolicitud(sNombre, curso, sProfe, sEstado);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro Correcto',
@@ -73,19 +75,64 @@ function validar() {
 function mostrarListaSolicitudes() {
     let listaSolicitudes = obtenerSolicitudes();
     let tbody = document.querySelector('#tblSolicitudes tbody');
+    let sUsuario = localStorage.getItem('correoUsuarioActivo');
+    let sRol = localStorage.getItem('rolUsuarioActivo');
+    let fila = tbody.insertRow();
+
     tbody.innerHTML = '';
 
     for (let i = 0; i < listaSolicitudes.length; i++) {
-        let fila = tbody.insertRow();
+        switch (sRol) {
+            case 'profesor':
+                if (sUsuario == listaSolicitudes[i]['profe']) {
+
+                    let celdaNombre = fila.insertCell();
+                    let celdaCurso = fila.insertCell();
+                    let celdaEstado = fila.insertCell();
 
 
-        let celdaNombre = fila.insertCell();
-        let celdaCurso = fila.insertCell();
+                    celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
+                    celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
+                    celdaEstado.innerHTML = listaSolicitudes[i]['estado'];
 
-        celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
-        celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
+                    let botonEditar = document.createElement('a');
+                    botonEditar.href = '#';
+                    botonEditar.classList.add('far');
+                    botonEditar.classList.add('fa-edit');
+                    celdaEditar.appendChild(botonEditar);
+
+                    let botonEliminar = document.createElement('a');
+                    botonEliminar.href = '#';
+                    botonEliminar.classList.add('far');
+                    botonEliminar.classList.add('fa-trash-alt');
+                    celdaEliminar.appendChild(botonEliminar);
+                };
+            case 'asistDecanatura' || 'decanatura' || 'rectoria' || 'administrador':
+                let celdaNombre = fila.insertCell();
+                let celdaCurso = fila.insertCell();
+                let celdaEstado = fila.insertCell();
+                let celdaEditar = fila.insertCell();
+                let celdaEliminar = fila.insertCell();
+
+
+                celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
+                celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
+                celdaEstado.innerHTML = listaSolicitudes[i]['estado'];
+
+                let botonEditar = document.createElement('a');
+                botonEditar.href = '#';
+                botonEditar.classList.add('far');
+                botonEditar.classList.add('fa-edit');
+                celdaEditar.appendChild(botonEditar);
+
+                let botonEliminar = document.createElement('a');
+                botonEliminar.classList.add('far');
+                botonEliminar.classList.add('fa-trash-alt');
+                celdaEliminar.appendChild(botonEliminar);
+        };
 
     }
+
 };
 
 function abrirFuncion(evt, funcion) {
@@ -103,17 +150,22 @@ function abrirFuncion(evt, funcion) {
     evt.currentTarget.className += " active";
 };
 
-function mostrarCursos(){
+function mostrarCursos() {
     let selectCursos = document.querySelector('#lstCursos');
     selectCursos.innerHTML = '';
-    for(let i=0; i < sListaCursos.length; i++){
+    for (let i = 0; i < sListaCursos.length; i++) {
         let nuevaOpcion = new Option(sListaCursos[i]['nombre']);
         nuevaOpcion.value = sListaCursos[i]['nombre'];
         selectCursos.appendChild(nuevaOpcion);
     }
 };
 
-function limpiarFormulario(){
+function limpiarFormulario() {
     inputNombre.value = '';
     selectCursos.value = '';
 };
+
+function aprobacionAsistDecanatura() {
+    let listaSolicitudes = obtenerSolicitudes();
+
+}
