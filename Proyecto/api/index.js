@@ -70,6 +70,7 @@ const periodos = require('./components/periodos/periodo.route.js');
 const grupos = require('./components/grupos/grupo.route.js');
 const sedes = require('./components/sedes/sede.route.js');
 const solicitudes = require('./components/solicitudes/solicitud.route.js');
+const bitacoras = require('./components/bitacoras/bitacora.route.js');
 
 
 /**
@@ -83,6 +84,7 @@ app.use('/api', grupos);
 app.use('/api', periodos);
 app.use('/api', sedes);
 app.use('/api', solicitudes);
+app.use('/api', bitacoras);
 
 
 // Se guarda todo lo que se ha realizado

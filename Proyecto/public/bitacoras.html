@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Carreras</title>
+    <title>Bitácoras</title>
 
     <!--Páginas de estilo css-->
     <link rel="stylesheet" href="css/reset.css">
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="css/modal.css">
 </head>
 
 <body>
@@ -58,58 +59,48 @@
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
-            <button class="tablinks" onclick="abrirFuncion(event, 'registrarCarrera')" id="defaultOpen">Registrar carrera</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'modificarCarrera')" id="modificar">Modificar carrera</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'buscarCarrera')" id="buscar">Listar carreras</button>
-            <button class="tablinks" onclick="abrirFuncion(event, 'enlazarCursos')">Cursos asignados a carrera</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarEntrada')" id="defaultOpen">Nueva entrada</button>
+            <!-- <button class="tablinks" onclick="abrirFuncion(event, 'modificarCarrera')" id="modificar">Modificar carrera</button> -->
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarBitacora')" id="buscar">Listar bitácoras</button>
         </div>
     
         <!--Función registrar carreras-->
-        <section id="registrarCarrera" class="tabcontent">
-            <h2>Registrar carreras</h2>
+        <section id="registrarEntrada" class="tabcontent">
+            <h2>Agregar nueva entrada a bitácora</h2>
             <p>Ingrese la información solicitada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
                 para guardar los datos.
             </p>
 
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
-                    <h3>Información de carrera</h3>
+                    <h3>Información de actividad</h3>
                     <div>
-                        <label for="txtCodigo">Código *</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtCodigo" placeholder="Ej, BISOFT02" required>
-                        <!-- <label for="txtCodigo" class="labelError">*</label> -->
-                    </div>
-                    <div>
-                        <label for="txtNombre">Nombre *</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtNombre" placeholder="Ej, Ingeniería en desarrollo del software" required>
-                        <!-- <label for="txtNombre" class="labelError">*</label> -->
-                    </div>
-                    <div>
-                        <label for="txtGrado">Grado *</label>
+                        <label for="txtBitacora">Bitácora *</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtGrado" required>
-                            <option value="Maestría">Maestría</option>
-                            <option value="Licenciatura">Licenciatura</option>
-                            <option value="Postgrado">Postgrado</option>
-                            <option value="Bachillerato">Bachillerato</option>
-                            <option value="Diplomado">Diplomado</option>
-                            <option value="Técnico">Técnico</option>
+                        <select id="txtBitacora" required>
+                    
                         </select>
-                        <!-- <label for="txtRol" class="labelError">*</label> -->
                     </div>
                     <div>
-                        <label for="txtCreditos">Créditos *</label>
+                        <label for="txtActividad">Actividad realizada *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtActividad" required>
+                            <option value="opcion 1">opcion 1</option>
+                            <option value="opcion 2">opcion 2</option>
+                            <option value="opcion 3">opcion 3</option>
+                            <option value="opcion 4">opcion 4</option>
+                            <option value="opcion 5">opcion 5</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="txtHoras">Horas *</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="number" id="txtCreditos" min="0" placeholder="Ej, 170" required>
-                        <!-- <label for="txtCreditos" class="labelError">*</label> -->
+                        <input type="number" id="txtHoras" min="0" placeholder="Ej, 5" required>
                     </div>
                     <div>
-                        <label for="txtFecha">Fecha de creación *</label>
+                        <label for="txtFecha">Fecha *</label>
                         <i class="far fa-calendar-alt"></i>
-                        <input type="date" id="txtFecha" placeholder="Fecha de creación" required>
-                        <!-- <label for="txtFecha" class="labelError">*</label> -->
+                        <input type="date" id="txtFecha" placeholder="Fecha" required>
                     </div>
                     <label for="" id="labelRequerido">*: campos requeridos</label>
                 </fieldset>
@@ -118,10 +109,9 @@
         </section>
 
         <!--Función buscar carreras-->
-        <section id="buscarCarrera" class="tabcontent">
-            <h2>Lista de carreras</h2>
-            <p>Despliegue total de registros para la sección "Carreras". Para búsquedas específicas, ingrese el nombre completo,
-                parcial, o el código de la carrera en "Filtrar".
+        <section id="buscarBitacora" class="tabcontent">
+            <h2>Lista de bitácoras</h2>
+            <p>Despliegue total de bitácoras registradas. Para búsquedas específicas, ingrese el nombre del curso en "Filtrar".
             </p>
 
             <div>
@@ -132,11 +122,11 @@
             <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
-                        <th width="10%">Código</th>
-                        <th width="50%">Nombre</th>
-                        <th width="10%">Créditos</th>
-                        <th width="10%">Fecha de creación</th>
-                        <th width="10%">Estado</th>
+                        <th width="10%">Curso</th>
+                        <th width="45%">Asistente</th>
+                        <th width="10%">Horas</th>
+                        <th width="15%">Fecha de creación</th>
+                        <th width="10%">Ver más</th>
                         <th width="5%">Editar</th>
                         <th width="5%">Eliminar</th>
                     </tr>
@@ -145,50 +135,11 @@
 
                 </tbody>
             </table>
-            <h3 id="mensajeLista">No existen carreras registradas</h3>
-        </section>
-
-        <!--Función enlazar cursos-->
-        <section id="enlazarCursos" class="tabcontent">
-            <h2>Cursos asignados a carreras</h2>
-            <p>Seleccione una carrera de la lista. Podrá ver los cursos pertenecientes a esa carrera seleccionando el botón "Cursos asignados"
-                o bien asignar nuevos cursos al seleccionar el botón "Cursos sin asignar", donde puede seleccionar los cursos deseados de la lista
-                y luego agregarlos al presionar "Asignar".
-            </p>
-
-            <form action="" id="formRegistro" autocomplete="off">
-                <fieldset class="fieldset">
-                    <div class="inputLargo">
-                        <label for="txtCarrera">Carrera *</label>
-                        <i class="fas fa-list"></i>
-                        <select id="txtCarrera" required>
-                    
-                        </select>
-                        <!-- <label for="txtCarrera" class="labelError">*</label> -->
-                    </div>
-
-                    <div id="btnPestanna" class="invisible">
-                        <button type="button" id="btnCursosAsignados">Cursos asignados</button>
-                        <button type="button" id="btnAsignarCursos">Cursos sin asignar</button>
-                    </div>
-
-                    <div id="pestannaAsignados" class="invisible">
-                        <div id="lstCursosAsignados">
-                        </div>
-                    </div>
-
-                    <div id="pestannaAsignar" class="invisible">
-                        <div id="lstCursosPorAsignar">
-                        </div>
-
-                        <button type="button" id="btnAsignar" class="button">Asignar</button>
-                    </div>
-                </fieldset>
-            </form>
+            <h3 id="mensajeLista">No existen bitácoras registradas</h3>
         </section>
 
         <!--Función modificar carrera-->
-        <section id="modificarCarrera" class="tabcontent">
+        <!-- <section id="modificarCarrera" class="tabcontent">
             <h2>Modificar carrera</h2>
             <p>Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
                 para guardar los datos.
@@ -239,17 +190,60 @@
                 </fieldset>
                 <button type="button" class="button" id="btnEditar">Registrar</button>
             </form>
-        </section>
+        </section> -->
+
+            <!-- The Modal -->
+    <div id="modal" class="modal ocultar">
+
+        <!-- Modal content -->
+        <div class="modal-content" id="scrollModal">
+            <div class="close">
+                <i id="btnCerrar" class="far fa-times-circle"></i>
+            </div>
+            <div class="modal-body">
+                <section id="topInformation">
+                <div>
+                    <p id="infCurso"></p>
+                    <p id="infAsistente"></p>
+                    <p id="infProfesor"></p>
+                    <p id="infHoras"></p>
+                    <p id="infEstado"></p>
+                </div>
+                </section>
+            </div>
+
+            <div class="tabla">
+                <p class="pHelp">Detalles de entradas</p>
+                <table id="tblEntradas" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Horas</th>
+                            <th>Estudiantes</th>
+                            <th>Fecha</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
     </main>
 
     <!--Scripts-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/carreras/servicioCarreras.js"></script>
+    <script src="js/bitacoras/servicioBitacoras.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>
     <script src="js/cursos/servicioCursos.js"></script>
     <script src="js/controladorGeneral.js"></script>
-    <script src="js/carreras/controladorCarreras.js"></script>
+    <script src="js/bitacoras/controladorBitacoras.js"></script>
 </body>
 
 </html>
