@@ -21,7 +21,8 @@ module.exports.registrar = function(req, res) {
         segundoNombreContacto : req.body.segundoNombreContacto,
         primerApellidoContacto : req.body.primerApellidoContacto,
         segundoApellidoContacto : req.body.segundoApellidoContacto,
-        telefonoContacto : req.body.telefonoContacto
+        telefonoContacto : req.body.telefonoContacto,
+        estado : 'true'
     });
 
     nuevoUsuario.save(function(error){
@@ -39,4 +40,36 @@ module.exports.listar_todos = function(req, res){
             res.send(usuarios);
         }
     );
+};
+
+module.exports.eliminar_usuario = function (req, res) {
+    usuarioModel.findByIdAndDelete(req.body._id,
+        function (err, usuario) {
+            if (err) {
+                res.json({ success: false, msg: 'El usuario no se ha podido eliminar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'El usuario se ha eliminado correctamente. ' + res });
+            }
+        });
+};
+
+module.exports.buscar_usuario_id = function (req, res) {
+    usuarioModel.findById({ _id: req.body._id }).then(
+        function (usuario) {
+            res.send(usuario);
+        }
+    );
+};
+
+module.exports.modificar_usuario = function (req, res) {
+    usuarioModel.findByIdAndUpdate(req.body._id, { $set: req.body },
+        function (err, usuario) {
+            if (err) {
+                res.json({ success: false, msg: 'El usuario no se ha podido modificar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'El usuario se ha actualizado correctamente. '});
+            }
+        });
 };

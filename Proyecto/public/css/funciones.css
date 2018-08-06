@@ -27,20 +27,20 @@ section h2 {
 section p {
     margin-bottom: 20px;
     padding-bottom: 20px;
-    line-height: 20px;
+    line-height: 25px;
 }
 /* Inicio estilos boton */
 .button {
-    background-color: white; 
-    color: black; 
-    border: 2px solid #722d7b;
+    background-color: #130f40; 
+    color: white; 
+    border: 1px solid #130f40;
     margin-left: 40%;
     margin-bottom: 20px;
     width: 20%; 
 }
 
 .button:hover {
-    background-color: #722d7b;
+    background-color: #30336b;
     color: white;
 }
 /* Fin estilos boton */
@@ -64,9 +64,7 @@ fieldset{
 
 /* Inicio estilos form*/
 body main form {
-    margin-left: 25%;
-    margin-right: 25%;
-    width: 50%;
+    width: 100%;
 }
 body main div #txtBuscar{
     width: 50%;
@@ -77,7 +75,10 @@ body main fieldset{
     margin-bottom: 20px;
 }
 body main fieldset label{
-    display: block;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 10px;
 }
 body main fieldset div #lstRequisitos {
     width: 100%;
@@ -95,18 +96,51 @@ body main fieldset div #lstRequisitos input{
 body main fieldset input{
     border: none;
     outline-style: none;
-    border-bottom: 1px solid;
+    border-bottom: 1.5px solid #260536;
     font-size: 14px;
-    width: 90%;
+    width: 95%;
+    display: inline-block;
+    text-align: center;
+}
+body main fieldset input::-webkit-input-placeholder{
+    color: #130f40;
+}
+body main fieldset input:focus, textarea:focus {
+    background-color: #ddd;
+}
+body main fieldset select{
+    font-size: 14px;
+    width: 95%;
+    display: inline-block;
 }
 body main fieldset div {
+    width: 35%;
+    display: inline-block;
+    margin-bottom: 40px;
+    margin-left: 7.5%;
+    margin-right: 5%;
+}
+.inputLargo{
+    width: 85%;
+    padding: 0px 10px 0px 0px;
+    box-sizing: border-box;
+}
+body main fieldset div textarea{
+    width: 100%;
+    height: 100px;
+}
+
+body main fieldset h3 {
     margin-bottom: 15px;
-    margin-left: 25px;
+}
+body main fieldset i {
+    width: 3%;
 }
 body main fieldset #labelRequerido {
     margin-bottom: 15px;
-    margin-left: 25px;
     font-size: 10px;
+    width: 100%;
+    text-align: center;
 }
 .labelError{
     display: inline;
@@ -217,3 +251,68 @@ footer{
     text-align: center;
 }
 /* Fin estilos footer */
+
+
+
+/******************* Toggle Switch **************************/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+  }
+  
+  .switch input {display:none;}
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 6px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #30336b;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #30336b;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  /********************************* ********************************************/
+
+  .listaVacia {
+      display: none;
+  }

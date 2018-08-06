@@ -12,8 +12,6 @@ let selectSede = document.querySelector('#txtSede');
 let inputEstado = document.querySelector('#rdEstado');
 let inputBuscar = document.querySelector('#txtBuscar');
 
-recomendacion();
-
 botonRegistrar.addEventListener('click', obtenerDatos);
 inputBuscar.addEventListener('keyup', mostrarBusquedaLaboratorios);
 
@@ -96,11 +94,15 @@ function mostrarListaLaboratorios() {
 };
 
 function mostrarSedes() {
-    let selectSede = document.querySelector('#lstSedes');
-    for (let i = 0; i < listaSedes.length; i++) {
-        let nuevaOpcion = new Option(listaSedes[i]['nombre']);
-        nuevaOpcion.value = listaSedes[i]['nombre'];
-        selectSede.appendChild(nuevaOpcion);
+    let selectSede = document.getElementById('txtSede');
+    selectSede.innerHTML = '';
+
+    for(let i=0; i < listaSedes.length; i++){
+        let sSede = listaSedes[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sSede;
+        nuevaOpcion.value = sSede;
+        selectSede.add(nuevaOpcion);
     }
 };
 
@@ -134,8 +136,6 @@ function validar() {
 
     return bError
 }
-
-
 
 function mostrarBusquedaLaboratorios() {
     let listaLaboratorios = obtenerBusquedaLaboratorios(inputBuscar.value);
@@ -180,15 +180,9 @@ function mostrarBusquedaLaboratorios() {
     }
 };
 
-
 function limpiarFormulario() {
     inputCodigo.value = '';
     inputNombre.value = '';
     inputCupo.value = '';
     selectSede.value = '';
 };
-
-function recomendacion() {
-    let listaLaboratorios = obtenerLaboratorios();
-    inputCodigo.value = toString(listaLaboratorios.length + 1);
-}

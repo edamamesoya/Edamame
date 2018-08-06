@@ -6,27 +6,50 @@ mostrarBusqueda();
 /**
  * Declaración de variables.
  */
-let inputPrimerNombre = document.querySelector('#txtPrimerNombre');
-let inputSegundoNombre = document.querySelector('#txtSegundoNombre');
-let inputPrimerApellido = document.querySelector('#txtPrimerApellido');
-let inputSegundoApellido = document.querySelector('#txtSegundoApellido');
-let inputCedula = document.querySelector('#txtCedula');
-let inputProvincia = document.querySelector('#txtProvincia');
-let inputCanton = document.querySelector('#txtCanton');
-let inputDistrito = document.querySelector('#txtDistrito');
-let inputDireccion = document.querySelector('#txtDireccion');
-let inputFechaIngreso = document.querySelector('#txtFechaIngreso');
-let inputTelefono = document.querySelector('#txtTelefono');
-let inputCorreo = document.querySelector('#txtCorreo');
-let inputRol = document.querySelector('#txtRol');
-let inputPrimerNombreContacto = document.querySelector('#txtPrimerNombreContacto');
-let inputSegundoNombreContacto = document.querySelector('#txtSegundoNombreContacto');
-let inputPrimerApellidoContacto = document.querySelector('#txtPrimerApellidoContacto');
-let inputSegundoApellidoContacto = document.querySelector('#txtSegundoApellidoContacto');
-let inputTelefonoContacto = document.querySelector('#txtTelefonoContacto');
+const inputPrimerNombre = document.querySelector('#txtPrimerNombre');
+const inputSegundoNombre = document.querySelector('#txtSegundoNombre');
+const inputPrimerApellido = document.querySelector('#txtPrimerApellido');
+const inputSegundoApellido = document.querySelector('#txtSegundoApellido');
+const inputCedula = document.querySelector('#txtCedula');
+const inputProvincia = document.querySelector('#txtProvincia');
+const inputCanton = document.querySelector('#txtCanton');
+const inputDistrito = document.querySelector('#txtDistrito');
+const inputDireccion = document.querySelector('#txtDireccion');
+const inputFechaIngreso = document.querySelector('#txtFechaIngreso');
+const inputTelefono = document.querySelector('#txtTelefono');
+const inputCorreo = document.querySelector('#txtCorreo');
+const inputRol = document.querySelector('#txtRol');
+const inputPrimerNombreContacto = document.querySelector('#txtPrimerNombreContacto');
+const inputSegundoNombreContacto = document.querySelector('#txtSegundoNombreContacto');
+const inputPrimerApellidoContacto = document.querySelector('#txtPrimerApellidoContacto');
+const inputSegundoApellidoContacto = document.querySelector('#txtSegundoApellidoContacto');
+const inputTelefonoContacto = document.querySelector('#txtTelefonoContacto');
 
-let inputBuscar = document.querySelector('#txtBuscar');
-let botonRegistrar = document.querySelector('#btnRegistrar');
+const inputEditarPrimerNombre = document.querySelector('#txtEditarPrimerNombre');
+const inputEditarSegundoNombre = document.querySelector('#txtEditarSegundoNombre');
+const inputEditarPrimerApellido = document.querySelector('#txtEditarPrimerApellido');
+const inputEditarSegundoApellido = document.querySelector('#txtEditarSegundoApellido');
+const inputEditarCedula = document.querySelector('#txtEditarCedula');
+const inputEditarProvincia = document.querySelector('#txtEditarProvincia');
+const inputEditarCanton = document.querySelector('#txtEditarCanton');
+const inputEditarDistrito = document.querySelector('#txtEditarDistrito');
+const inputEditarDireccion = document.querySelector('#txtEditarDireccion');
+const inputEditarFechaIngreso = document.querySelector('#txtEditarFechaIngreso');
+const inputEditarTelefono = document.querySelector('#txtEditarTelefono');
+const inputEditarCorreo = document.querySelector('#txtEditarCorreo');
+const inputEditarRol = document.querySelector('#txtEditarRol');
+const inputEditarPrimerNombreContacto = document.querySelector('#txtEditarPrimerNombreContacto');
+const inputEditarSegundoNombreContacto = document.querySelector('#txtEditarSegundoNombreContacto');
+const inputEditarPrimerApellidoContacto = document.querySelector('#txtEditarPrimerApellidoContacto');
+const inputEditarSegundoApellidoContacto = document.querySelector('#txtEditarSegundoApellidoContacto');
+const inputEditarTelefonoContacto = document.querySelector('#txtEditarTelefonoContacto');
+
+const inputId = document.querySelector('#txtId');
+
+inputFechaIngreso.valueAsDate = new Date();
+const inputBuscar = document.querySelector('#txtBuscar');
+const botonRegistrar = document.querySelector('#btnRegistrar');
+const botonModificar = document.querySelector('#btnEditar');
 
 /**
  * Declaración variables para ubicación 
@@ -34,6 +57,10 @@ let botonRegistrar = document.querySelector('#btnRegistrar');
 let nNumeroProvincia = 0;
 let nNumeroCanton = 0;
 let nNumeroDistrito = 0;
+
+let nNumeroEProvincia = 0;
+let nNumeroECanton = 0;
+let nNumeroEDistrito = 0;
 
 let sListaProvincias = [];
 let sListaCantones = [];
@@ -44,15 +71,19 @@ sListaCantones = obtenerCantones();
 sListaDistritos = obtenerDistritos();
 
 mostrarProvincias();
-mostrarCantones();
-mostrarDistritos();
+mostrarEditarProvincias();
 
 /**
  * Declaración de eventos relacionados a elementos HTML.
  */
 inputProvincia.addEventListener('change', setNumeroProvincia);
 inputCanton.addEventListener('change', setNumeroCanton);
+
+inputEditarProvincia.addEventListener('change', setNumeroEditarProvincia);
+inputEditarCanton.addEventListener('change', setNumeroEditarCanton);
+
 botonRegistrar.addEventListener('click', obtenerDatos);
+botonModificar.addEventListener('click', modificarDatos);
 inputBuscar.addEventListener('keyup' , function(){
     mostrarBusqueda(inputBuscar.value)
 });
@@ -60,11 +91,11 @@ inputBuscar.addEventListener('keyup' , function(){
 /**
  * Declaración de expresiones regulares.
  */
-let regexCodigo = /^[a-zA-Z0-9]+$/;
-let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ]+$/;
-let regexDireccion = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9\(\)\@\"\'\:\.\,\;\-\#\_\\\/\?\¿\!\¡ ]+$/;
-let regexNumeros = /^[0-9]+$/;
-let regexCorreo = /[a-zA-ZÑñáéíóúÁÉÍÓÚ]+@ucenfotec+\.ac\.cr+/;
+const regexCodigo = /^[a-zA-Z0-9]+$/;
+const regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ]+$/;
+const regexDireccion = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9\(\)\@\"\'\:\.\,\;\-\#\_\\\/\?\¿\!\¡ ]+$/;
+const regexNumeros = /^[0-9]+$/;
+const regexCorreo = /[a-zA-ZÑñáéíóúÁÉÍÓÚ]+@ucenfotec+\.ac\.cr+/;
 
 /**
  * Descripción: Registra un usuario con los datos obtenidos del usuario.
@@ -120,6 +151,62 @@ function obtenerDatos(){
                 confirmButtonText: 'Entendido'
             });
         }
+    }
+};
+
+function modificarDatos(){
+    let sPrimerNombre = inputEditarPrimerNombre.value;
+    let sSegundoNombre = inputEditarSegundoNombre.value;
+    let sPrimerApellido = inputEditarPrimerApellido.value;
+    let sSegundoApellido = inputEditarSegundoApellido.value;
+    let nCedula = inputEditarCedula.value;
+    let sProvincia = inputEditarProvincia.value;
+    let sCanton = inputEditarCanton.value;
+    let sDistrito = inputEditarDistrito.value;
+    let sDireccion = inputEditarDireccion.value;
+    let fFechaIngreso = inputEditarFechaIngreso.value;
+    let sCorreo = inputEditarCorreo.value;
+    let sRol = inputEditarRol.value;
+    let sPrimerNombreContacto = inputEditarPrimerNombreContacto.value;
+    let sSegundoNombreContacto = inputEditarSegundoNombreContacto.value;
+    let sPrimerApellidoContacto = inputEditarPrimerApellidoContacto.value;
+    let sSegundoApellidoContacto = inputEditarSegundoApellidoContacto.value;
+    let nTelefonoContacto = inputEditarTelefonoContacto.value;
+
+    let sEstado = chkEstado.checked;
+    let sId = inputId.value;
+
+    let bError = false;
+    bError = validarRegistroModificar();
+    
+    if(bError == true){
+        swal({
+            title: 'Modificación incorrecta',
+            text: 'No se pudo modificar el usuario, revise los campos en rojo',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+          });
+    }else{
+        let respuesta = actualizarUsuario(sId, sPrimerNombre, sSegundoNombre, sPrimerApellido, sSegundoApellido, nCedula, sProvincia, sCanton, sDistrito, sDireccion, fFechaIngreso, sCorreo, sRol, sPrimerNombreContacto, sSegundoNombreContacto, sPrimerApellidoContacto, sSegundoApellidoContacto, nTelefonoContacto, sEstado);
+        if(respuesta.success == true){
+            swal({
+                title: 'Modificación correcta',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            listaUsuarios = obtenerUsuarios();
+            // limpiarFormularioModificar();
+            mostrarBusqueda();
+            document.getElementById("buscar").click();
+        }else{
+            swal({
+                title: 'Registro incorrecto',
+                text: respuesta.msg,
+                type: 'error',
+                confirmButtonText: 'Entendido'
+              });
+        }   
     }
 };
 
@@ -181,7 +268,7 @@ function validarRegistro(){
         inputSegundoApellido.classList.remove('errorInput');
     }
     // Validación del input para cédula
-    if(nCedula == 0 || (regexNumeros.test(nCedula) == false)){
+    if(nCedula == 0 || (regexNumeros.test(nCedula) == false) || (nCedula < 100000000) || (nCedula > 999999999)){
         inputCedula.classList.add('errorInput');
         bError = true;
     }else{
@@ -202,7 +289,7 @@ function validarRegistro(){
         inputFechaIngreso.classList.remove('errorInput');
     }
     // Validación del input para teléfono
-    if(nTelefono == 0 || (regexNumeros.test(nTelefono) == false) || (nTelefono < 10000000) || (nTelefono > 9999999999) ){
+    if(nTelefono == 0 || (regexNumeros.test(nTelefono) == false) || (nTelefono < 10000000) || (nTelefono > 99999999) ){
         inputTelefono.classList.add('errorInput');
         bError = true;
     }else{
@@ -275,6 +362,152 @@ function validarRegistro(){
     return bError;
 }
 
+function validarRegistroModificar(){
+    let bError = false;
+    let dFechaActual = new Date();
+
+    let sPrimerNombre = inputEditarPrimerNombre.value;
+    let sSegundoNombre = inputEditarSegundoNombre.value;
+    let sPrimerApellido = inputEditarPrimerApellido.value;
+    let sSegundoApellido = inputEditarSegundoApellido.value;
+    let nCedula = Number(inputEditarCedula.value);
+    let sProvincia = inputEditarProvincia.value;
+    let sCanton = inputEditarCanton.value;
+    let sDistrito = inputEditarDistrito.value;
+    let sDireccion = inputEditarDireccion.value;
+    let dFechaIngreso = new Date(inputEditarFechaIngreso.value);
+    let nTelefono = Number(inputEditarTelefono.value);
+    let sCorreo = inputEditarCorreo.value;
+    let sRol = inputEditarRol.value;
+    let sPrimerNombreContacto = inputEditarPrimerNombreContacto.value;
+    let sSegundoNombreContacto = inputEditarSegundoNombreContacto.value;
+    let sPrimerApellidoContacto = inputEditarPrimerApellidoContacto.value;
+    let sSegundoApellidoContacto = inputEditarSegundoApellidoContacto.value;
+    let nTelefonoContacto = Number(inputEditarTelefonoContacto.value);
+
+    // Validación del input para primer nombre
+    if (sPrimerNombre == '' || (regexNombre.test(sPrimerNombre) == false) ){
+        inputEditarPrimerNombre.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarPrimerNombre.classList.remove('errorInput');
+    }
+    // Validación del input para segundo nombre
+    if (sSegundoNombre == '' || (regexNombre.test(sSegundoNombre) == false) ){
+        inputEditarSegundoNombre.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarSegundoNombre.classList.remove('errorInput');
+    }
+    // Validación del input para primer apellido
+    if (sPrimerApellido == '' || (regexNombre.test(sPrimerApellido) == false) ){
+        inputEditarPrimerApellido.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarPrimerApellido.classList.remove('errorInput');
+    }
+    // Validación del input para segundo apellido
+    if (sSegundoApellido == '' || (regexNombre.test(sSegundoApellido) == false) ){
+        inputEditarSegundoApellido.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarSegundoApellido.classList.remove('errorInput');
+    }
+    // Validación del input para cédula
+    if(nCedula == 0 || (regexNumeros.test(nCedula) == false) || (nCedula < 100000000) || (nCedula > 999999999)){
+        inputEditarCedula.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarCedula.classList.remove('errorInput');
+    }
+    // Validación del input para dirección
+    if(sDireccion == 0 || (regexDireccion.test(sDireccion) == false) ){
+        inputEditarDireccion.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarDireccion.classList.remove('errorInput');
+    }
+    // Validación del input para fecha
+    if (dFechaIngreso == '' || dFechaIngreso > dFechaActual ){
+        inputEditarFechaIngreso.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarFechaIngreso.classList.remove('errorInput');
+    }
+    // Validación del input para teléfono
+    if(nTelefono == 0 || (regexNumeros.test(nTelefono) == false) || (nTelefono < 10000000) || (nTelefono > 99999999) ){
+        inputEditarTelefono.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarTelefono.classList.remove('errorInput');
+    }
+    // Validación del input para primer nombre del contacto de emergencia
+    if (sPrimerNombreContacto == '' || (regexNombre.test(sPrimerNombreContacto) == false) ){
+        inputEditarPrimerNombreContacto.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarPrimerNombreContacto.classList.remove('errorInput');
+    }
+    // Validación del input para segundo nombre del contacto de emergencia
+    if (sSegundoNombreContacto == '' || (regexNombre.test(sSegundoNombreContacto) == false) ){
+        inputEditarSegundoNombreContacto.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarSegundoNombreContacto.classList.remove('errorInput');
+    }
+    // Validación del input para primer apellido del contacto de emergencia
+    if (sPrimerApellidoContacto == '' || (regexNombre.test(sPrimerApellidoContacto) == false) ){
+        inputPrimerApellidoContacto.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputPrimerApellidoContacto.classList.remove('errorInput');
+    }
+    // Validación del input para segundo apellido del contacto de emergencia
+    if (sSegundoApellidoContacto == '' || (regexNombre.test(sSegundoApellidoContacto) == false) ){
+        inputEditarSegundoApellidoContacto.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarSegundoApellidoContacto.classList.remove('errorInput');
+    }
+    // Validación del input para teléfono
+    if(nTelefonoContacto == 0 || (regexNumeros.test(nTelefonoContacto) == false) || (nTelefonoContacto < 10000000) || (nTelefonoContacto > 99999999) ){
+        inputEditarTelefonoContacto.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarTelefonoContacto.classList.remove('errorInput');
+    }
+    // Validación del input para provincia
+    if (sProvincia == '' ){
+        inputEditarProvincia.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarProvincia.classList.remove('errorInput');
+    }
+    // Validación del input para canton
+    if (sCanton == '' ){
+        inputEditarCanton.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarCanton.classList.remove('errorInput');
+    }
+    // Validación del input para distrito
+    if (sDistrito == '' ){
+        inputEditarDistrito.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarDistrito.classList.remove('errorInput');
+    }
+    // Validación del input para correo electrónico
+    if (sCorreo == '' || (regexCorreo.test(sCorreo) == false) ){
+        inputEditarCorreo.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarCorreo.classList.remove('errorInput');
+    }
+    //Rol
+    return bError;
+}
+
 /**
  * Descripción: Filtra los usuarios de una lista de usuarios registrados cuyo nombre haga match, 
  * y las muestra en una tabla junto con las opciones para editar y eliminar.
@@ -293,8 +526,8 @@ function mostrarBusqueda(pFiltro){
         if( (nombreCompleto.toLowerCase()).includes(pFiltro.toLowerCase()) ){
             let fila = tbody.insertRow();
 
-            let celdaNombre = fila.insertCell();
             let celdaCedula = fila.insertCell();
+            let celdaNombre = fila.insertCell();
             let celdaTelefono = fila.insertCell();
             let celdaCorreo = fila.insertCell();
             let celdaContactoEmergencia = fila.insertCell();
@@ -314,17 +547,28 @@ function mostrarBusqueda(pFiltro){
             celdaContactoEmergencia.appendChild(botonContactoEmergencia);
             
             let botonEditar = document.createElement('a');
-            botonEditar.href = '#';
             botonEditar.classList.add('far');
             botonEditar.classList.add('fa-edit');
+
+            botonEditar.dataset.id = listaUsuarios[i]['_id'];
+            botonEditar.addEventListener('click', editar);
+
             celdaEditar.appendChild(botonEditar);
 
             let botonEliminar = document.createElement('a');
-            botonEliminar.href = '#';
             botonEliminar.classList.add('far');
             botonEliminar.classList.add('fa-trash-alt');
+
+            botonEliminar.dataset.id = listaUsuarios[i]['_id'];
+            botonEliminar.addEventListener('click', eliminar); 
+
             celdaEliminar.appendChild(botonEliminar);
         }
+    }
+    if(listaUsuarios.length == 0){
+        document.getElementById('mensajeLista').classList.remove('listaVacia');
+    }else{
+        document.getElementById('mensajeLista').classList.add('listaVacia');
     }
 };
 
@@ -357,12 +601,15 @@ function limpiarFormulario(){
  * Descripción: Muestra una lista de las provincias de Costa Rica.
  */
 function mostrarProvincias(){
-    let selectProvincias = document.querySelector('#lstProvincias');
+    let selectProvincias = document.getElementById('txtProvincia');
     selectProvincias.innerHTML = '';
+
     for(let i=0; i < sListaProvincias.length; i++){
-        let nuevaOpcion = new Option(sListaProvincias[i]['nombre']);
-        nuevaOpcion.value = sListaProvincias[i]['nombre'];
-        selectProvincias.appendChild(nuevaOpcion);
+        let sProvincia = sListaProvincias[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sProvincia;
+        nuevaOpcion.value = sProvincia;
+        selectProvincias.add(nuevaOpcion);
     }
 };
 
@@ -371,13 +618,16 @@ function mostrarProvincias(){
  * esté seleccionada.
  */
 function mostrarCantones(){
-    let selectCantones = document.querySelector('#lstCantones');
+    let selectCantones = document.getElementById('txtCanton');
     selectCantones.innerHTML = '';
+
     for(let i=0; i < sListaCantones.length; i++){
         if (nNumeroProvincia == sListaCantones[i]['Provincia_idProvincia']){
-            let nuevaOpcion = new Option(sListaCantones[i]['nombre']);
-            nuevaOpcion.value = sListaCantones[i]['nombre'];
-            selectCantones.appendChild(nuevaOpcion);
+            let sCanton = sListaCantones[i]['nombre'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sCanton;
+            nuevaOpcion.value = sCanton;
+            selectCantones.add(nuevaOpcion);
         }
     }
 };
@@ -387,14 +637,16 @@ function mostrarCantones(){
  * esté seleccionado.
  */
 function mostrarDistritos(){
-
-    let selectDistritos = document.querySelector('#lstDistritos');
+    let selectDistritos = document.getElementById('txtDistrito');
     selectDistritos.innerHTML = '';
+
     for(let i=0; i < sListaDistritos.length; i++){
         if (nNumeroCanton == sListaDistritos[i]['Canton_idCanton']){
-            let nuevaOpcion = new Option(sListaDistritos[i]['nombre']);
-            nuevaOpcion.value = sListaDistritos[i]['nombre'];
-            selectDistritos.appendChild(nuevaOpcion);
+            let sDistrito = sListaDistritos[i]['nombre'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sDistrito;
+            nuevaOpcion.value = sDistrito;
+            selectDistritos.add(nuevaOpcion);
         }
     }
 };
@@ -423,4 +675,120 @@ function setNumeroCanton(){
         }
     }
     mostrarDistritos();
+};
+
+function eliminar(){
+    let id = this.dataset.id;
+
+    swal({
+        title: '¿Seguro que desea eliminar el usuario?',
+        text: "Esta acción no se puede revertir",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+      }).then((result) => {
+        if (result.value) {
+            eliminarUsuario(id);
+            listaUsuarios = obtenerUsuarios();
+            mostrarBusqueda();
+          swal(
+            'Eliminado!',
+            'El usuario ha sido eliminado.',
+            'success'
+          )
+        }
+      })
+};
+
+function editar(){
+    let id = this.dataset.id;
+
+    document.getElementById("modificar").click();
+    let usuario = obtenerUsuarioPorId(id);
+
+    inputEditarPrimerNombre.value = usuario['primerNombre'];
+    inputEditarSegundoNombre.value = usuario['segundoNombre'];
+    inputEditarPrimerApellido.value = usuario['primerApellido'];
+    inputEditarSegundoApellido.value = usuario['segundoApellido'];
+    inputEditarCedula.value = usuario['cedula'];
+    inputEditarProvincia.value = usuario['provincia'];
+    inputEditarCanton.value = usuario['canton'];
+    inputEditarDistrito.value = usuario['distrito'];
+    inputEditarDireccion.value = usuario['direccion'];
+    inputEditarFechaIngreso.valueAsDate = new Date(usuario['fechaIngreso']);
+    inputEditarTelefono.value = usuario['telefono'];
+    inputEditarCorreo.value = usuario['correo'];
+    inputEditarRol.value = usuario['rol'];
+    inputEditarPrimerNombreContacto.value = usuario['primerNombreContacto'];
+    inputEditarSegundoNombreContacto.value = usuario['segundoNombreContacto'];
+    inputEditarPrimerApellidoContacto.value = usuario['primerApellidoContacto'];
+    inputEditarSegundoApellidoContacto.value = usuario['segundoApellidoContacto'];
+    inputEditarTelefonoContacto.value = usuario['telefonoContacto'];
+    chkEstado.checked = usuario['estado'];
+    inputId.value = usuario['_id'];
+};
+
+function mostrarEditarProvincias(){
+    let selectProvincias = document.getElementById('txtEditarProvincia');
+    selectProvincias.innerHTML = '';
+
+    for(let i=0; i < sListaProvincias.length; i++){
+        let sProvincia = sListaProvincias[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sProvincia;
+        nuevaOpcion.value = sProvincia;
+        selectProvincias.add(nuevaOpcion);
+    }
+};
+
+function setNumeroEditarProvincia(){
+    let sProvincia = inputEditarProvincia.value;
+    for(let i=0; i < sListaProvincias.length; i++){
+        if (sProvincia == sListaProvincias[i]['nombre']){
+            nNumeroProvincia = sListaProvincias[i]['idProvincia'];
+        }
+    }
+    mostrarEditarCantones();
+};
+
+function setNumeroEditarCanton(){
+    let sCanton = inputEditarCanton.value;
+    for(let i=0; i < sListaCantones.length; i++){
+        if (sCanton == sListaCantones[i]['nombre']){
+            nNumeroCanton = sListaCantones[i]['idCanton'];
+        }
+    }
+    mostrarEditarDistritos();
+};
+
+function mostrarEditarCantones(){
+    let selectCantones = document.getElementById('txtEditarCanton');
+    selectCantones.innerHTML = '';
+
+    for(let i=0; i < sListaCantones.length; i++){
+        if (nNumeroProvincia == sListaCantones[i]['Provincia_idProvincia']){
+            let sCanton = sListaCantones[i]['nombre'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sCanton;
+            nuevaOpcion.value = sCanton;
+            selectCantones.add(nuevaOpcion);
+        }
+    }
+};
+
+function mostrarEditarDistritos(){
+    let selectDistritos = document.getElementById('txtEditarDistrito');
+    selectDistritos.innerHTML = '';
+
+    for(let i=0; i < sListaDistritos.length; i++){
+        if (nNumeroCanton == sListaDistritos[i]['Canton_idCanton']){
+            let sDistrito = sListaDistritos[i]['nombre'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sDistrito;
+            nuevaOpcion.value = sDistrito;
+            selectDistritos.add(nuevaOpcion);
+        }
+    }
 };

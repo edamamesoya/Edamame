@@ -9,21 +9,35 @@ mostrarPestannas();
 /**
  * Declaración de variables.
  */
-let inputCodigo = document.querySelector('#txtCodigo');
-let inputNombre = document.querySelector('#txtNombre');
-let inputCreditos = document.querySelector('#txtCreditos');
-let inputFecha = document.querySelector('#txtFecha');
-let inputBuscar = document.querySelector('#txtBuscar');
-let inputCarrera = document.querySelector('#txtCarrera');
-let botonRegistrar = document.querySelector('#btnRegistrar');
-let botonCursosAsignados = document.querySelector('#btnCursosAsignados');
-let botonAsignarCursos = document.querySelector('#btnAsignarCursos');
-let botonAsignar = document.querySelector('#btnAsignar');
+const inputCodigo = document.querySelector('#txtCodigo');
+const inputNombre = document.querySelector('#txtNombre');
+const selectGrado = document.querySelector('#txtGrado');
+const inputCreditos = document.querySelector('#txtCreditos');
+const inputFecha = document.querySelector('#txtFecha');
+
+const inputEditarCodigo = document.querySelector('#txtEditarCodigo');
+const inputEditarNombre = document.querySelector('#txtEditarNombre');
+const selectEditarGrado = document.querySelector('#txtEditarGrado');
+const inputEditarCreditos = document.querySelector('#txtEditarCreditos');
+const inputEditarFecha = document.querySelector('#txtEditarFecha');
+const chkEstado = document.querySelector('#chkEstado');
+
+const inputId = document.querySelector('#txtId');
+
+const inputBuscar = document.querySelector('#txtBuscar');
+const inputCarrera = document.querySelector('#txtCarrera');
+const botonRegistrar = document.querySelector('#btnRegistrar');
+const botonModificar = document.querySelector('#btnEditar');
+const botonCursosAsignados = document.querySelector('#btnCursosAsignados');
+const botonAsignarCursos = document.querySelector('#btnAsignarCursos');
+const botonAsignar = document.querySelector('#btnAsignar');
 
 /**
  * Declaración de eventos relacionados a elementos HTML.
  */
 botonRegistrar.addEventListener('click', obtenerDatos);
+botonModificar.addEventListener('click', modificarDatos);
+
 botonAsignar.addEventListener('click', asignarCursos);
 inputBuscar.addEventListener('keyup', function(){
     mostrarBusqueda(inputBuscar.value)
@@ -45,6 +59,7 @@ let regexCreditos = /^[0-9]+$/;
 function obtenerDatos(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
+    let sGrado = selectGrado.value;
     let nCreditos = inputCreditos.value;
     let dFechaCreacion = inputFecha.value;
 
@@ -59,7 +74,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
           });
     }else{
-        let respuesta = registrarCarrera(sCodigo , sNombre, nCreditos, dFechaCreacion);
+        let respuesta = registrarCarrera(sCodigo , sNombre, sGrado, nCreditos, dFechaCreacion);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -69,6 +84,51 @@ function obtenerDatos(){
             });
             sListaCarreras = obtenerCarreras();
             limpiarFormulario();
+            mostrarBusqueda();
+            mostrarCursosAsignados();
+            mostrarCarreras();
+            document.getElementById("buscar").click();
+        }else{
+            swal({
+                title: 'Registro incorrecto',
+                text: respuesta.msg,
+                type: 'error',
+                confirmButtonText: 'Entendido'
+              });
+        }   
+    }
+};
+
+function modificarDatos(){
+    let sCodigo = inputEditarCodigo.value;
+    let sNombre = inputEditarNombre.value;
+    let sGrado = selectEditarGrado.value;
+    let nCreditos = inputEditarCreditos.value;
+    let dFechaCreacion = inputEditarFecha.value;
+    let sEstado = chkEstado.checked;
+    let sId = inputId.value;
+
+    let bError = false;
+    bError = validarRegistroModificar();
+    
+    if(bError == true){
+        swal({
+            title: 'Modificación incorrecta',
+            text: 'No se pudo modificar la carrera, revise los campos en rojo',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+          });
+    }else{
+        let respuesta = actualizarCarrera(sId, sCodigo , sNombre, sGrado, nCreditos, dFechaCreacion, sEstado);
+        if(respuesta.success == true){
+            swal({
+                title: 'Modificación correcta',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            sListaCarreras = obtenerCarreras();
+            limpiarFormularioModificar();
             mostrarBusqueda();
             mostrarCursosAsignados();
             mostrarCarreras();
@@ -94,6 +154,7 @@ function validarRegistro(){
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
+    let sGrado = selectGrado.value;
     let nCreditos = Number(inputCreditos.value);
     let dFechaCreacion = new Date(inputFecha.value);
     let dFechaActual = new Date();
@@ -114,6 +175,14 @@ function validarRegistro(){
         inputNombre.classList.remove('errorInput');
     }
 
+    // Validación del select grado
+    if (sGrado == ''){
+        selectGrado.classList.add('errorInput');
+        bError = true;
+    }else{
+        selectGrado.classList.remove('errorInput');
+    }
+
     // Validación del input para créditos
     if(nCreditos == 0 || (regexCreditos.test(nCreditos) == false) ){
         inputCreditos.classList.add('errorInput');
@@ -123,7 +192,7 @@ function validarRegistro(){
     }
 
     // Validación del input para fecha
-    if (dFechaCreacion == '' || dFechaCreacion > dFechaActual ){
+    if (inputFecha.value == '' || dFechaCreacion > dFechaActual ){
         inputFecha.classList.add('errorInput');
         bError = true;
     }else{
@@ -131,6 +200,57 @@ function validarRegistro(){
     }
     return bError;
 }
+
+function validarRegistroModificar(){
+    let bError = false;
+    let sCodigo = inputEditarCodigo.value;
+    let sNombre = inputEditarNombre.value;
+    let sGrado = selectEditarGrado.value;
+    let nCreditos = Number(inputEditarCreditos.value);
+    let dFechaCreacion = new Date(inputEditarFecha.value);
+    let dFechaActual = new Date();
+
+    // Validación del input para código
+    if (sCodigo == '' || (regexCodigo.test(sCodigo) == false) ){
+        inputEditarCodigo.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarCodigo.classList.remove('errorInput');
+    }
+
+    // Validación del input para nombre
+    if (sNombre == '' || (regexNombre.test(sNombre) == false) ){
+        inputEditarNombre.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarNombre.classList.remove('errorInput');
+    }
+
+    // Validación del select grado
+    if (sGrado == ''){
+        selectGrado.classList.add('errorInput');
+        bError = true;
+    }else{
+        selectGrado.classList.remove('errorInput');
+    }
+
+    // Validación del input para créditos
+    if(nCreditos == 0 || (regexCreditos.test(nCreditos) == false) ){
+        inputEditarCreditos.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarCreditos.classList.remove('errorInput');
+    }
+
+    // Validación del input para fecha
+    if (dFechaCreacion == '' || dFechaCreacion > dFechaActual ){
+        inputEditarFecha.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputEditarFecha.classList.remove('errorInput');
+    }
+    return bError;
+};
 
 /**
  * Descripción: Filtra las carreras de una lista de carreras registradas cuyo nombre haga match, 
@@ -174,17 +294,28 @@ function mostrarBusqueda(pFiltro){
         }
 
         let botonEditar = document.createElement('a');
-        botonEditar.href = '';
         botonEditar.classList.add('far');
         botonEditar.classList.add('fa-edit');
+
+        botonEditar.dataset.id = sListaCarreras[i]['_id'];
+        botonEditar.addEventListener('click', editar);
+
         celdaEditar.appendChild(botonEditar);
 
         let botonEliminar = document.createElement('a');
-        botonEliminar.href = '#';
         botonEliminar.classList.add('far');
         botonEliminar.classList.add('fa-trash-alt');
+
+        botonEliminar.dataset.id = sListaCarreras[i]['_id'];
+        botonEliminar.addEventListener('click', eliminar);
+
         celdaEliminar.appendChild(botonEliminar);
         }
+    }
+    if(sListaCarreras.length == 0){
+        document.getElementById('mensajeLista').classList.remove('listaVacia');
+    }else{
+        document.getElementById('mensajeLista').classList.add('listaVacia');
     }
 };
 
@@ -199,18 +330,28 @@ function limpiarFormulario(){
     inputFecha.value = '';
 };
 
+function limpiarFormularioModificar(){
+    inputEditarCodigo.value = '';
+    inputEditarNombre.value = '';
+    inputEditarCreditos.value = '';
+    inputEditarFecha.value = '';
+};
+
 /**
  * Descripción: Agrega al html una lista de las carreras registradas.
  */
 function mostrarCarreras(){
     sListaCarreras = obtenerCarreras();
-    
-    let selectCarreras = document.querySelector('#lstCarreras');
+
+    let selectCarreras = document.getElementById('txtCarrera');
     selectCarreras.innerHTML = '';
+
     for(let i=0; i < sListaCarreras.length; i++){
-        let nuevaOpcion = new Option(sListaCarreras[i]['nombre']);
-        nuevaOpcion.value = sListaCarreras[i]['nombre'];
-        selectCarreras.appendChild(nuevaOpcion);
+        let sCarrera = sListaCarreras[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sCarrera;
+        nuevaOpcion.value = sCarrera;
+        selectCarreras.add(nuevaOpcion);
     }
 };
 
@@ -288,64 +429,38 @@ function mostrarCursosAsignados(){
  * Descripción: Muestra los cursos sin asignar a una carrera seleccionada.
  */
 function mostrarCursosPorAsignar(){     
-    // sListaCarreras = obtenerCarreras();
-    // sListaCursos = obtenerCursos();
-    // let sCarreraActual = document.querySelector('#txtCarrera').value;
-
-    // let x=[];
-    // let b=false;
-
-    // let selectCursosAsignados = document.querySelector('#lstCursosAsignados');
-    // selectCursosAsignados.innerHTML = '';
-
-    // for (let i=0; i < sListaCarreras.length; i++) { 
-    //     if (sCarreraActual == sListaCarreras[i]['nombre']){
-    //         for(let k=0; k < sListaCursos; k++){ 
-    //             b=false;
-    //             for (let j=0; j < sListaCarreras[i]['cursosAsignados'].length; j++) {
-    //                 if (sListaCurso[k]['nombre'] != sListaCarreras[i]['cursosAsignados'][j]['nombreCurso']){
-    //                     b = true;
-    //                 }
-    //             }
-    //             if(b){
-    //                 x.push(sListaCurso[k]);
-    //             }
-    //         }
-    //     }
-    // }
-    // for (let i=0; i < x.length; i++) { 
-    //     let etiquetaCursoPorAsignar = document.createElement('label');
-    //     let cursoPorAsignar = document.createElement('input');
-    
-    //     cursoPorAsignar.setAttribute('type', 'checkbox');
-    //     cursoPorAsignar.setAttribute('name', x[i]['nombre']);
-    //     cursoPorAsignar.setAttribute('value', x[i]['codigo']);
-    
-    //     etiquetaCursoPorAsignar.innerHTML = x[i]['nombre'];
-    //     etiquetaCursoPorAsignar.setAttribute('for', x[i]['nombre']);
-    
-    //     document.getElementById('lstCursosPorAsignar').appendChild(cursoPorAsignar);
-    //     document.getElementById('lstCursosPorAsignar').appendChild(etiquetaCursoPorAsignar);
-    //     }
+    sListaCarreras = obtenerCarreras();
     sListaCursos = obtenerCursos();
+    let sCarreraActual = document.querySelector('#txtCarrera').value;
 
     let selectCursosPorAsignar = document.querySelector('#lstCursosPorAsignar');
     selectCursosPorAsignar.innerHTML = '';
-    
-    for (let i=0; i < sListaCursos.length; i++) { 
 
-    let etiquetaCursoPorAsignar = document.createElement('label');
-    let cursoPorAsignar = document.createElement('input');
+    for (let i=0; i < sListaCarreras.length; i++) { 
+        if (sCarreraActual == sListaCarreras[i]['nombre']){
+            for(let k=0; k < sListaCursos.length; k++){ 
+                let bAsignado = false;
+                for (let j=0; j < sListaCarreras[i]['cursosAsignados'].length; j++) {
+                    if (sListaCursos[k]['nombre'] == sListaCarreras[i]['cursosAsignados'][j]['nombreCurso']){
+                        bAsignado = true;
+                    }
+                }
+                if(!bAsignado){
+                    let etiquetaCursoPorAsignar = document.createElement('label');
+                    let cursoPorAsignar = document.createElement('input');
 
-    cursoPorAsignar.setAttribute('type', 'checkbox');
-    cursoPorAsignar.setAttribute('name', sListaCursos[i]['nombre']);
-    cursoPorAsignar.setAttribute('value', sListaCursos[i]['codigo']);
+                    cursoPorAsignar.setAttribute('type', 'checkbox');
+                    cursoPorAsignar.setAttribute('name', sListaCursos[k]['nombre']);
+                    cursoPorAsignar.setAttribute('value', sListaCursos[k]['codigo']);
 
-    etiquetaCursoPorAsignar.innerHTML = sListaCursos[i]['nombre'];
-    etiquetaCursoPorAsignar.setAttribute('for', sListaCursos[i]['nombre']);
+                    etiquetaCursoPorAsignar.innerHTML = sListaCursos[k]['nombre'];
+                    etiquetaCursoPorAsignar.setAttribute('for', sListaCursos[k]['nombre']);
 
-    document.getElementById('lstCursosPorAsignar').appendChild(cursoPorAsignar);
-    document.getElementById('lstCursosPorAsignar').appendChild(etiquetaCursoPorAsignar);
+                    document.getElementById('lstCursosPorAsignar').appendChild(cursoPorAsignar);
+                    document.getElementById('lstCursosPorAsignar').appendChild(etiquetaCursoPorAsignar);
+                }
+            }
+        }
     }
 };
 
@@ -396,4 +511,46 @@ function asignarCursos(){
         } 
         }
     } 
+};
+
+function eliminar(){
+    let id = this.dataset.id;
+
+    swal({
+        title: '¿Seguro que desea eliminar la carrera?',
+        text: "Esta acción no se puede revertir",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+      }).then((result) => {
+        if (result.value) {
+            eliminarCarrera(id);
+            sListaCarreras = obtenerCarreras();
+            mostrarBusqueda();
+            mostrarCursosAsignados();
+            mostrarCarreras();
+          swal(
+            'Eliminada!',
+            'La carrera ha sido eliminada.',
+            'success'
+          )
+        }
+      })
+};
+
+function editar(){
+    let id = this.dataset.id;
+
+    document.getElementById("modificar").click();
+    let carrera = obtenerCarreraPorId(id);
+
+    inputEditarCodigo.value = carrera['codigo'];
+    inputEditarNombre.value = carrera['nombre'];
+    selectEditarGrado.value = carrera['grado'];
+    inputEditarCreditos.value = carrera['creditos'];
+    inputEditarFecha.valueAsDate = new Date(carrera['fechaCreacion']);
+    chkEstado.checked = carrera['estado'];
+    inputId.value = carrera['_id'];
 };

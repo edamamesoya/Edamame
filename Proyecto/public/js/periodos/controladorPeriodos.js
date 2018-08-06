@@ -1,6 +1,6 @@
 'use strict'
 
-mostrarListaPeriodos();
+mostrarListaPeriodos()
 
 let botonRegistrar = document.querySelector('#btnRegistrar');
 let inputCodigo = document.querySelector('#txtCodigo');
@@ -20,7 +20,6 @@ let regexNombre = /^[a-zA-Z0-9 ]+$/;
 
 inputBuscar.value = '';
 mostrarBusquedaPeriodos();
-recomendarFecha();
 
 function obtenerDatos() {
     let bError = false;
@@ -51,7 +50,7 @@ function obtenerDatos() {
             swal({
                 title: 'Registro incorrecto',
                 text: respuesta.msg,
-                type: 'warning',
+                type: 'error',
                 confirmButtonText: 'Entendido'
             });
         }
@@ -82,7 +81,7 @@ function mostrarListaPeriodos() {
         let nAnnoInicio = dFechaInicio.getUTCFullYear();
         celdaCodigo.innerHTML = listaPeriodos[i]['codigo'];
         celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
-        celdaFechaInicio.innerHTML = nDiaInicio + '/' + nMesInicio + '/' + nAnnoInicio;
+        celdaFechaInicio.innerHTML = nDiaInicio + '/' + nMesInicio + '/' +nAnnoInicio;
 
         let dFechaConclusion = new Date(listaPeriodos[i]['fechaconclusion']);
         let nMesConclusion = dFechaConclusion.getUTCMonth() + 1;
@@ -100,51 +99,45 @@ function mostrarListaPeriodos() {
 };
 
 function validar() {
-    let listaPeriodos = obtenerPeriodos();
     let bError = false;
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let dFechaInicio = new Date(inputFechaInicio.value);
     let dFechaConclusion = new Date(inputFechaConclusion.value);
     let dFechaActual = new Date();
-    let bCoincidenciaCodigo = false;
 
-    for (let i = 0; i < listaPeriodos.length; i++) {
-        if (sCodigo == '' || (regexCodigo.test(sCodigo) == false) || sCodigo == listaPeriodos[i]['codigo']) {
-            bCoincidenciaCodigo = true;
-        }
-    };
-
-    if (bCoincidenciaCodigo == true) {
+    if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)) {
         inputCodigo.classList.add('errorInput');
         bError = true;
     } else {
         inputCodigo.classList.remove('errorInput');
-    };
+    }
 
     if (sNombre == '' || (regexNombre.test(sNombre) == false)) {
         inputNombre.classList.add('errorInput');
         bError = true
     } else {
         inputNombre.classList.remove('errorInput');
-    };
+    }
 
-    if (inputFechaInicio.value == '' || dFechaInicio < new Date(listaPeriodos[(listaPeriodos.length - 1)]['fechaconclusion'])){
+    if (dFechaInicio == 0) {
         inputFechaInicio.classList.add('errorInput');
         bError = true
     } else {
         inputFechaInicio.classList.remove('errorInput');
-    };
+    }
 
-    if (inputFechaConclusion.value == '' || dFechaConclusion <= dFechaInicio) {
+
+
+    if (dFechaConclusion == 0) {
         inputFechaConclusion.classList.add('errorInput');
         bError = true
     } else {
         inputFechaConclusion.classList.remove('errorInput');
-    };
+    }
 
     return bError;
-};
+}
 
 function mostrarBusquedaPeriodos() {
     let listaPeriodos = obtenerBusquedaPeriodos(inputBuscar.value);
@@ -165,14 +158,14 @@ function mostrarBusquedaPeriodos() {
 
         celdaCodigo.innerHTML = listaPeriodos[i]['codigo'];
         celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
-
+        
         let dFechaInicio = new Date(listaPeriodos[i]['fechainicio']);
         let nMesInicio = dFechaInicio.getUTCMonth() + 1;
         let nDiaInicio = dFechaInicio.getUTCDate();
         let nAnnoInicio = dFechaInicio.getUTCFullYear();
         celdaCodigo.innerHTML = listaPeriodos[i]['codigo'];
         celdaNombre.innerHTML = listaPeriodos[i]['nombre'];
-        celdaFechaInicio.innerHTML = nDiaInicio + '/' + nMesInicio + '/' + nAnnoInicio;
+        celdaFechaInicio.innerHTML = nDiaInicio + '/' + nMesInicio + '/' +nAnnoInicio;
 
         let dFechaConclusion = new Date(listaPeriodos[i]['fechaconclusion']);
         let nMesConclusion = dFechaConclusion.getUTCMonth() + 1;
@@ -188,11 +181,13 @@ function mostrarBusquedaPeriodos() {
         }
 
         let botonEditar = document.createElement('a');
+        botonEditar.href = '#';
         botonEditar.classList.add('far');
         botonEditar.classList.add('fa-edit');
         celdaEditar.appendChild(botonEditar);
 
         let botonEliminar = document.createElement('a');
+        botonEliminar.href = '#';
         botonEliminar.classList.add('far');
         botonEliminar.classList.add('fa-trash-alt');
         celdaEliminar.appendChild(botonEliminar);
@@ -203,12 +198,6 @@ function mostrarBusquedaPeriodos() {
 function limpiarFormulario() {
     inputCodigo.value = '';
     inputNombre.value = '';
-    inputFechaInicio.valueAsDate = new Date();
+    inputFechaInicio.value = '';
     inputFechaConclusion.value = '';
 };
-
-function recomendarFecha() {
-    inputCodigo.value
-    inputFechaInicio.valueAsDate = new Date();
-
-}

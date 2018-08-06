@@ -8,7 +8,7 @@
  * {Date} pFechaCreacion, {boolean} pEstado
  * @return: {String} repuesta
  */
-function registrarCurso(pCodigo, pNombre, pCreditos, pCarrera, pRequisitos){
+function registrarCurso(pCodigo, pNombre, pCreditos){
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_curso',
@@ -19,9 +19,7 @@ function registrarCurso(pCodigo, pNombre, pCreditos, pCarrera, pRequisitos){
         data:{
            codigo : pCodigo,
            nombre : pNombre,
-           creditos : pCreditos,
-           carrera : pCarrera,
-           requisitos : pRequisitos
+           creditos : pCreditos
         }
       });
     
@@ -62,4 +60,80 @@ function obtenerCursos(){
       });
 
     return listaCursos;
+};
+
+function obtenerCursoPorId(pId){
+  let curso = '';
+  let peticion = $.ajax({
+      url : 'http://localhost:4000/api/buscar_curso_id',
+      type : 'post',
+      contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+      dataType : 'json',
+      async : false,
+      data:{
+          _id : pId
+      }
+    });
+  
+    peticion.done(function(response){
+      curso = response;
+    });
+  
+    peticion.fail(function(response){
+     
+    });
+
+    return curso;
+};
+
+function actualizarCurso(pId, pCodigo, pNombre, pCreditos, pEstado){
+  let respuesta = '';
+  let peticion = $.ajax({
+      url : 'http://localhost:4000/api/modificar_curso',
+      type : 'post',
+      contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+      dataType : 'json',
+      async : false,
+      data:{
+          _id: pId,
+          codigo : pCodigo,
+          nombre : pNombre,
+          creditos : pCreditos,
+          estado : pEstado
+      }
+    });
+  
+    peticion.done(function(response){
+     respuesta = response;
+    });
+  
+    peticion.fail(function(response){
+     
+    });
+
+    return respuesta;
+};
+
+function eliminarCurso(pId){
+  let respuesta = '';
+  let peticion = $.ajax({
+      url : 'http://localhost:4000/api/eliminar_curso',
+      type : 'post',
+      contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+      dataType : 'json',
+      async : false,
+      data:{
+          _id: pId
+      }
+    });
+  
+    peticion.done(function(response){
+     respuesta = response;
+    });
+  
+    peticion.fail(function(response){
+     
+    });
+
+    return respuesta;
 };
