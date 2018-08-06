@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Solicitud de Asistentes</title>
-    
+
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/estilosGenerales.css">
     <link rel="stylesheet" href="css/funciones.css">
@@ -25,8 +25,8 @@
                 <i class="fas fa-user-tie fa-5x"></i>
                 <!-- <img src="" alt="img usuario"> -->
                 <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                    </a>
+                    <label for="bLogOut">Salir</label>
             </div>
         </div>
 
@@ -55,7 +55,7 @@
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
-            <button class="tablinks" onclick="abrirFuncion(event, 'registrarSolicitudes')" >Registrar solicitudes de asistentes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarSolicitudes')">Registrar solicitudes de asistentes</button>
 
             <button class="tablinks" onclick="abrirFuncion(event, 'listarSolicitudes')" id="buscar">Listar solicitudes de asistentes</button>
         </div>
@@ -71,7 +71,7 @@
                         <label for="txtCursos">Cursos:</label>
                         <i class="fas fa-list"></i>
                         <select id="txtCursos" placeholder="Seleccione un curso de la lista" required>
-                            
+
                         </select>
                         <label for="txtCursos" class="labelError">*</label>
                     </div>
@@ -84,6 +84,7 @@
                     <button type="button" id="btnRegistrar" class="button">Registrar</button>
                 </fieldset>
             </form>
+            <h3 id="mensajeLista">No existen usuarios registrados</h3>
         </section>
         <!--listado de solicitudes-->
         <div id="listarSolicitudes" class="tabcontent">
@@ -96,6 +97,9 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Curso</th>
+                        <th>Estado</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,6 +108,32 @@
             </table>
         </div>
 
+        <section id="editarSolicitudes" class="tabcontent">
+            <h2>Modificar solicitudes de asistentes</h2>
+            <p>
+                Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Guardar" para guardar
+                los datos.
+            </p>
+            <form id="formRegistro">
+                <fieldset class="fieldset">
+                    <div>
+                        <label for="txtEditarCursos">Cursos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarCursos" placeholder="Seleccione un curso de la lista" required>
+
+                        </select>
+                        <label for="txtEditarCursos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarNombre">Nombre:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNombre" required>
+                        <label for="txtEditarNombre" class="labelError">*</label>
+                    </div>
+                    <button type="button" id="btnEditar" class="button">Guardar</button>
+                </fieldset>
+            </form>
+        </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>

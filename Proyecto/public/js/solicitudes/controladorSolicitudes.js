@@ -16,7 +16,7 @@ let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
 
 let sNombre = '';
 
-function obtenerDatos(){
+function obtenerDatos() {
     let curso = selectCursos.value;
     let sNombre = inputNombre.value;
 
@@ -79,18 +79,45 @@ function mostrarListaSolicitudes() {
 
         let celdaNombre = fila.insertCell();
         let celdaCurso = fila.insertCell();
+        let celdaEstado = fila.insertCell();
+        let celdaEditar = fila.insertCell();
+        let celdaEliminar = fila.insertCell();
 
         celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
         celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
+        celdaEstado.innerHTML = listaSolicitudes[i]['estado'];
 
+        let botonEditar = document.createElement('a');
+        botonEditar.classList.add('far');
+        botonEditar.classList.add('fa-edit');
+
+        botonEditar.dataset.id = listaSolicitudes[i]['_id'];
+        botonEditar.addEventListener('click', editar);
+
+        celdaEditar.appendChild(botonEditar);
+
+        let botonEliminar = document.createElement('a');
+        botonEliminar.classList.add('far');
+        botonEliminar.classList.add('fa-trash-alt');
+
+        botonEliminar.dataset.id = listaSolicitudes[i]['_id'];
+        botonEliminar.addEventListener('click', eliminar);
+
+        celdaEliminar.appendChild(botonEliminar);
+    }
+
+    if (listaSolicitudes.length == 0) {
+        document.getElementById('mensajeLista').classList.remove('listaVacia');
+    } else {
+        document.getElementById('mensajeLista').classList.add('listaVacia');
     }
 };
 
-function mostrarCursos(){
+function mostrarCursos() {
     let selectCursos = document.getElementById('txtCursos');
     selectCursos.innerHTML = '';
 
-    for(let i=0; i < sListaCursos.length; i++){
+    for (let i = 0; i < sListaCursos.length; i++) {
         let sCurso = sListaCursos[i]['nombre'];
         let nuevaOpcion = document.createElement('option');
         nuevaOpcion.text = sCurso;
@@ -99,7 +126,57 @@ function mostrarCursos(){
     }
 };
 
-function limpiarFormulario(){
+function limpiarFormulario() {
     inputNombre.value = '';
     selectCursos.value = '';
+};
+
+function eliminar() {
+    let id = this.dataset.id;
+
+    swal({
+        title: '¿Seguro que desea eliminar la solicitud?',
+        text: "Esta acción no se puede revertir",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+    }).then((result) => {
+        if (result.value) {
+            eliminarSolicitud(id);
+            listaSolicitudes = obtenerSolicitudes();
+            mostrarBusqueda();
+            swal(
+                'Eliminada!',
+                'La solicitud ha sido eliminado.',
+                'success'
+            )
+        }
+    })
+};
+
+function editar() {
+    let id = this.dataset.id;
+
+    document.getElementById("modificar").click();
+    let solicitud = obtenerSolicitudPorId(id);
+
+    inputEditarNombre.value = solicitud['nombre'];
+    inputEditarProfe.value = solicitud['profe'];
+    inputEstado.value = solicitud['estado'];
+    inputId.value = solicitud['_id'];
+};
+
+function mostrarEditarCursos() {
+    let selectCursos = document.getElementById('txtEditarCursos');
+    selectCursos.innerHTML = '';
+
+    for (let i = 0; i < sListaCursos.length; i++) {
+        let sCurso = sListaCursos[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sCurso;
+        nuevaOpcion.value = sCurso;
+        selectCursos.add(nuevaOpcion);
+    }
 };

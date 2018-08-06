@@ -25,8 +25,8 @@
                 <i class="fas fa-user-tie fa-5x"></i>
                 <!-- <img src="" alt="img usuario"> -->
                 <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                    </a>
+                    <label for="bLogOut">Salir</label>
             </div>
         </div>
 
@@ -88,7 +88,7 @@
                         <label for="txtSede">Sede:</label>
                         <i class="fas fa-list"></i>
                         <select id="txtSede" required>
-                    
+
                         </select>
                         <label for="txtSede" class="labelError">*</label>
                     </div>
@@ -124,6 +124,7 @@
 
                 </tbody>
             </table>
+            <h3 id="mensajeLista">No existen usuarios registrados</h3>
         </div>
 
         <div id="listarLaboratorio" class="tabcontent">
@@ -147,9 +148,50 @@
 
                 </tbody>
             </table>
+            <h3 id="mensajeLista">No existen usuarios registrados</h3>
+        </div>
+
+        <div id="modificarLaboratorio" class="tabcontent">
+            <h2>Editar laboratorios</h2>
+            <p>
+                Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar" para guardar
+                los datos.
+            </p>
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <div>
+                        <label for="txtEditarCodigo">Código:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtCodigo">
+                        <label for="txtEditarCodigo" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarNombre">Nombre:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNombre">
+                        <label for="txtEditarNombre" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarCupos">Cupo:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtCupos" min="0">
+                        <label for="txtEditarCupos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarSede">Sede:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarSede" required>
+
+                        </select>
+                        <label for="txtEditarSede" class="labelError">*</label>
+                    </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
+                    <button type="button" id="btnEditar" class="button">Registrar</button>
+                </fieldset>
+            </form>
         </div>
     </main>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/laboratorios/servicioLaboratorios.js"></script>
