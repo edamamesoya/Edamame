@@ -12,6 +12,8 @@ let selectSede = document.querySelector('#txtSede');
 let inputEstado = document.querySelector('#rdEstado');
 let inputBuscar = document.querySelector('#txtBuscar');
 
+recomendacion();
+
 botonRegistrar.addEventListener('click', obtenerDatos);
 inputBuscar.addEventListener('keyup', mostrarBusquedaLaboratorios);
 
@@ -185,3 +187,8 @@ function limpiarFormulario() {
     inputCupo.value = '';
     selectSede.value = '';
 };
+
+function recomendacion() {
+    let listaLaboratorios = obtenerLaboratorios();
+    inputCodigo.value = toString(listaLaboratorios.length + 1);
+}
