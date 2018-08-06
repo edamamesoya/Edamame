@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitud de Asistentes</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/estilosGenerales.css">
+    <link rel="stylesheet" href="css/funciones.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <main>
+        <!--Header de la página-->
+        <div class="header">
+            <div class="w3-display-left">
+                <img src="img/logoCenfo.png" alt="Logo U">
+            </div>
+            <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
+            <div class="w3-display-right">
+                <i class="fas fa-user-tie fa-5x"></i>
+                <!-- <img src="" alt="img usuario"> -->
+                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                    </a>
+                    <label for="bLogOut">Salir</label>
+            </div>
+        </div>
+
+        <!--Menú general (arriba)-->
+        <div class="menuGeneral">
+            <!-- <a href="index.html" class="w3-bar-item w3-button" id="menuInicio">Inicio</a> -->
+            <a href="perfil.html" class="w3-bar-item w3-button" id="menuPerfil">Perfil</a>
+            <a href="solicitudes.html" class="w3-bar-item w3-button" id="menuSolicitudes">Solicitudes</a>
+            <div class="w3-dropdown-hover" id="menuFunciones">
+                <button class="w3-bar-item w3-button">Funciones</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
+                    <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
+                    <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
+                    <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
+                    <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
+                    <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
+                    <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
+                    <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
+                </div>
+            </div>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
+        </div>
+
+        <!--Menú de acciones (lateral)-->
+        <div class="tab">
+            <h2>Menú</h2>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarSolicitudes')">Registrar solicitudes de asistentes</button>
+
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarSolicitudes')" id="buscar">Listar solicitudes de asistentes</button>
+        </div>
+        <!--registro de solicitudes-->
+        <section id="registrarSolicitudes" class="tabcontent">
+            <h2>Registrar solicitudes de asistentes</h2>
+            <p>
+                Favor introducir la información que se le solicita. Al terminar, presione "Registrar" para que el laboratorio se registre.
+            </p>
+            <form id="formRegistro">
+                <fieldset class="fieldset">
+
+                    <div>
+                        <label for="txtSedes">Sedes:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtSedes" placeholder="Seleccione uns sede de la lista" required>
+                        </select>
+                        <label for="txtSedes" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtPeriodos">Periodos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtPeriodos" placeholder="Seleccione un periodo de la lista" required>
+
+                        </select>
+                        <label for="txtPeriodos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtCursos">Cursos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtCursos" placeholder="Seleccione un curso de la lista" required>
+
+                        </select>
+                        <label for="txtCursos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtGrupos">Grupos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtGrupos" placeholder="Seleccione un Grupo de la lista" required>
+                        </select>
+                        <label for="txtGrupos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEstado">Estado</label>
+                        <i class="fas fa-list"></i>
+                        <input type="text" id="txtEstado">
+                    </div>
+                    <div>
+                        <label for="txtNombre">Nombre de estudiante postulante:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNombre" required>
+                        <label for="txtNombre" class="labelError">*</label>
+                    </div>
+                    <button type="button" id="btnRegistrar" class="button">Registrar</button>
+                </fieldset>
+            </form>
+        </section>
+        <!--listado de solicitudes-->
+        <div id="listarSolicitudes" class="tabcontent">
+            <h2>Lista de solicitudes</h2>
+            <p>
+                Aquí se encuentran listados todas las solicitudes de asistentes que se encuentren registrados en este momento.
+            </p>
+            <table id="tblSolicitudes" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th width="20%">Nombre</th>
+                        <th width="20%">Curso</th>
+                        <th width="5%">Grupo</th>
+                        <th width="20%">Sede</th>
+                        <th width="20%">Periodo</th>
+                        <th width="5%">Estado</th>
+                        <th width="5%">Editar</th>
+                        <th width="5%">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/periodos/servicioPeriodos.js"></script>
+    <script src="js/sedes/servicioSedes.js"></script>
+    <script src="js/grupos/servicioGrupos.js"></script>
+    <script src="js/usuarios/servicioUsuarios.js"></script>
+    <script src="js/cursos/servicioCursos.js"></script>
+    <script src="js/solicitudes/servicioSolicitudes.js"></script>
+    <script src="js/controladorGeneral.js"></script>
+    <script src="js/solicitudes/controladorSolicitudes.js"></script>
+</body>
+
+</html>

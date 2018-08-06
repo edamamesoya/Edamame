@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Solicitud de Sedes</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/estilosGenerales.css">
+    <link rel="stylesheet" href="css/funciones.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <main>
+        <!--Header de la página-->
+        <div class="header">
+            <div class="w3-display-left">
+                <img src="img/logoCenfo.png" alt="Logo U">
+            </div>
+            <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
+            <div class="w3-display-right">
+                <i class="fas fa-user-tie fa-5x"></i>
+                <!-- <img src="" alt="img usuario"> -->
+                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                    </a>
+                    <label for="bLogOut">Salir</label>
+            </div>
+        </div>
+
+        <!--Menú general (arriba)-->
+        <div class="menuGeneral">
+            <!-- <a href="index.html" class="w3-bar-item w3-button" id="menuInicio">Inicio</a> -->
+            <a href="perfil.html" class="w3-bar-item w3-button" id="menuPerfil">Perfil</a>
+            <a href="solicitudes.html" class="w3-bar-item w3-button" id="menuSolicitudes">Solicitudes</a>
+            <div class="w3-dropdown-hover" id="menuFunciones">
+                <button class="w3-bar-item w3-button">Funciones</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
+                    <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
+                    <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
+                    <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
+                    <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
+                    <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
+                    <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
+                    <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
+                </div>
+            </div>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
+        </div>
+        <input type="text" id="txtId" hidden>
+        <!--Menú de acciones (lateral)-->
+        <div class="tab">
+            <h2>Menú</h2>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarSedes')">Registrar sede</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarSede')" id="modificar">Modificar sede</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarSedes')" id="buscar">Listar sedes</button>
+        </div>
+
+        <!--registro de sede-->
+        <div id="registrarSedes" class="tabcontent">
+            <h2>Registrar Sedes</h2>
+            <p>
+                Favor introducir la información que se le solicita. Al terminar, presione "Registrar" para que la sede se registre.
+            </p>
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <legend>Registro de Sedes</legend>
+                    <div>
+                        <label for="txtNombre">Nombre de la sede:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNombre" placeholder="Ej, Sede Central">
+                        <label for="txtNombre" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtProvincia">Provincia:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtProvincia" required>
+
+                        </select>
+                        <label for="txtProvincia" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtCanton">Cantón:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtCanton" required>
+
+                        </select>
+                        <label for="txtCanton" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtDistrito">Distrito:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtDistrito" required>
+
+                        </select>
+                        <label for="txtDistrito" class="labelError">*</label>
+                    </div>
+                </fieldset>
+                <div id="mapaSede"></div>
+                <button type="button" id="btnRegistrar" class="button">Registrar</button>
+            </form>
+        </div>
+
+        <!--listado de sedes-->
+        <div id="listarSedes" class="tabcontent">
+            <h2>Lista de sedes</h2>
+            <p>
+                Aquí se encuentran listados todas las Sedes que se encuentren registradas en este momento. Para búsquedas específicas, ingrese
+                el nombre completo o parcial de la sede en "Filtrar".
+            </p>
+
+            <div>
+                <label for="txtBuscar">Filtrar:</label>
+                <input type="text" id="txtBuscar">
+            </div>
+
+            <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th width="20%">Nombre</th>
+                        <th width="20%">Provincia</th>
+                        <th width="20%">Cantón</th>
+                        <th width="20%">Distrito</th>
+                        <th width="10%">Estado</th>
+                        <th width="5%">Editar</th>
+                        <th width="5%">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!--modificacion de sede-->
+        <div id="modificarSede" class="tabcontent">
+            <h2>Modificar Sede</h2>
+            <p>
+                Acontinuacion podra modificar aspectos de la sede registrada.
+            </p>
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <legend>Información de sedes</legend>
+                    <div>
+                        <label for="txtEditarNombre">Nombre de la sede:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarNombre" placeholder="Ej, Sede Central">
+                    </div>
+                    <div>
+                        <label for="txtEditarProvincia">Provincia:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarProvincia" required>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="txtEditarCanton">Cantón:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarCanton" required>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="txtEditarDistrito">Distrito:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarDistrito" required>
+                        </select>
+                    </div>
+                    <div class="inputLargo">
+                        <label for="chkEstado">Cambia estado </label>
+                        <label class="switch">
+                            <input type="checkbox" id="chkEstado">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </fieldset>
+                <button type="button" class="button" id="btnEditar">Modificar Cambios</button>
+            </form>
+        </div>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/usuarios/servicioUsuarios.js"></script>
+    <script src="js/servicioUbicacion.js"></script>
+    <script src="js/sedes/servicioSedes.js"></script>
+    <script src="js/controladorGeneral.js"></script>
+    <script src="js/sedes/controladorSedes.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF0irly13UZBvBzBJVFx0Arrve0bXZwe4&callback=initMap" async
+        defer></script>
+</body>
+
+</html>
