@@ -67,6 +67,22 @@
             </p>
             <form id="formRegistro">
                 <fieldset class="fieldset">
+
+                    <div>
+                        <label for="txtSedes">Sedes:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtSedes" placeholder="Seleccione uns sede de la lista" required>
+                        </select>
+                        <label for="txtSedes" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtPeriodos">Periodos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtPeriodos" placeholder="Seleccione un periodo de la lista" required>
+
+                        </select>
+                        <label for="txtPeriodos" class="labelError">*</label>
+                    </div>
                     <div>
                         <label for="txtCursos">Cursos:</label>
                         <i class="fas fa-list"></i>
@@ -76,7 +92,14 @@
                         <label for="txtCursos" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtNombre">Nombre:</label>
+                        <label for="txtGrupos">Grupos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtGrupos" placeholder="Seleccione un Grupo de la lista" required>
+                        </select>
+                        <label for="txtGrupos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtNombre">Nombre de estudiante postulante:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" required>
                         <label for="txtNombre" class="labelError">*</label>
@@ -84,7 +107,6 @@
                     <button type="button" id="btnRegistrar" class="button">Registrar</button>
                 </fieldset>
             </form>
-            <h3 id="mensajeLista">No existen usuarios registrados</h3>
         </section>
         <!--listado de solicitudes-->
         <div id="listarSolicitudes" class="tabcontent">
@@ -95,11 +117,14 @@
             <table id="tblSolicitudes" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Curso</th>
-                        <th>Estado</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
+                        <th width="20%">Nombre</th>
+                        <th width="20%">Curso</th>
+                        <th width="5%">Grupo</th>
+                        <th width="20%">Sede</th>
+                        <th width="20%">Periodo</th>
+                        <th width="5%">Estado</th>
+                        <th width="5%">Editar</th>
+                        <th width="5%">Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,36 +133,13 @@
             </table>
         </div>
 
-        <section id="editarSolicitudes" class="tabcontent">
-            <h2>Modificar solicitudes de asistentes</h2>
-            <p>
-                Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Guardar" para guardar
-                los datos.
-            </p>
-            <form id="formRegistro">
-                <fieldset class="fieldset">
-                    <div>
-                        <label for="txtEditarCursos">Cursos:</label>
-                        <i class="fas fa-list"></i>
-                        <select id="txtEditarCursos" placeholder="Seleccione un curso de la lista" required>
-
-                        </select>
-                        <label for="txtEditarCursos" class="labelError">*</label>
-                    </div>
-                    <div>
-                        <label for="txtEditarNombre">Nombre:</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtNombre" required>
-                        <label for="txtEditarNombre" class="labelError">*</label>
-                    </div>
-                    <button type="button" id="btnEditar" class="button">Guardar</button>
-                </fieldset>
-            </form>
-        </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/periodos/servicioPeriodos.js"></script>
+    <script src="js/sedes/servicioSedes.js"></script>
+    <script src="js/grupos/servicioGrupos.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>
     <script src="js/cursos/servicioCursos.js"></script>
     <script src="js/solicitudes/servicioSolicitudes.js"></script>

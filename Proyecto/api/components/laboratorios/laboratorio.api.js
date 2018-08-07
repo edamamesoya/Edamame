@@ -46,3 +46,35 @@ module.exports.buscar_laboratorio = function(req, res){
         }
     );
 };
+
+module.exports.eliminar_laboratorio = function (req, res) {
+    laboratorioModel.findByIdAndDelete(req.body._id,
+        function (err, laboratorio) {
+            if (err) {
+                res.json({ success: false, msg: 'El laboratorio no se ha podido eliminar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'El laboratorio se ha eliminado correctamente. ' + res });
+            }
+        });
+};
+
+module.exports.buscar_laboratorio_id = function (req, res) {
+    laboratorioModel.findById({ _id: req.body._id }).then(
+        function (laboratorio) {
+            res.send(laboratorio);
+        }
+    );
+};
+
+module.exports.modificar_laboratorio = function (req, res) {
+    laboratorioModel.findByIdAndUpdate(req.body._id, { $set: req.body },
+        function (err, laboratorio) {
+            if (err) {
+                res.json({ success: false, msg: 'El laboratorio no se ha podido modificar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'El laboratorio se ha actualizado correctamente. '});
+            }
+        });
+};

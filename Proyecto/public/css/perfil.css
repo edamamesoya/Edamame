@@ -81,4 +81,10 @@ body main fieldset button {
     margin-left: 10%;
     margin-right: 10%;
 }
+
+.boton{
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+}
 /* Fin estilos form */
