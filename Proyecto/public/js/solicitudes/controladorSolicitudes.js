@@ -5,6 +5,8 @@ let sListaSedes = obtenerSedes();
 let sListaPeriodos = obtenerPeriodos();
 let sListaGrupos = obtenerGrupos();
 let sListaCursos = obtenerCursos();
+const sRol = localStorage.getItem('rolUsuarioActivo');
+const sProfe = localStorage.getItem('correoUsuarioActivo');
 
 mostrarListaSolicitudes();
 mostrarSedes();
@@ -33,8 +35,6 @@ function obtenerDatos(){
     let grupo = selectGrupos.value;
     let curso = selectCursos.value;
     let sNombre = inputNombre.value;
-    let estado = inputEstado.value;
-    let profesor = localStorage.getItem('correoUsuarioActicvo');
 
     let bError = false;
     bError = validar();
@@ -46,7 +46,7 @@ function obtenerDatos(){
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarSolicitud(sede, periodo, grupo, curso, sNombre, estado, profesor);
+        let respuesta = registrarSolicitud(sede, periodo, grupo, curso, sNombre, estado, sProfe);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro Correcto',
@@ -145,7 +145,10 @@ function mostrarListaSolicitudes() {
     for (let i = 0; i < listaSolicitudes.length; i++) {
         let fila = tbody.insertRow();
 
-
+        switch (sRol){
+            case 'profesor':
+            if (sUsuario == listaSolicitudes[i]['profe'])
+        }
         let celdaNombre = fila.insertCell();
         let celdaCurso = fila.insertCell();
         let celdaGrupo = fila.insertCell();
@@ -156,10 +159,10 @@ function mostrarListaSolicitudes() {
         let celdaEliminar = fila.insertCell();
 
         celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
-        celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
-        celdaGrupo.innerHTML = listaSolicitudes[i]['grupos'];
-        celdaPeriodo.innerHTML = listaSolicitudes[i]['periodos'];
-        celdaSede.innerHTML = listaSolicitudes[i]['sedes'];
+        celdaCurso.innerHTML = listaSolicitudes[i]['curso'];
+        celdaGrupo.innerHTML = listaSolicitudes[i]['grupo'];
+        celdaPeriodo.innerHTML = listaSolicitudes[i]['periodo'];
+        celdaSede.innerHTML = listaSolicitudes[i]['sede'];
         celdaEstado.innerHTML = listaSolicitudes [i] ['estado'];
 
         let botonEditar = document.createElement('a');
