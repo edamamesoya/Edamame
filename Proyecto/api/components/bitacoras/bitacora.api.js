@@ -37,7 +37,7 @@ module.exports.agregar_entrada = function(req, res){
                     fecha : req.body.fecha,
                     actividad : req.body.actividad,
                     horas : req.body.horas,
-                    estudiantes : req.body.estudiantes
+                    descripcion : req.body.descripcion
                 }
             }
         },
@@ -51,16 +51,24 @@ module.exports.agregar_entrada = function(req, res){
     )
 };
 
-module.exports.eliminar_bitacora = function (req, res) {
-    bitacoraModel.findByIdAndDelete(req.body._id,
-        function (err, bitacora) {
-            if (err) {
-                res.json({ success: false, msg: 'La bitácora no se ha podido eliminar. ' + handleError(err) });
-
-            } else {
-                res.json({ success: true, msg: 'La bitácora se ha eliminado correctamente. ' + res });
+module.exports.eliminar_entrada = function (req, res) {
+    bitacoraModel.update(
+        {_id: req.body._idBitacora}, 
+        {$pull: 
+            {'entradas':
+                {
+                    _id: req.body._idEntrada
+                }
             }
-        });
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo eliminar la entrada, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'La entrada se eliminó con éxito'});
+            }
+        }
+    )
 };
 
 module.exports.buscar_bitacora_id = function (req, res) {
@@ -71,29 +79,23 @@ module.exports.buscar_bitacora_id = function (req, res) {
     );
 };
 
-module.exports.modificar_bitacora = function (req, res) {
-    bitacoraModel.findByIdAndUpdate(req.body._id, { $set: req.body },
-        function (err, bitacora) {
-            if (err) {
-                res.json({ success: false, msg: 'La bitácora no se ha podido modificar. ' + handleError(err) });
-
-            } else {
-                res.json({ success: true, msg: 'La bitácora se ha actualizado correctamente. '});
+module.exports.modificar_entrada = function(req, res){  
+    bitacoraModel.findOneAndUpdate(
+        {_id: req.body._idBitacora, "entradas._id": req.body._idEntrada}, 
+        {
+            "$set": {
+                'entradas.$.fecha': req.body.fecha,
+                'entradas.$.actividad': req.body.actividad,
+                'entradas.$.horas': req.body.horas,
+                'entradas.$.descripcion': req.body.descripcion
             }
-        });
-};
-
-module.exports.eliminar_entrada_bitacora = function (req, res) {
-    // bitacoraModel.findByIdAndDelete({'entradas._id' : req.body._id},
-    //     function (err, entrada) {
-    //         if (err) {
-    //             res.json({ success: false, msg: 'La bitácora no se ha podido eliminar. ' + handleError(err) });
-
-    //         } else {
-    //             res.json({ success: true, msg: 'La bitácora se ha eliminado correctamente. ' + res });
-    //         }
-    //     });
-
-    bitacora.entradas.id(req.body._id).remove();
-        // parent.children.id(_id).remove();
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo actualizar la entrada de esta bitácora, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'La entrada se actualizó con éxito'});
+            }
+        }
+    )
 };

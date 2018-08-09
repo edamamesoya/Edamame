@@ -23,18 +23,13 @@ router.route('/buscar_bitacora_id')
         bitacoraApi.buscar_bitacora_id(req, res);
     });
 
-router.route('/modificar_bitacora')
+router.route('/modificar_entrada')
     .post(function (req, res) {
-        bitacoraApi.modificar_bitacora(req, res);
-    });
-
-router.route('/eliminar_bitacora')
-    .post(function (req, res) {
-        bitacoraApi.eliminar_bitacora(req, res);
+        bitacoraApi.modificar_entrada(req, res);
     });
 
 router.route('/eliminar_entrada')
     .post(function (req, res) {
-        bitacoraApi.eliminar_entrada_bitacora(req, res);
+        bitacoraApi.eliminar_entrada(req, res);
     });
 module.exports = router;

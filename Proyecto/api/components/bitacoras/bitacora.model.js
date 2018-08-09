@@ -13,7 +13,7 @@ let bitacoraSchema = new mongoose.Schema({
             fecha : {type : Date},
             actividad : {type : String},
             horas : {type : Number},
-            estudiantes : {type : Array}
+            descripcion : {type : String}
         }
     ]
 });

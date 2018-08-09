@@ -97,6 +97,31 @@ function agregarCurso(id, pCodigoCurso, pNombreCurso){
     return respuesta;
 };
 
+function desenlazarCurso(pIdCarrera, pIdCurso){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/desenlazar_curso',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pIdCarrera,
+            _idCurso : pIdCurso
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+  
+      return respuesta;
+};
+
 function obtenerCarreraPorId(pId){
     let usuario = '';
     let peticion = $.ajax({

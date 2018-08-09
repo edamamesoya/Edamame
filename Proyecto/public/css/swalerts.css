@@ -1,0 +1,72 @@
+/* Swal Design */
+.swal-modal {
+    background-color: #FFF;
+    border: 1px solid #BEBEBE;
+    border-radius: 2px;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    text-align: left;
+    padding-left: 24px;
+  }
+  
+  .swal-footer {
+    height: 36px;
+    margin: 16px;
+    padding: 0;
+  }
+  
+  .swal-title {
+    text-align: left;
+    font-size: 24px;
+    color: #212121;
+    font-weight: bold;
+    cursor: default;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .swal-text {
+    text-align: left;
+    color: gray;
+    cursor: default;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .swal2-confirm {
+    color: #30336b;
+  }
+  
+  .swal-button--confirm:hover {
+    background-color: #E0E0E0;
+  }
+  
+  .swal-button--confirm:active {
+    background-color: #BEBEBE;
+  }
+  
+  .swal-button--cancel {
+    color: #EF5350;
+  }
+  
+  .swal-button--cancel:hover {
+    background-color: #E0E0E0;
+  }
+  
+  .swal-button--cancel:active {
+    background-color: #BEBEBE;
+  }
+  
+  .swal-button {
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: transparent;
+    font-size: 16px;
+    margin: 0;
+    padding: 10px 15px;
+  }
+  
+  .swal-button:focus {
+    display: none;
+  }

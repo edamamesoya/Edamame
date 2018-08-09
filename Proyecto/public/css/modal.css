@@ -52,6 +52,20 @@
   color: #9E2169;
 }
 
+.textDescripcion{
+  width: 40%;
+  display: inline-block;
+  text-align: center;
+  padding: 0;
+}
+
+.textoTitulo{
+  text-align: center;
+}
+
+.titulo{
+  font-size: 20px;
+}
 #modalHeader {
   color: rgb(252, 19, 19);
 }

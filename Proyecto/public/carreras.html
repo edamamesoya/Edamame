@@ -8,6 +8,7 @@
     <!--Páginas de estilo css-->
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/estilosGenerales.css">
+    <link rel="stylesheet" href="css/swalerts.css">
     <link rel="stylesheet" href="css/funciones.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
@@ -74,10 +75,11 @@
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
                     <h3>Información de carrera</h3>
-                    <div>
+                    <div class="tooltip">
                         <label for="txtCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtCodigo" placeholder="Ej, BISOFT02" required>
+                        <span class="tooltiptext invisible" id="tooltipCodigo">1. El campo no puede estar vacío</span>
                         <!-- <label for="txtCodigo" class="labelError">*</label> -->
                     </div>
                     <div>
@@ -173,15 +175,17 @@
                     </div>
 
                     <div id="pestannaAsignados" class="invisible">
+                        <h3 id="mensajeAsignados">No existen cursos asignados</h3>
                         <div id="lstCursosAsignados">
                         </div>
+                        <button type="button" id="btnDesasignar" class="button buttonLargo">Desasignar</button>
                     </div>
 
                     <div id="pestannaAsignar" class="invisible">
+                        <h3 id="mensajePorAsignar">No existen cursos por asignar</h3>
                         <div id="lstCursosPorAsignar">
                         </div>
-
-                        <button type="button" id="btnAsignar" class="button">Asignar</button>
+                        <button type="button" id="btnAsignar" class="button buttonLargo">Asignar</button>
                     </div>
                 </fieldset>
             </form>
@@ -244,6 +248,7 @@
 
     <!--Scripts-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/carreras/servicioCarreras.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>

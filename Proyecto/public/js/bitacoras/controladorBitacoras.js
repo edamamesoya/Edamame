@@ -7,13 +7,25 @@ mostrarBitacoras();
 
 const selectBitacora = document.querySelector('#txtBitacora');
 const selectActividad = document.querySelector('#txtActividad');
+const inputDescripcion = document.querySelector('#txtDescripcion');
 const inputHoras = document.querySelector('#txtHoras');
 const inputFecha = document.querySelector('#txtFecha');
 const btnRegistrar = document.querySelector('#btnRegistrar');
 
+const inputEditarBitacora = document.querySelector('#txtEditarBitacora');
+const selectEditarActividad = document.querySelector('#txtEditarActividad');
+const inputEditarDescripcion = document.querySelector('#txtEditarDescripcion');
+const inputEditarHoras = document.querySelector('#txtEditarHoras');
+const inputEditarFecha = document.querySelector('#txtEditarFecha');
+const btnModificar = document.querySelector('#btnEditar');
+
+const inputIdBitacora = document.querySelector('#txtIdBitacora');
+const inputIdEntrada = document.querySelector('#txtIdEntrada');
+
 const btnCerrar = document.querySelector('#btnCerrar');
 
 btnRegistrar.addEventListener('click', nuevaEntrada);
+btnModificar.addEventListener('click', modificarEntrada);
 btnCerrar.addEventListener('click', cerrarModal);
 /**
  * Declaración de variables.
@@ -43,8 +55,17 @@ function verificarUsuario(){
 function limpiarFormulario(){
     selectBitacora.value = '';
     selectActividad.value = '';
+    inputDescripcion.value = '';
     inputHoras.value = '';
     inputFecha.value = '';
+};
+
+function limpiarFormularioModificar(){
+    inputEditarBitacora.value = '';
+    selectEditarActividad.value = '';
+    inputEditarDescripcion.value = '';
+    inputEditarHoras.value = '';
+    inputEditarFecha.value = '';
 };
 
 function mostrarBusqueda(pFiltro){
@@ -60,73 +81,17 @@ function mostrarBusqueda(pFiltro){
     if(usuarioActivo['rol'] == 'asistente'){
         for(let i = 0; i < sListaBitacoras.length; i++){
             if( (sListaBitacoras[i]['asistente'] == sNombre) && (sListaBitacoras[i]['curso'].toLowerCase()).includes(pFiltro.toLowerCase()) ){
-            let fila = tbody.insertRow();
-    
-            let celdaActividad = fila.insertCell();
-            let celdaEstudiantes = fila.insertCell();
-            let celdaHoras = fila.insertCell();
-            let celdaFechaCreacion = fila.insertCell();
-            let celdaEstado = fila.insertCell();
-            let celdaEditar = fila.insertCell();
-            let celdaEliminar = fila.insertCell();
-    
-            celdaActividad.innerHTML = sListaBitacoras[i]['curso'];
-            celdaEstudiantes.innerHTML = sListaBitacoras[i]['asistente'];
-
-            let nHorasTotales = 0;
-            for(let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
-                nHorasTotales += Number(sListaBitacoras[i]['entradas'][j]['horas']);
-            }
-            celdaHoras.innerHTML = nHorasTotales;
-            
-            let dFecha = new Date(sListaBitacoras[i]['fechaCreacion']);
-            let nMes = dFecha.getUTCMonth() + 1;
-            let nDia = dFecha.getUTCDate();
-            let nAnno = dFecha.getUTCFullYear();
-            celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
-            
-            let bEstado = sListaBitacoras[i]['estado'];
-            if(bEstado){
-                celdaEstado.innerHTML = 'Aprobada';
-            }else{
-                celdaEstado.innerHTML = 'Sin aprobar';
-            }
-    
-            let botonEditar = document.createElement('a');
-            botonEditar.classList.add('far');
-            botonEditar.classList.add('fa-edit');
-    
-            botonEditar.dataset.id = sListaBitacoras[i]['_id'];
-            botonEditar.addEventListener('click', mostrarModel);
-    
-            celdaEditar.appendChild(botonEditar);
-    
-            let botonEliminar = document.createElement('a');
-            botonEliminar.classList.add('far');
-            botonEliminar.classList.add('fa-trash-alt');
-    
-            botonEliminar.dataset.id = sListaBitacoras[i]['_id'];
-            // botonEliminar.addEventListener('click', eliminar);
-    
-            celdaEliminar.appendChild(botonEliminar);
-            }
-        }
-    }else{
-        if(usuarioActivo['rol'] == 'profesor'){
-            for(let i = 0; i < sListaBitacoras.length; i++){
-                if( (sListaBitacoras[i]['profesor'] == sNombre) && (sListaBitacoras[i]['curso'].toLowerCase()).includes(pFiltro.toLowerCase()) ){
                 let fila = tbody.insertRow();
         
-                let celdaActividad = fila.insertCell();
-                let celdaEstudiantes = fila.insertCell();
+                let celdaCurso = fila.insertCell();
+                let celdaAsistente = fila.insertCell();
                 let celdaHoras = fila.insertCell();
                 let celdaFechaCreacion = fila.insertCell();
                 let celdaEstado = fila.insertCell();
-                let celdaEditar = fila.insertCell();
-                let celdaEliminar = fila.insertCell();
-        
-                celdaActividad.innerHTML = sListaBitacoras[i]['curso'];
-                celdaEstudiantes.innerHTML = sListaBitacoras[i]['asistente'];
+                let celdaVerMas = fila.insertCell();
+
+                celdaCurso.innerHTML = sListaBitacoras[i]['curso'];
+                celdaAsistente.innerHTML = sListaBitacoras[i]['asistente'];
 
                 let nHorasTotales = 0;
                 for(let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
@@ -146,80 +111,104 @@ function mostrarBusqueda(pFiltro){
                 }else{
                     celdaEstado.innerHTML = 'Sin aprobar';
                 }
-        
-                let botonEditar = document.createElement('a');
-                botonEditar.classList.add('far');
-                botonEditar.classList.add('fa-edit');
-        
-                botonEditar.dataset.id = sListaBitacoras[i]['_id'];
-                botonEditar.addEventListener('click', mostrarModel);
-        
-                celdaEditar.appendChild(botonEditar);
-        
-                let botonEliminar = document.createElement('a');
-                botonEliminar.classList.add('far');
-                botonEliminar.classList.add('fa-trash-alt');
-        
-                botonEliminar.dataset.id = sListaBitacoras[i]['_id'];
-                // botonEliminar.addEventListener('click', eliminar);
-        
-                celdaEliminar.appendChild(botonEliminar);
+
+                let botonVerMas = document.createElement('a');
+                    botonVerMas.classList.add('fas');
+                    botonVerMas.classList.add('fa-info');
+            
+                    botonVerMas.dataset.id = sListaBitacoras[i]['_id'];
+                    botonVerMas.addEventListener('click', mostrarModel);
+            
+                    celdaVerMas.appendChild(botonVerMas);
+            }
+        }
+    }else{
+        if(usuarioActivo['rol'] == 'profesor'){
+            for(let i = 0; i < sListaBitacoras.length; i++){
+                if( (sListaBitacoras[i]['profesor'] == sNombre) && (sListaBitacoras[i]['curso'].toLowerCase()).includes(pFiltro.toLowerCase()) ){
+                    let fila = tbody.insertRow();
+            
+                    let celdaCurso = fila.insertCell();
+                    let celdaAsistente = fila.insertCell();
+                    let celdaHoras = fila.insertCell();
+                    let celdaFechaCreacion = fila.insertCell();
+                    let celdaEstado = fila.insertCell();
+                    let celdaVerMas = fila.insertCell();
+            
+                    celdaCurso.innerHTML = sListaBitacoras[i]['curso'];
+                    celdaAsistente.innerHTML = sListaBitacoras[i]['asistente'];
+
+                    let nHorasTotales = 0;
+                    for(let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
+                        nHorasTotales += Number(sListaBitacoras[i]['entradas'][j]['horas']);
+                    }
+                    celdaHoras.innerHTML = nHorasTotales;
+                    
+                    let dFecha = new Date(sListaBitacoras[i]['fechaCreacion']);
+                    let nMes = dFecha.getUTCMonth() + 1;
+                    let nDia = dFecha.getUTCDate();
+                    let nAnno = dFecha.getUTCFullYear();
+                    celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
+                    
+                    let bEstado = sListaBitacoras[i]['estado'];
+                    if(bEstado){
+                        celdaEstado.innerHTML = 'Aprobada';
+                    }else{
+                        celdaEstado.innerHTML = 'Sin aprobar';
+                    }
+
+                    let botonVerMas = document.createElement('a');
+                    botonVerMas.classList.add('fas');
+                    botonVerMas.classList.add('fa-info');
+            
+                    botonVerMas.dataset.id = sListaBitacoras[i]['_id'];
+                    botonVerMas.addEventListener('click', mostrarModel);
+            
+                    celdaVerMas.appendChild(botonVerMas);
                 }
             }
         }else{
             for(let i = 0; i < sListaBitacoras.length; i++){
                 if( (sListaBitacoras[i]['curso'].toLowerCase()).includes(pFiltro.toLowerCase()) || (sListaBitacoras[i]['asistente'].toLowerCase()).includes(pFiltro.toLowerCase()) ){
-                let fila = tbody.insertRow();
-        
-                let celdaActividad = fila.insertCell();
-                let celdaEstudiantes = fila.insertCell();
-                let celdaHoras = fila.insertCell();
-                let celdaFechaCreacion = fila.insertCell();
-                let celdaVerMas = fila.insertCell();
-                let celdaEditar = fila.insertCell();
-                let celdaEliminar = fila.insertCell();
-        
-                celdaActividad.innerHTML = sListaBitacoras[i]['curso'];
-                celdaEstudiantes.innerHTML = sListaBitacoras[i]['asistente'];
-                
-                let nHorasTotales = 0;
-                for(let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
-                    nHorasTotales += Number(sListaBitacoras[i]['entradas'][j]['horas']);
-                }
-                celdaHoras.innerHTML = nHorasTotales;
-                
-                let dFecha = new Date(sListaBitacoras[i]['fechaCreacion']);
-                let nMes = dFecha.getUTCMonth() + 1;
-                let nDia = dFecha.getUTCDate();
-                let nAnno = dFecha.getUTCFullYear();
-                celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
-                
-                let botonVerMas = document.createElement('a');
-                botonVerMas.classList.add('fas');
-                botonVerMas.classList.add('fa-info');
-        
-                botonVerMas.dataset.id = sListaBitacoras[i]['_id'];
-                botonVerMas.addEventListener('click', mostrarModel);
-        
-                celdaVerMas.appendChild(botonVerMas);
-        
-                let botonEditar = document.createElement('a');
-                botonEditar.classList.add('far');
-                botonEditar.classList.add('fa-edit');
-        
-                botonEditar.dataset.id = sListaBitacoras[i]['_id'];
-                // botonEditar.addEventListener('click', mostrarModel);
-        
-                celdaEditar.appendChild(botonEditar);
-        
-                let botonEliminar = document.createElement('a');
-                botonEliminar.classList.add('far');
-                botonEliminar.classList.add('fa-trash-alt');
-        
-                botonEliminar.dataset.id = sListaBitacoras[i]['_id'];
-                // botonEliminar.addEventListener('click', eliminar);
-        
-                celdaEliminar.appendChild(botonEliminar);
+                    let fila = tbody.insertRow();
+            
+                    let celdaCurso = fila.insertCell();
+                    let celdaAsistente = fila.insertCell();
+                    let celdaHoras = fila.insertCell();
+                    let celdaFechaCreacion = fila.insertCell();
+                    let celdaEstado = fila.insertCell();
+                    let celdaVerMas = fila.insertCell();
+            
+                    celdaCurso.innerHTML = sListaBitacoras[i]['curso'];
+                    celdaAsistente.innerHTML = sListaBitacoras[i]['asistente'];
+                    
+                    let nHorasTotales = 0;
+                    for(let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
+                        nHorasTotales += Number(sListaBitacoras[i]['entradas'][j]['horas']);
+                    }
+                    celdaHoras.innerHTML = nHorasTotales;
+                    
+                    let dFecha = new Date(sListaBitacoras[i]['fechaCreacion']);
+                    let nMes = dFecha.getUTCMonth() + 1;
+                    let nDia = dFecha.getUTCDate();
+                    let nAnno = dFecha.getUTCFullYear();
+                    celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
+                    
+                    let bEstado = sListaBitacoras[i]['estado'];
+                    if(bEstado){
+                        celdaEstado.innerHTML = 'Aprobada';
+                    }else{
+                        celdaEstado.innerHTML = 'Sin aprobar';
+                    }
+
+                    let botonVerMas = document.createElement('a');
+                    botonVerMas.classList.add('fas');
+                    botonVerMas.classList.add('fa-info');
+            
+                    botonVerMas.dataset.id = sListaBitacoras[i]['_id'];
+                    botonVerMas.addEventListener('click', mostrarModel);
+            
+                    celdaVerMas.appendChild(botonVerMas);
                 }
             }
         }
@@ -277,7 +266,7 @@ function nuevaEntrada(){
     let sActividad = selectActividad.value;
     let nHoras = inputHoras.value;
     let fFecha = inputFecha.value;
-    let estudiantes = '';
+    let sDescripcion = inputDescripcion.value;
 
     for (let i=0; i < sListaBitacoras.length; i++){
         if(selectBitacora.value == sListaBitacoras[i]['curso']){
@@ -285,7 +274,7 @@ function nuevaEntrada(){
         }
     }
 
-    let respuesta = agregarEntrada(sId, fFecha, sActividad, nHoras, estudiantes);
+    let respuesta = agregarEntrada(sId, fFecha, sActividad, nHoras, sDescripcion);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -293,8 +282,10 @@ function nuevaEntrada(){
                 type: 'success',
                 confirmButtonText: 'Entendido'
             });
-            document.getElementById("buscar").click();
             limpiarFormulario();
+            sListaBitacoras = obtenerBitacoras();
+            mostrarBusqueda();
+            document.getElementById("buscar").click();
         }else{
             swal({
                 title: 'Registro incorrecto',
@@ -303,6 +294,37 @@ function nuevaEntrada(){
                 confirmButtonText: 'Entendido'
               });
         }
+};
+
+function modificarEntrada(){
+    let sActividad = selectEditarActividad.value;
+    let nHoras = inputEditarHoras.value;
+    let fFecha = inputEditarFecha.value;
+    let sDescripcion = inputEditarDescripcion.value;
+
+    let sIdBitacora = inputIdBitacora.value;
+    let sIdEntrada = inputIdEntrada.value;
+
+    let respuesta = actualizarEntrada(sIdBitacora, sIdEntrada, fFecha, sActividad, nHoras, sDescripcion);
+    if(respuesta.success == true){
+        swal({
+            title: 'Modificación correcta',
+            text: respuesta.msg,
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        limpiarFormularioModificar();
+        sListaBitacoras = obtenerBitacoras();
+        mostrarBusqueda();
+        document.getElementById("buscar").click();
+    }else{
+        swal({
+            title: 'Modificación incorrecta',
+            text: respuesta.msg,
+            type: 'error',
+            confirmButtonText: 'Entendido'
+            });
+    }
 };
 
 function cerrarModal(){
@@ -316,7 +338,7 @@ function mostrarModel(){
     let bitacora = obtenerBitacoraPorId(id);
     let bEstado = bitacora['estado'];
 
-    document.querySelector('#infCurso').innerHTML = bitacora['curso'];
+    document.querySelector('#infCurso').innerHTML = 'Curso: ' + bitacora['curso'];
     document.querySelector('#infAsistente').innerHTML = 'Asistente: ' + bitacora['asistente'];
     document.querySelector('#infProfesor').innerHTML = 'Profesor: ' + bitacora['profesor'];
 
@@ -339,16 +361,15 @@ function mostrarModel(){
 
         let celdaActividad = fila.insertCell();
         let celdaHoras = fila.insertCell();
-        let celdaEstudiantes = fila.insertCell();
+        let celdaDescripcion = fila.insertCell();
         let celdaFecha = fila.insertCell();
 
-        // let celdaEstado = fila.insertCell();
         let celdaEditar = fila.insertCell();
         let celdaEliminar = fila.insertCell();
 
         celdaActividad.innerHTML = bitacora['entradas'][i]['actividad'];
         celdaHoras.innerHTML = bitacora['entradas'][i]['horas'];
-        celdaEstudiantes.innerHTML = bitacora['entradas'][i]['estudiantes'];
+        celdaDescripcion.innerHTML = bitacora['entradas'][i]['descripcion'];
 
         let dFecha = new Date(bitacora['entradas'][i]['fecha']);
         let nMes = dFecha.getUTCMonth() + 1;
@@ -356,19 +377,13 @@ function mostrarModel(){
         let nAnno = dFecha.getUTCFullYear();
         celdaFecha.innerHTML = nDia + '/' + nMes + '/' + nAnno;
         
-        // let bEstado = sListaBitacoras[i]['estado'];
-        // if(bEstado){
-        //     celdaEstado.innerHTML = 'Aprobada';
-        // }else{
-        //     celdaEstado.innerHTML = 'Sin aprobar';
-        // }
-
         let botonEditar = document.createElement('a');
         botonEditar.classList.add('far');
         botonEditar.classList.add('fa-edit');
 
-        // botonEditar.dataset.id = sListaBitacoras[i]['_id'];
-        // botonEditar.addEventListener('click', mostrarModel);
+        botonEditar.dataset.idBitacora = bitacora['_id'];
+        botonEditar.dataset.idEntrada = bitacora['entradas'][i]['_id'];
+        botonEditar.addEventListener('click', editar);
 
         celdaEditar.appendChild(botonEditar);
 
@@ -376,9 +391,66 @@ function mostrarModel(){
         botonEliminar.classList.add('far');
         botonEliminar.classList.add('fa-trash-alt');
 
-        // botonEliminar.dataset.id = sListaBitacoras[i]['_id'];
-        // botonEliminar.addEventListener('click', eliminar);
+        botonEliminar.dataset.idBitacora = bitacora['_id'];
+        botonEliminar.dataset.idEntrada = bitacora['entradas'][i]['_id'];
+        botonEliminar.addEventListener('click', eliminar);
 
         celdaEliminar.appendChild(botonEliminar);
     }
+};
+
+function eliminar(){
+    let sIdBitacora = this.dataset.idBitacora;
+    let sIdEntrada = this.dataset.idEntrada;
+
+    swal({
+        title: '¿Seguro que desea eliminar esta entrada de la bitácora?',
+        text: "Esta acción no se puede revertir",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar'
+      }).then((result) => {
+        if (result.value) {
+            eliminarEntrada(sIdBitacora, sIdEntrada);
+            sListaBitacoras = obtenerBitacoras();
+            mostrarBusqueda();
+            cerrarModal();
+          swal(
+            'Eliminado!',
+            'La entrada ha sido eliminada.',
+            'success'
+          )
+        }
+      })
+};
+
+function editar(){
+    let sIdBitacora = this.dataset.idBitacora;
+    let sIdEntrada = this.dataset.idEntrada;
+    let nEntrada = 0;
+
+    document.getElementById("modificar").click();
+    let bitacora = obtenerBitacoraPorId(sIdBitacora);
+
+    console.log(bitacora);
+
+    inputEditarBitacora.value = bitacora['curso'];
+    for(let i=0; i < sListaBitacoras.length; i++){
+        for (let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
+            if(sIdEntrada == sListaBitacoras[i]['entradas'][j]['_id']){
+                nEntrada = j;
+            }
+        }
+    }
+    selectEditarActividad.value = bitacora['entradas'][nEntrada]['actividad'];
+    inputEditarDescripcion.value = bitacora['entradas'][nEntrada]['descripcion'];
+    inputEditarHoras.value = bitacora['entradas'][nEntrada]['horas'];
+    inputEditarFecha.valueAsDate = new Date(bitacora['entradas'][nEntrada]['fecha']);
+
+    inputIdBitacora.value = bitacora['_id'];
+    inputIdEntrada.value = bitacora['entradas'][nEntrada]['_id'];
+
+    cerrarModal();
 };

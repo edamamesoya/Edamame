@@ -50,21 +50,22 @@
                 </div>
             </div>
             <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
-        <input type="text" id="txtId" hidden>
+        <input type="text" id="txtIdBitacora" hidden>
+        <input type="text" id="txtIdEntrada" hidden>
         
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
             <button class="tablinks" onclick="abrirFuncion(event, 'registrarEntrada')" id="defaultOpen">Nueva entrada</button>
-            <!-- <button class="tablinks" onclick="abrirFuncion(event, 'modificarCarrera')" id="modificar">Modificar carrera</button> -->
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarEntrada')" id="modificar">Modificar entrada</button>
             <button class="tablinks" onclick="abrirFuncion(event, 'buscarBitacora')" id="buscar">Listar bitácoras</button>
         </div>
     
-        <!--Función registrar carreras-->
+        <!--Función registrar entradas de bitácora-->
         <section id="registrarEntrada" class="tabcontent">
             <h2>Agregar nueva entrada a bitácora</h2>
             <p>Ingrese la información solicitada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
@@ -92,6 +93,10 @@
                             <option value="opcion 5">opcion 5</option>
                         </select>
                     </div>
+                    <div class="inputLargo">
+                        <label for="txtDescripcion">Descripción</label>
+                        <textarea id="txtDescripcion"> </textarea>
+                    </div>
                     <div>
                         <label for="txtHoras">Horas *</label>
                         <i class="fas fa-pencil-alt"></i>
@@ -108,7 +113,7 @@
             </form>
         </section>
 
-        <!--Función buscar carreras-->
+        <!--Función buscar bitácoras-->
         <section id="buscarBitacora" class="tabcontent">
             <h2>Lista de bitácoras</h2>
             <p>Despliegue total de bitácoras registradas. Para búsquedas específicas, ingrese el nombre del curso en "Filtrar".
@@ -126,9 +131,8 @@
                         <th width="45%">Asistente</th>
                         <th width="10%">Horas</th>
                         <th width="15%">Fecha de creación</th>
+                        <th width="10%">Estado</th>
                         <th width="10%">Ver más</th>
-                        <th width="5%">Editar</th>
-                        <th width="5%">Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -138,102 +142,91 @@
             <h3 id="mensajeLista">No existen bitácoras registradas</h3>
         </section>
 
-        <!--Función modificar carrera-->
-        <!-- <section id="modificarCarrera" class="tabcontent">
-            <h2>Modificar carrera</h2>
+        <!--Función modificar entrada de bitácora-->
+        <section id="modificarEntrada" class="tabcontent">
+            <h2>Modificar entrada</h2>
             <p>Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
                 para guardar los datos.
             </p>
 
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
-                    <h3>Información de carrera</h3>
-                    <div class="inputLargo">
-                        <label for="txtEditarNombre">Nombre *</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtEditarNombre" required>
+                    <h3>Información de actividad</h3>
+                    <div>
+                        <label for="txtEditarBitacora">Bitácora *</label>
+                        <i class="fas fa-list"></i>
+                        <input type="text" id="txtEditarBitacora" disabled required>
                     </div>
                     <div>
-                        <label for="txtEditarCodigo">Código *</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtEditarCodigo" required>
-                    </div>
-                    <div>
-                        <label for="txtEditarGrado">Grado *</label>
-                        <i class="fas fa-user-lock"></i>
-                        <select id="txtEditarGrado" required>
-                            <option value="Maestría">Maestría</option>
-                            <option value="Licenciatura">Licenciatura</option>
-                            <option value="Postgrado">Postgrado</option>
-                            <option value="Bachillerato">Bachillerato</option>
-                            <option value="Diplomado">Diplomado</option>
-                            <option value="Técnico">Técnico</option>
+                        <label for="txtEditarActividad">Actividad realizada *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarActividad" required>
+                            <option value="opcion 1">opcion 1</option>
+                            <option value="opcion 2">opcion 2</option>
+                            <option value="opcion 3">opcion 3</option>
+                            <option value="opcion 4">opcion 4</option>
+                            <option value="opcion 5">opcion 5</option>
                         </select>
                     </div>
-                    <div>
-                        <label for="txtEditarCreditos">Créditos *</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="number" id="txtEditarCreditos" min="0" required>
-                    </div>
-                    <div>
-                        <label for="txtEditarFecha">Fecha de creación *</label>
-                        <i class="far fa-calendar-alt"></i>
-                        <input type="date" id="txtEditarFecha" required>
-                    </div>
                     <div class="inputLargo">
-                        <label class="switch">
-                            <input type="checkbox" id="chkEstado">
-                            <span class="slider round"></span>
-                        </label>
+                        <label for="txtEditarDescripcion">Descripción</label>
+                        <textarea id="txtEditarDescripcion"> </textarea>
                     </div>
-                    <label for="" id="labelEditarRequerido">*: campos requeridos</label>
+                    <div>
+                        <label for="txtEditarHoras">Horas *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtEditarHoras" min="0" placeholder="Ej, 5" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarFecha">Fecha *</label>
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" id="txtEditarFecha" placeholder="Fecha" required>
+                    </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
                 </fieldset>
                 <button type="button" class="button" id="btnEditar">Registrar</button>
             </form>
-        </section> -->
+        </section>
 
-            <!-- The Modal -->
-    <div id="modal" class="modal ocultar">
-
-        <!-- Modal content -->
-        <div class="modal-content" id="scrollModal">
-            <div class="close">
-                <i id="btnCerrar" class="far fa-times-circle"></i>
-            </div>
-            <div class="modal-body">
-                <section id="topInformation">
-                <div>
-                    <p id="infCurso"></p>
-                    <p id="infAsistente"></p>
-                    <p id="infProfesor"></p>
-                    <p id="infHoras"></p>
-                    <p id="infEstado"></p>
+        <!-- Listar entradas de bitácora -->
+        <div id="modal" class="modal ocultar">
+            <div class="modal-content" id="scrollModal">
+                <div class="close">
+                    <i id="btnCerrar" class="far fa-times-circle"></i>
                 </div>
-                </section>
-            </div>
+                <div class="modal-body">
+                    <section id="topInformation">
+                    <div>
+                        <p id="infCurso" class="textoTitulo"></p>
+                        <p id="infAsistente" class="textDescripcion"></p>
+                        <p id="infProfesor" class="textDescripcion"></p>
+                        <p id="infHoras" class="textDescripcion"></p>
+                        <p id="infEstado" class="textDescripcion"></p>
+                    </div>
+                    </section>
+                </div>
 
-            <div class="tabla">
-                <p class="pHelp">Detalles de entradas</p>
-                <table id="tblEntradas" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
-                    <thead>
-                        <tr>
-                            <th>Actividad</th>
-                            <th>Horas</th>
-                            <th>Estudiantes</th>
-                            <th>Fecha</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="tabla">
+                    <p class="titulo">Detalles</p>
+                    <table id="tblEntradas" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                        <thead>
+                            <tr>
+                                <th>Actividad</th>
+                                <th>Horas</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            
         </div>
-        
-    </div>
-
     </main>
 
     <!--Scripts-->

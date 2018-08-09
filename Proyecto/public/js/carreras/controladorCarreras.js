@@ -31,6 +31,7 @@ const botonModificar = document.querySelector('#btnEditar');
 const botonCursosAsignados = document.querySelector('#btnCursosAsignados');
 const botonAsignarCursos = document.querySelector('#btnAsignarCursos');
 const botonAsignar = document.querySelector('#btnAsignar');
+const botonDesasignar = document.querySelector('#btnDesasignar');
 
 /**
  * Declaración de eventos relacionados a elementos HTML.
@@ -39,6 +40,7 @@ botonRegistrar.addEventListener('click', obtenerDatos);
 botonModificar.addEventListener('click', modificarDatos);
 
 botonAsignar.addEventListener('click', asignarCursos);
+botonDesasignar.addEventListener('click', desasignarCursos);
 inputBuscar.addEventListener('keyup', function(){
     mostrarBusqueda(inputBuscar.value)
 });
@@ -63,6 +65,8 @@ function obtenerDatos(){
     let nCreditos = inputCreditos.value;
     let dFechaCreacion = inputFecha.value;
 
+    let msgError = '';
+
     let bError = false;
     bError = validarRegistro();
     
@@ -71,7 +75,8 @@ function obtenerDatos(){
             title: 'Registro incorrecto',
             text: 'No se pudo registrar la carrera, revise los campos en rojo',
             type: 'warning',
-            confirmButtonText: 'Entendido'
+            confirmButtonText: 'Entendido',
+            confirmButtonColor: '#30336b'
           });
     }else{
         let respuesta = registrarCarrera(sCodigo , sNombre, sGrado, nCreditos, dFechaCreacion);
@@ -89,12 +94,16 @@ function obtenerDatos(){
             mostrarCarreras();
             document.getElementById("buscar").click();
         }else{
+            if(respuesta.msg['code'] == 11000){
+                console.log(respuesta.msg['message']['dup key']);
+                msgError = 'Ya existe una carrera con ese nombre'
+            }
             swal({
                 title: 'Registro incorrecto',
-                text: respuesta.msg,
+                text: msgError,
                 type: 'error',
                 confirmButtonText: 'Entendido'
-              });
+            });
         }   
     }
 };
@@ -162,9 +171,13 @@ function validarRegistro(){
     // Validación del input para código
     if (sCodigo == '' || (regexCodigo.test(sCodigo) == false) ){
         inputCodigo.classList.add('errorInput');
+        document.getElementById('tooltipCodigo').classList.add('visible');
+        document.getElementById('tooltipCodigo').classList.remove('invisible');
         bError = true;
     }else{
         inputCodigo.classList.remove('errorInput');
+        document.getElementById('tooltipCodigo').classList.add('invisible');
+        document.getElementById('tooltipCodigo').classList.remove('visible');
     }
 
     // Validación del input para nombre
@@ -398,12 +411,14 @@ function mostrarCursosAsignados(){
     let sCarreraActual = document.querySelector('#txtCarrera').value;
     let nombreCurso = '';
     let codigoCurso = '';
+    let nCantCursos = 0;
 
     let selectCursosAsignados = document.querySelector('#lstCursosAsignados');
     selectCursosAsignados.innerHTML = '';
 
     for (let i=0; i < sListaCarreras.length; i++) { 
         if (sCarreraActual == sListaCarreras[i]['nombre']){
+            nCantCursos = sListaCarreras[i]['cursosAsignados'].length;
             for (let j=0; j < sListaCarreras[i]['cursosAsignados'].length; j++) { 
                 nombreCurso = sListaCarreras[i]['cursosAsignados'][j]['nombreCurso'];
                 codigoCurso = sListaCarreras[i]['cursosAsignados'][j]['codigoCurso'];
@@ -423,6 +438,13 @@ function mostrarCursosAsignados(){
             }
         }
     }
+    if(nCantCursos == 0){
+        document.getElementById('mensajeAsignados').classList.add('visible');
+        document.getElementById('mensajeAsignados').classList.remove('invisible');
+    }else{
+        document.getElementById('mensajeAsignados').classList.add('invisible');
+        document.getElementById('mensajeAsignados').classList.remove('visible');
+    }
 };
 
 /**
@@ -431,6 +453,7 @@ function mostrarCursosAsignados(){
 function mostrarCursosPorAsignar(){     
     sListaCarreras = obtenerCarreras();
     sListaCursos = obtenerCursos();
+    let nCantCursos = 0;
     let sCarreraActual = document.querySelector('#txtCarrera').value;
 
     let selectCursosPorAsignar = document.querySelector('#lstCursosPorAsignar');
@@ -446,6 +469,7 @@ function mostrarCursosPorAsignar(){
                     }
                 }
                 if(!bAsignado){
+                    nCantCursos++;
                     let etiquetaCursoPorAsignar = document.createElement('label');
                     let cursoPorAsignar = document.createElement('input');
 
@@ -461,6 +485,13 @@ function mostrarCursosPorAsignar(){
                 }
             }
         }
+    }
+    if(nCantCursos == 0){
+        document.getElementById('mensajePorAsignar').classList.add('visible');
+        document.getElementById('mensajePorAsignar').classList.remove('invisible');
+    }else{
+        document.getElementById('mensajePorAsignar').classList.add('invisible');
+        document.getElementById('mensajePorAsignar').classList.remove('visible');
     }
 };
 
@@ -489,9 +520,6 @@ function asignarCursos(){
     let curso = document.querySelectorAll('#lstCursosPorAsignar input[type=checkbox]');
     for (let i=0; i < curso.length; i++) {
         if (curso[i].checked){
-            console.log(idCarrera);
-            console.log(curso.value);
-            console.log(curso.name);
             let respuesta = agregarCurso(idCarrera, curso[i].value, curso[i].name);
         if(respuesta.success == true){
             swal({
@@ -504,6 +532,46 @@ function asignarCursos(){
         }else{
             swal({
                 title: 'Registro incorrecto',
+                text: respuesta.msg,
+                type: 'error',
+                confirmButtonText: 'Entendido'
+              });
+        } 
+        }
+    } 
+};
+
+function desasignarCursos(){
+    let idCarrera = '';
+    let carrera = '';
+    let idCurso = '';
+
+    for (let j=0; j < sListaCarreras.length; j++) {
+        if (sListaCarreras[j]['nombre'] == inputCarrera.value){
+            idCarrera = sListaCarreras[j]['_id'];
+            carrera = sListaCarreras[j];
+        }
+    }
+    let curso = document.querySelectorAll('#lstCursosAsignados input[type=checkbox]');
+    for (let i=0; i < curso.length; i++) {
+        if (curso[i].checked){
+            for (let j=0; j < carrera['cursosAsignados'].length; j++){
+                if (curso[i].name == carrera['cursosAsignados'][j]['nombreCurso']){
+                    idCurso = carrera['cursosAsignados'][j]['_id'];
+                }
+            }
+            let respuesta = desenlazarCurso(idCarrera, idCurso);
+        if(respuesta.success == true){
+            swal({
+                title: 'Desenlace correcto',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            botonCursosAsignados.click();
+        }else{
+            swal({
+                title: 'Desenlace incorrecto',
                 text: respuesta.msg,
                 type: 'error',
                 confirmButtonText: 'Entendido'
