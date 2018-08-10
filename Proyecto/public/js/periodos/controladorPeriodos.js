@@ -1,7 +1,7 @@
 'use strict'
 
 let ListaPeriodos = obtenerPeriodos();
-mostrarListaPeriodos()
+mostrarListaPeriodos();
 
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
@@ -24,6 +24,7 @@ botonRegistrar.addEventListener('click', obtenerDatos);
 botonModificar.addEventListener('click', modificarDatos);
 inputBuscar.addEventListener('keyup', mostrarBusquedaPeriodos);
 
+limpiarFormulario();
 
 //Regex//
 let regexCodigo = /^[a-zA-Z0-9\-\_ ]+$/;
@@ -284,10 +285,20 @@ function mostrarBusquedaPeriodos() {
 
 
 function limpiarFormulario() {
-    inputCodigo.value = '';
-    inputNombre.value = '';
-    inputFechaInicio.value = '';
-    inputFechaConclusion.value = '';
+    let listaPeriodos = obtenerPeriodos();
+    let dFechaActual = new Date();
+    if (listaPeriodos.length > 0) {
+        let dFechaConclusionPasada = new Date(listaPeriodos[listaPeriodos.length - 1]['fechaconclusion']);
+        inputCodigo.value = '';
+        inputNombre.value = '';
+        if (dFechaActual > dFechaConclusionPasada) {
+            inputFechaInicio.valueAsDate = dFechaActual;
+        } else {
+            inputFechaInicio.valueAsDate = dFechaConclusionPasada;
+        }
+    } else {
+        inputFechaInicio.valueAsDate = dFechaActual;
+    }
 };
 
 function limpiarFormularioModificar() {
@@ -337,7 +348,7 @@ function editar() {
     inputId.value = periodo['_id'];
 };
 
-function modificarDatos(){
+function modificarDatos() {
     let sCodigo = inputEditarCodigo.value;
     let sNombre = inputEditarNombre.value;
     let dFechaInicio = inputEditarFechaInicio.value;
@@ -347,17 +358,17 @@ function modificarDatos(){
 
     let bError = false;
     bError = validarRegistroModificar();
-    
-    if(bError == true){
+
+    if (bError == true) {
         swal({
             title: 'Modificación incorrecta',
             text: 'No se pudo modificar el periodo, revise los campos en rojo',
             type: 'warning',
             confirmButtonText: 'Entendido'
-          });
-    }else{
-        let respuesta = actualizarPeriodo(sId, sCodigo , sNombre, dFechaInicio, dFechaConclusion, sEstado);
-        if(respuesta.success == true){
+        });
+    } else {
+        let respuesta = actualizarPeriodo(sId, sCodigo, sNombre, dFechaInicio, dFechaConclusion, sEstado);
+        if (respuesta.success == true) {
             swal({
                 title: 'Modificación correcta',
                 text: respuesta.msg,
@@ -370,13 +381,13 @@ function modificarDatos(){
             mostrarBusquedaPeriodos();
             mostrarListaPeriodos();
             document.getElementById("buscar").click();
-        }else{
+        } else {
             swal({
                 title: 'Registro incorrecto',
                 text: respuesta.msg,
                 type: 'error',
                 confirmButtonText: 'Entendido'
-              });
-        }   
+            });
+        }
     }
 };

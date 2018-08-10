@@ -6,8 +6,12 @@ module.exports.registrar = function (req, res) {
 
         nombre: req.body.nombre,
         cursos: req.body.cursos,
-        profe : req.body.profe,
-        estado: req.body.estado
+        profe: req.body.profe,
+        estado: req.body.estado,
+        sedes: req.body.sedes,
+        grupos: req.body.grupos,
+        periodos: req.body.periodos,
+
 
     });
 

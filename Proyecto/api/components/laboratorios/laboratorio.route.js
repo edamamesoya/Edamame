@@ -19,7 +19,7 @@ router.route('/buscar_laboratorio')
         laboratorioApi.buscar_laboratorio(req, res);
     });
 
-    router.route('/buscar_laboratorio_id')
+router.route('/buscar_laboratorio_id')
     .post(function (req, res) {
         laboratorioApi.buscar_laboratorio_id(req, res);
     });
