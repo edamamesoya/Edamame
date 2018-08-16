@@ -8,7 +8,7 @@ module.exports.registrar = function(req, res) {
         profesor : req.body.profesor,
         fechaCreacion : req.body.fechaCreacion,
         cantidadHoras : '0',
-        estado : 'false'
+        estado : 'pendiente'
     });
 
     nuevaBitacora.save(function(error){
@@ -98,4 +98,16 @@ module.exports.modificar_entrada = function(req, res){
             }
         }
     )
+};
+
+module.exports.modificar_bitacora = function (req, res) {
+    bitacoraModel.findByIdAndUpdate(req.body._id, { $set: req.body },
+        function (err, bitacora) {
+            if (err) {
+                res.json({ success: false, msg: 'La bitácora no se ha podido modificar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'La bitácora se ha actualizado correctamente. '});
+            }
+        });
 };

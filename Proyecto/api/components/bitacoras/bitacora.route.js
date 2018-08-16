@@ -32,4 +32,9 @@ router.route('/eliminar_entrada')
     .post(function (req, res) {
         bitacoraApi.eliminar_entrada(req, res);
     });
+
+router.route('/modificar_bitacora')
+    .post(function (req, res) {
+        bitacoraApi.modificar_bitacora(req, res);
+    });
 module.exports = router;

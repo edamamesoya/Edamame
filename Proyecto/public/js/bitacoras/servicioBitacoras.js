@@ -128,3 +128,28 @@ function actualizarEntrada(pIdBitacora, pIdEntrada, pFecha, pActividad, pHoras, 
 
       return respuesta;
 };
+
+function actualizarBitacora(pId, pEstado){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/modificar_bitacora',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: pId,
+            estado : pEstado
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+};

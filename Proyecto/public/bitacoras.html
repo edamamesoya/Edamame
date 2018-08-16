@@ -76,7 +76,7 @@
                 <fieldset class="fieldset">
                     <h3>Información de actividad</h3>
                     <div>
-                        <label for="txtBitacora">Bitácora *</label>
+                        <label for="txtBitacora">Curso *</label>
                         <i class="fas fa-list"></i>
                         <select id="txtBitacora" required>
                     
@@ -86,6 +86,7 @@
                         <label for="txtActividad">Actividad realizada *</label>
                         <i class="fas fa-list"></i>
                         <select id="txtActividad" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
                             <option value="opcion 1">opcion 1</option>
                             <option value="opcion 2">opcion 2</option>
                             <option value="opcion 3">opcion 3</option>
@@ -128,8 +129,9 @@
                 <thead>
                     <tr>
                         <th width="10%">Curso</th>
-                        <th width="45%">Asistente</th>
-                        <th width="10%">Horas</th>
+                        <th width="25%">Asistente</th>
+                        <th width="25%">Profesor</th>
+                        <th width="5%">Horas</th>
                         <th width="15%">Fecha de creación</th>
                         <th width="10%">Estado</th>
                         <th width="10%">Ver más</th>
@@ -153,7 +155,7 @@
                 <fieldset class="fieldset">
                     <h3>Información de actividad</h3>
                     <div>
-                        <label for="txtEditarBitacora">Bitácora *</label>
+                        <label for="txtEditarBitacora">Curso *</label>
                         <i class="fas fa-list"></i>
                         <input type="text" id="txtEditarBitacora" disabled required>
                     </div>
@@ -223,9 +225,12 @@
 
                         </tbody>
                     </table>
+                    <h3 id="bitacoraVacia">No existen actividades registradas</h3>
                 </div>
+
+                <button type="button" class="button" id="btnAprobar">Aprobar bitácora</button>
+                <button type="button" class="button" id="btnRechazar">Rechazar bitácora</button>
             </div>
-            
         </div>
     </main>
 

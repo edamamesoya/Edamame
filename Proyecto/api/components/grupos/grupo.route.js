@@ -27,5 +27,13 @@ router.route('/buscar_grupo')
     .post(function (req, res) {
         grupoApi.buscar_grupo(req, res);
     });
+router.route('/buscar_grupo_id')
+    .post(function (req, res) {
+        grupoApi.buscar_grupo_id(req, res);
+    });
 
+router.route('/eliminar_grupo')
+    .post(function (req, res) {
+        grupoApi.eliminar_grupo(req, res);
+    });
 module.exports = router;

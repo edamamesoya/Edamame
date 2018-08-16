@@ -7,7 +7,7 @@ let bitacoraSchema = new mongoose.Schema({
     profesor : {type : String, required : true},
     fechaCreacion : {type : Date, required : true},
     cantidadHoras : {type : Number, required : true},   
-    estado : {type : Boolean, required : true},
+    estado : {type : String, required : true},
     entradas : [
         {
             fecha : {type : Date},

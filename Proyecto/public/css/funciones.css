@@ -41,6 +41,7 @@ section p {
 
 .buttonLargo {
     width: 40%; 
+    margin-left: 30%;
 }
 
 .button:hover {
@@ -100,9 +101,9 @@ body main fieldset div #lstRequisitos input{
 body main fieldset input{
     border: none;
     outline-style: none;
-    border-bottom: 1.5px solid #260536;
+    border-bottom: 1px solid #260536;
     font-size: 14px;
-    width: 95%;
+    width: 90%;
     display: inline-block;
     text-align: center;
 }
@@ -114,7 +115,7 @@ body main fieldset input:focus, textarea:focus {
 }
 body main fieldset select{
     font-size: 14px;
-    width: 95%;
+    width: 90%;
     display: inline-block;
 }
 body main fieldset div {
@@ -124,13 +125,16 @@ body main fieldset div {
     margin-left: 7.5%;
     margin-right: 5%;
 }
+.enlazar {
+    width: 80%;
+}
 .inputLargo{
     width: 85%;
     padding: 0px 10px 0px 0px;
     box-sizing: border-box;
 }
 body main fieldset div textarea{
-    width: 100%;
+    width: 99%;
     height: 100px;
 }
 
@@ -139,6 +143,8 @@ body main fieldset h3 {
 }
 body main fieldset i {
     width: 3%;
+    margin-right: 5%;
+    color: #30336b;
 }
 body main fieldset #labelRequerido {
     margin-bottom: 15px;
@@ -176,6 +182,7 @@ body main fieldset div #lstCursosPorAsignar input{
     width: 5%;
     display: inline-block;
 }
+
 /* Fin estilos form */
 
 /* Inicio estilos lstRequisitos */
@@ -216,12 +223,13 @@ body main .checkbox{
 .invisible {
     display: none;
 }
+.visibleIB{
+    display: inline-block;
+}
 
  /* Inicio estilos Mapa */
- div #mapaSede {
-
-    top: 10%;   
-    width: 100%;
+.mapaSede {  
+    width: 70%;
     height: 300px;
     border: 1px solid #BEBEBE;
     border-radius: 2px;
@@ -230,6 +238,7 @@ body main .checkbox{
     animation: grande 1s ease;
     margin-top: 5%;
     margin-bottom: 5%;
+    margin-left: 15%;
 }
 
 @keyframes grande {
@@ -330,7 +339,7 @@ footer{
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 120px;
+    width: 90%;
     background-color: #130f40;
     color: #fff;
     font-size: 10px;
@@ -340,7 +349,7 @@ footer{
     position: absolute;
     z-index: 1;
     top: 110%;
-    left: 50%;
+    left: 25%;
     margin-left: -60px;
 }
 

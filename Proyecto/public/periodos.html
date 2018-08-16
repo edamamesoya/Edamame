@@ -25,8 +25,8 @@
                 <i class="fas fa-user-tie fa-5x"></i>
                 <!-- <img src="" alt="img usuario"> -->
                 <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                    </a>
+                    <label for="bLogOut">Salir</label>
             </div>
         </div>
 
@@ -52,10 +52,13 @@
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
+        <input type="text" id="txtId" hidden>
+
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
             <button class="tablinks" onclick="abrirFuncion(event, 'registrarPeriodo')">Registrar periodo</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarPeriodo')" id="modificar">Modificar periodo</button>
             <button class="tablinks" onclick="abrirFuncion(event, 'buscarPeriodo')" id="buscar">Listar periodos</button>
         </div>
 
@@ -121,6 +124,7 @@
 
                 </tbody>
             </table>
+            <h3 id="mensajeLista">No existen periodos registrados</h3>
         </section>
 
         <div id="listarPeriodo" class="tabcontent">
@@ -142,6 +146,49 @@
 
                 </tbody>
             </table>
+        </div>
+        <div id="modificarPeriodo" class="tabcontent">
+            <h2>Modificar Periodos</h2>
+            <p>
+                Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar" para guardar
+                los datos.
+            </p>
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <div>
+                        <label for="txtEditarCodigo">Código:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarCodigo" placeholder="Ej, I-2018">
+                        <label for="txtEditarCodigo" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarNombre">Nombre:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtEditarNombre" placeholder="Ej, Primer periodo 2018">
+                        <label for="txtEditarNombre" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarFechaInicio">Fecha de Inicio:</label>
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" id="txtEditarFechaInicio">
+                        <label for="txtEditarFechaInicio" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarFechaConclusion">Fecha de Conclusión:</label>
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" id="txtEditarFechaConclusion">
+                        <label for="txtEditarFechaConclusion" class="labelError">*</label>
+                    </div>
+                    <div class="inputLargo">
+                        <label class="switch">
+                            <input type="checkbox" id="chkEstado">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <label for="" id="labelEditarRequerido">*: campos requeridos</label>
+                </fieldset>
+                <button type="button" id="btnEditar" class="button">Registrar</button>
+            </form>
         </div>
     </main>
 

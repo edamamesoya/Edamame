@@ -18,12 +18,16 @@ const inputEditarDescripcion = document.querySelector('#txtEditarDescripcion');
 const inputEditarHoras = document.querySelector('#txtEditarHoras');
 const inputEditarFecha = document.querySelector('#txtEditarFecha');
 const btnModificar = document.querySelector('#btnEditar');
+const btnAprobar = document.querySelector('#btnAprobar');
+const btnRechazar = document.querySelector('#btnRechazar');
 
 const inputIdBitacora = document.querySelector('#txtIdBitacora');
 const inputIdEntrada = document.querySelector('#txtIdEntrada');
 
 const btnCerrar = document.querySelector('#btnCerrar');
 
+btnAprobar.addEventListener('click', aprobarBitacora);
+btnRechazar.addEventListener('click', rechazarBitacora);
 btnRegistrar.addEventListener('click', nuevaEntrada);
 btnModificar.addEventListener('click', modificarEntrada);
 btnCerrar.addEventListener('click', cerrarModal);
@@ -39,9 +43,10 @@ inputBuscar.addEventListener('keyup', function(){
 /**
  * Declaración de expresiones regulares.
  */
-let regexCodigo = /^[a-zA-Z0-9\-]+$/;
-let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
-let regexCreditos = /^[0-9]+$/;
+const regexCodigo = /^[a-zA-Z0-9\-]+$/;
+const regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
+const regexHoras = /^[0-9]+$/;
+const regexDescripcion = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ0-9\(\)\@\"\'\:\.\,\;\-\#\_\\\/\?\¿\!\¡ ]+$/;
 
 function verificarUsuario(){
     let sCorreo = localStorage.getItem('correoUsuarioActivo');
@@ -85,6 +90,7 @@ function mostrarBusqueda(pFiltro){
         
                 let celdaCurso = fila.insertCell();
                 let celdaAsistente = fila.insertCell();
+                let celdaProfesor = fila.insertCell();
                 let celdaHoras = fila.insertCell();
                 let celdaFechaCreacion = fila.insertCell();
                 let celdaEstado = fila.insertCell();
@@ -92,6 +98,7 @@ function mostrarBusqueda(pFiltro){
 
                 celdaCurso.innerHTML = sListaBitacoras[i]['curso'];
                 celdaAsistente.innerHTML = sListaBitacoras[i]['asistente'];
+                celdaProfesor.innerHTML = sListaBitacoras[i]['profesor'];
 
                 let nHorasTotales = 0;
                 for(let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
@@ -105,12 +112,7 @@ function mostrarBusqueda(pFiltro){
                 let nAnno = dFecha.getUTCFullYear();
                 celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
                 
-                let bEstado = sListaBitacoras[i]['estado'];
-                if(bEstado){
-                    celdaEstado.innerHTML = 'Aprobada';
-                }else{
-                    celdaEstado.innerHTML = 'Sin aprobar';
-                }
+                celdaEstado.innerHTML = sListaBitacoras[i]['estado'];
 
                 let botonVerMas = document.createElement('a');
                     botonVerMas.classList.add('fas');
@@ -130,6 +132,7 @@ function mostrarBusqueda(pFiltro){
             
                     let celdaCurso = fila.insertCell();
                     let celdaAsistente = fila.insertCell();
+                    let celdaProfesor = fila.insertCell();
                     let celdaHoras = fila.insertCell();
                     let celdaFechaCreacion = fila.insertCell();
                     let celdaEstado = fila.insertCell();
@@ -137,6 +140,7 @@ function mostrarBusqueda(pFiltro){
             
                     celdaCurso.innerHTML = sListaBitacoras[i]['curso'];
                     celdaAsistente.innerHTML = sListaBitacoras[i]['asistente'];
+                    celdaProfesor.innerHTML = sListaBitacoras[i]['profesor'];
 
                     let nHorasTotales = 0;
                     for(let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
@@ -150,12 +154,7 @@ function mostrarBusqueda(pFiltro){
                     let nAnno = dFecha.getUTCFullYear();
                     celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
                     
-                    let bEstado = sListaBitacoras[i]['estado'];
-                    if(bEstado){
-                        celdaEstado.innerHTML = 'Aprobada';
-                    }else{
-                        celdaEstado.innerHTML = 'Sin aprobar';
-                    }
+                    celdaEstado.innerHTML = sListaBitacoras[i]['estado'];
 
                     let botonVerMas = document.createElement('a');
                     botonVerMas.classList.add('fas');
@@ -174,6 +173,7 @@ function mostrarBusqueda(pFiltro){
             
                     let celdaCurso = fila.insertCell();
                     let celdaAsistente = fila.insertCell();
+                    let celdaProfesor = fila.insertCell();
                     let celdaHoras = fila.insertCell();
                     let celdaFechaCreacion = fila.insertCell();
                     let celdaEstado = fila.insertCell();
@@ -181,6 +181,7 @@ function mostrarBusqueda(pFiltro){
             
                     celdaCurso.innerHTML = sListaBitacoras[i]['curso'];
                     celdaAsistente.innerHTML = sListaBitacoras[i]['asistente'];
+                    celdaProfesor.innerHTML = sListaBitacoras[i]['profesor'];
                     
                     let nHorasTotales = 0;
                     for(let j=0; j < sListaBitacoras[i]['entradas'].length; j++){
@@ -194,12 +195,7 @@ function mostrarBusqueda(pFiltro){
                     let nAnno = dFecha.getUTCFullYear();
                     celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
                     
-                    let bEstado = sListaBitacoras[i]['estado'];
-                    if(bEstado){
-                        celdaEstado.innerHTML = 'Aprobada';
-                    }else{
-                        celdaEstado.innerHTML = 'Sin aprobar';
-                    }
+                    celdaEstado.innerHTML = sListaBitacoras[i]['estado'];
 
                     let botonVerMas = document.createElement('a');
                     botonVerMas.classList.add('fas');
@@ -227,6 +223,13 @@ function mostrarBitacoras(){
 
     let selectBitacora = document.getElementById('txtBitacora');
     selectBitacora.innerHTML = '';
+
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectBitacora.add(placeholder);
 
     if(usuarioActivo['rol'] == 'asistente'){
         for(let i = 0; i < sListaBitacoras.length; i++){
@@ -274,7 +277,18 @@ function nuevaEntrada(){
         }
     }
 
-    let respuesta = agregarEntrada(sId, fFecha, sActividad, nHoras, sDescripcion);
+    let bError = false;
+    bError = validarEntrada();
+
+    if(bError == true){
+        swal({
+            title: 'Registro incorrecto',
+            text: 'No se pudo registrar la entrada, revise los campos en rojo',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    }else{
+        let respuesta = agregarEntrada(sId, fFecha, sActividad, nHoras, sDescripcion);
         if(respuesta.success == true){
             swal({
                 title: 'Registro correcto',
@@ -294,7 +308,60 @@ function nuevaEntrada(){
                 confirmButtonText: 'Entendido'
               });
         }
+    }
 };
+
+function validarEntrada(){
+    let bError = false;
+
+    let sCurso = selectBitacora.value;
+    let sActividad = selectActividad.value;
+    let nHoras = Number(inputHoras.value);
+    let fFecha = new Date(inputFecha.value);
+    let sDescripcion = inputDescripcion.value;
+    let dFechaActual = new Date();
+
+    // Validación del select para curso
+    if (sCurso == ''){
+        selectBitacora.classList.add('errorInput');
+        bError = true;
+    }else{
+        selectBitacora.classList.remove('errorInput');
+    }
+
+    // Validación del select para actividad
+    if (sActividad == ''){
+        selectActividad.classList.add('errorInput');
+        bError = true;
+    }else{
+        selectActividad.classList.remove('errorInput');
+    }
+
+    // Validación del input de horas
+    if (nHoras == 0 || nHoras < 0 || (regexHoras.test(nHoras) == false) ){
+        inputHoras.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputHoras.classList.remove('errorInput');
+    }
+
+    // Validación del input para fecha
+    if (inputFecha.value == '' || fFecha > dFechaActual ){
+        inputFecha.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputFecha.classList.remove('errorInput');
+    }
+
+     // Validación del input para descripción
+     if(regexDescripcion.test(sDescripcion) == false){
+        inputDescripcion.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputDescripcion.classList.remove('errorInput');
+    }
+    return bError;
+}
 
 function modificarEntrada(){
     let sActividad = selectEditarActividad.value;
@@ -348,11 +415,7 @@ function mostrarModel(){
     }
     document.querySelector('#infHoras').innerHTML = 'Horas totales: ' + nHorasTotales;
 
-    if(bEstado){
-        document.querySelector('#infEstado').innerHTML = 'Estado: Aprobada';
-    }else{
-        document.querySelector('#infEstado').innerHTML = 'Estado: Sin Aprobar';
-    }
+    document.querySelector('#infEstado').innerHTML = 'Estado: ' + bitacora['estado'];
 
     let tbody = document.querySelector('#tblEntradas tbody');
     tbody.innerHTML = '';
@@ -396,6 +459,26 @@ function mostrarModel(){
         botonEliminar.addEventListener('click', eliminar);
 
         celdaEliminar.appendChild(botonEliminar);
+    }
+    if(bitacora['entradas'].length == 0){
+        document.getElementById('bitacoraVacia').classList.remove('listaVacia');
+    }else{
+        document.getElementById('bitacoraVacia').classList.add('listaVacia');
+    }
+
+    let sRol = localStorage.getItem('rolUsuarioActivo');
+    if(sRol == 'asistente'){
+        btnAprobar.classList.add('invisible');
+        btnAprobar.classList.remove('visible');
+        btnRechazar.classList.add('invisible');
+        btnRechazar.classList.remove('visible');
+    }else{
+        btnAprobar.dataset.id = id;
+        btnRechazar.dataset.id = id;
+        btnAprobar.classList.add('visible');
+        btnAprobar.classList.remove('invisible');
+        btnRechazar.classList.add('visible');
+        btnRechazar.classList.remove('invisible');
     }
 };
 
@@ -453,4 +536,54 @@ function editar(){
     inputIdEntrada.value = bitacora['entradas'][nEntrada]['_id'];
 
     cerrarModal();
+};
+
+function aprobarBitacora(){
+    let id = this.dataset.id;
+    let sEstado = 'Aprobada';
+
+    let respuesta = actualizarBitacora(id, sEstado);
+    if(respuesta.success == true){
+        swal({
+            title: 'Aprobado!',
+            text: respuesta.msg,
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        sListaBitacoras = obtenerBitacoras();
+        mostrarBusqueda();
+        cerrarModal();
+    }else{
+        swal({
+            title: 'Aprobación fallida',
+            text: respuesta.msg,
+            type: 'error',
+            confirmButtonText: 'Entendido'
+            });
+    }
+};
+
+function rechazarBitacora(){
+    let id = this.dataset.id;
+    let sEstado = 'Rechazada';
+
+    let respuesta = actualizarBitacora(id, sEstado);
+    if(respuesta.success == true){
+        swal({
+            title: 'Rechazada!',
+            text: respuesta.msg,
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        sListaBitacoras = obtenerBitacoras();
+        mostrarBusqueda();
+        cerrarModal();
+    }else{
+        swal({
+            title: 'Aprobación fallida',
+            text: respuesta.msg,
+            type: 'error',
+            confirmButtonText: 'Entendido'
+            });
+    }
 };

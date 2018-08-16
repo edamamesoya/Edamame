@@ -80,18 +80,18 @@
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtCodigo" placeholder="Ej, BISOFT02" required>
                         <span class="tooltiptext invisible" id="tooltipCodigo">1. El campo no puede estar vacío</span>
-                        <!-- <label for="txtCodigo" class="labelError">*</label> -->
                     </div>
-                    <div>
+                    <div class="tooltip">
                         <label for="txtNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" placeholder="Ej, Ingeniería en desarrollo del software" required>
-                        <!-- <label for="txtNombre" class="labelError">*</label> -->
+                        <span class="tooltiptext invisible" id="tooltipNombre">1. El campo no puede estar vacío <br> 2. Únicamente letras y espacios</span>
                     </div>
                     <div>
                         <label for="txtGrado">Grado *</label>
                         <i class="fas fa-list"></i>
                         <select id="txtGrado" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
                             <option value="Maestría">Maestría</option>
                             <option value="Licenciatura">Licenciatura</option>
                             <option value="Postgrado">Postgrado</option>
@@ -174,14 +174,38 @@
                         <button type="button" id="btnAsignarCursos">Cursos sin asignar</button>
                     </div>
 
-                    <div id="pestannaAsignados" class="invisible">
+                    <div id="pestannaAsignados" class="invisible enlazar">
+                        <table id="tblCursosAsignados" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                            <thead>
+                                <tr>
+                                    <th width="25%">Seleccionar</th>
+                                    <th width="50%">Curso</th>
+                                    <th width="25%">Requisitos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            
+                            </tbody>
+                        </table>
                         <h3 id="mensajeAsignados">No existen cursos asignados</h3>
                         <div id="lstCursosAsignados">
                         </div>
                         <button type="button" id="btnDesasignar" class="button buttonLargo">Desasignar</button>
                     </div>
 
-                    <div id="pestannaAsignar" class="invisible">
+                    <div id="pestannaAsignar" class="invisible enlazar">
+                        <table id="tblCursosSinAsignar" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                            <thead>
+                                <tr>
+                                    <th width="25%">Seleccionar</th>
+                                    <th width="50%">Curso</th>
+                                    <th width="25%">Requisitos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            
+                            </tbody>
+                        </table>
                         <h3 id="mensajePorAsignar">No existen cursos por asignar</h3>
                         <div id="lstCursosPorAsignar">
                         </div>
