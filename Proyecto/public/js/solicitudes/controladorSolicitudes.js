@@ -337,7 +337,7 @@ function mostrarListaSolicitudes() {
             document.getElementById("listarSolicitudesDecanatura").click();
             document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
             document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("editarAdmin").remove();            
+            document.getElementById("editarAdmin").remove();
             document.getElementById("registrar").remove();
             document.getElementById("buscar").remove();
             document.getElementById("editar").remove();
@@ -525,6 +525,38 @@ function editar() {
     chkEstado.checked = solicitud['estado'];
     inputId.value = solicitud['_id'];
 };
+
+function aprobar() {
+    let id = this.dataset.id;
+
+    let solicitud = obtenerSolicitudPorId(id);
+
+    let sede = solicitud['sedes'];
+    let periodo = solicitud['periodos'];
+    let grupo = solicitud['grupos'];
+    let curso = solicitud['cursos'];
+    let sNombre = solicitud['nombre'];
+    let estado = 'Aprobada';
+
+    let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
+    if (respuesta.success == true) {
+        swal({
+            title: '¡Aprobada!',
+            text: respuesta.msg,
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        listaSolicitudes = obtenerSolicitudes();
+        location.reload();
+    } else {
+        swal({
+            title: 'Aprobación incorrecta.',
+            text: respuesta.msg,
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    }
+}
 
 function validarAsistenteDecanatura() {
     let bError = false;
