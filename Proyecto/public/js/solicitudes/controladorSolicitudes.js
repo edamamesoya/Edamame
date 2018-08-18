@@ -56,6 +56,11 @@ const inputEditarNombreAsistente = document.querySelector('#txtNombreAsistente')
 const selectEditarGrupoAsistente = document.querySelector('#txtGruposAsistente');
 const chkAsistentePrevioAsistente = document.querySelector('#asistentePrevio');
 const inputFechaAsistente = document.querySelector('#txtFechaIngresoAsistente');
+const primerApellido = document.querySelector('#txtPrimerApellido');
+const segundoApellido = document.querySelector('#txtSegundoApellido');
+const correo = document.querySelector('#txtCorreo');
+const telefono = document.querySelector('#txtTelefono');
+const cedula = document.querySelector('#txtCedula');
 
 selectCursos.addEventListener('change', mostrarGrupos);
 selectEditarCurso.addEventListener('change', mostrarGruposEditar);
@@ -81,6 +86,11 @@ function obtenerDatos() {
     let curso = selectCursos.value;
     let sNombre = inputNombre.value;
     let asistentePrevio = true;
+    let sCedula = cedula.value;
+    let sPrimerApellido = primerApellido.value;
+    let sSegundoApellido = segundoApellido.value;
+    let sTelefono = telefono.value;
+    let sCorreo = correo.value;
     let fecha = new Date();
     let estado = 'Sin enviar';
     let bError = false;
@@ -93,7 +103,7 @@ function obtenerDatos() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarSolicitud(sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
+        let respuesta = registrarSolicitud(sede, periodo, curso, grupo, sNombre, estado, sPrimerApellido, sSegundoApellido, sTelefono, sCedula, sCorreo, sProfeNombre, asistentePrevio, fecha);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro Correcto',
@@ -953,6 +963,11 @@ function aprobar() {
     let grupo = solicitud['grupos'];
     let curso = solicitud['cursos'];
     let sNombre = solicitud['nombre'];
+    let sPrimerApellido = solicitud['primerApellido'];
+    let sSegundoApellido = solicitud['segundApellido'];
+    let sCedula = solicitud['cedula'];
+    let sCorreo = solicitud['correo'];
+    let sTelefono = solicitud['telefono'];
     let profe = solicitud['profe'];
     let estado = 'Aprobada';
     let asistentePrevio = solicitud['asistentePrevio'];
@@ -978,6 +993,7 @@ function aprobar() {
             location.reload();
         }
     })
+    registrarAsistente(sNombre, sPrimerApellido, sSegundoApellido, sCedula, fecha, sTelefono, sCorreo);
 }
 
 function rechazar() {
