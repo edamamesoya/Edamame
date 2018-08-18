@@ -20,7 +20,9 @@ let selectSedes = document.querySelector('#txtSedes');
 let selectPeriodos = document.querySelector('#txtPeriodos');
 let selectGrupos = document.querySelector('#txtGrupos');
 let selectCursos = document.querySelector('#txtCursos');
+const selectEstado = document.querySelector('#txtEstado');
 let botonRegistrar = document.querySelector('#btnRegistrar');
+
 
 const botonModificar = document.querySelector('#btnGuardar');
 const inputFecha = document.querySelector('#txtFechaIngreso');
@@ -70,13 +72,60 @@ function obtenerDatos() {
 
 function enviar() {
     let id = this.dataset.id;
+    let solicitud = obtenerSolicitudPorId(id);
+    let sede = solicitud['sedes'];
+    let periodo = solicitud['periodos'];
+    let grupo = solicitud['grupos'];
+    let curso = solicitud['cursos'];
+    let sNombre = solicitud['nombre'];
+    let profe = solicitud['profe'];
 
     switch (sRol) {
         case 'profesor':
 
+        let estado = 'En proceso: Asist. Decanatura';
+    
+        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
+        if (respuesta.success == true) {
+            swal({
+                title: '¡Enviada!',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            listaSolicitudes = obtenerSolicitudes();
+            location.reload();
+        } else {
+            swal({
+                title: 'Envío incorrecto.',
+                text: respuesta.msg,
+                type: 'warning',
+                confirmButtonText: 'Entendido'
+            });
+        }
+    
             break;
         case 'asistDecanatura':
-
+        let estado = 'En Proceso: Decanatura';
+    
+        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
+        if (respuesta.success == true) {
+            swal({
+                title: '¡Enviada!',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            listaSolicitudes = obtenerSolicitudes();
+            location.reload();
+        } else {
+            swal({
+                title: 'Envío incorrecto.',
+                text: respuesta.msg,
+                type: 'warning',
+                confirmButtonText: 'Entendido'
+            });
+        }
             break;
     }
 
@@ -162,14 +211,17 @@ function mostrarPeriodos() {
 
 function mostrarGrupos() {
     let selectGrupos = document.getElementById('txtGrupos');
+    let selectCursos = document.getElementById('txtCursos');
     selectGrupos.innerHTML = '';
 
     for (let i = 0; i < sListaGrupos.length; i++) {
-        let sGrupo = sListaGrupos[i]['numeroGrupo'];
-        let nuevaOpcion = document.createElement('option');
-        nuevaOpcion.text = sGrupo;
-        nuevaOpcion.value = sGrupo;
-        selectGrupos.add(nuevaOpcion);
+        if (selectCursos == sListaGrupos[i]['cursos']) {
+            let sGrupo = sListaGrupos[i]['numeroGrupo'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sGrupo;
+            nuevaOpcion.value = sGrupo;
+            selectGrupos.add(nuevaOpcion);
+        }
     }
 };
 
@@ -247,26 +299,30 @@ function mostrarListaSolicitudes() {
 
                         celdaEnviar.appendChild(botonEnviar);
                     } else {
-                        let celdaNombre = fila.insertCell();
-                        let celdaCurso = fila.insertCell();
-                        let celdaGrupo = fila.insertCell();
-                        let celdaPeriodo = fila.insertCell();
-                        let celdaSede = fila.insertCell();
-                        let celdaEstado = fila.insertCell();
-                        let celdaEditar = fila.insertCell();
-                        let celdaEliminar = fila.insertCell();
-                        let celdaEnviar = fila.insertCell();
+                        if (listaSolicitudes[i]['estado'] == 'Aprobada') {
 
-                        celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
-                        celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
-                        celdaGrupo.innerHTML = listaSolicitudes[i]['grupos'];
-                        celdaPeriodo.innerHTML = listaSolicitudes[i]['periodos'];
-                        celdaSede.innerHTML = listaSolicitudes[i]['sedes'];
-                        celdaEstado.innerHTML = listaSolicitudes[i]['estado'];
-                        celdaEditar.innerHTML = 'No disponible';
-                        celdaEliminar.innerHTML = 'No disponible';
-                        celdaEnviar.innerHTML = 'Enviada';
+                        } else {
+                            let celdaNombre = fila.insertCell();
+                            let celdaCurso = fila.insertCell();
+                            let celdaGrupo = fila.insertCell();
+                            let celdaPeriodo = fila.insertCell();
+                            let celdaSede = fila.insertCell();
+                            let celdaEstado = fila.insertCell();
+                            let celdaEditar = fila.insertCell();
+                            let celdaEliminar = fila.insertCell();
+                            let celdaEnviar = fila.insertCell();
 
+                            celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
+                            celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
+                            celdaGrupo.innerHTML = listaSolicitudes[i]['grupos'];
+                            celdaPeriodo.innerHTML = listaSolicitudes[i]['periodos'];
+                            celdaSede.innerHTML = listaSolicitudes[i]['sedes'];
+                            celdaEstado.innerHTML = listaSolicitudes[i]['estado'];
+                            celdaEditar.innerHTML = 'No disponible';
+                            celdaEliminar.innerHTML = 'No disponible';
+                            celdaEnviar.innerHTML = 'Enviada';
+
+                        }
                     }
                 }
             }
@@ -345,7 +401,7 @@ function mostrarListaSolicitudes() {
             tbodyDecanatura.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
                 let fila = tbodyDecanatura.insertRow();
-                if (listaSolicitudes[i]['estado'] == 'En proceso: Decanatura') {
+                if (listaSolicitudes[i]['estado'] == 'En Proceso: Decanatura') {
                     let celdaNombre = fila.insertCell();
                     let celdaCurso = fila.insertCell();
                     let celdaGrupo = fila.insertCell();
@@ -368,12 +424,15 @@ function mostrarListaSolicitudes() {
 
                     celdaRechazar.appendChild(botonRechazar);
 
+                    botonRechazar.addEventListener('click', rechazar);
+
                     let botonAprobar = document.createElement('a');
                     botonAprobar.classList.add('far');
                     botonAprobar.classList.add('fa-check-circle');
 
                     celdaAprobar.appendChild(botonAprobar);
 
+                    botonAprobar.addEventListener('click', aprobar);
 
                 };
             };
@@ -415,11 +474,15 @@ function mostrarListaSolicitudes() {
 
                     celdaRechazar.appendChild(botonRechazar);
 
+                    botonRechazar.addEventListener('click', rechazar);
+
                     let botonAprobar = document.createElement('a');
                     botonAprobar.classList.add('far');
                     botonAprobar.classList.add('fa-check-circle');
 
                     celdaAprobar.appendChild(botonAprobar);
+
+                    botonAprobar.addEventListener('click', aprobar);
                 };
             };
             break;
@@ -549,6 +612,7 @@ function aprobar() {
         });
         listaSolicitudes = obtenerSolicitudes();
         location.reload();
+        crearUsuario();
     } else {
         swal({
             title: 'Aprobación incorrecta.',
@@ -662,6 +726,7 @@ function validarAdmin() {
     let curso = selectCursos.value;
     let sNombre = inputNombre.value;
     let dFecha = inputFecha.value;
+    let sEstado = selectEstado.value;
 
     //validar nombre
     if (sNombre == '' || (regexNombre.test(sNombre) == false)) {
@@ -704,12 +769,24 @@ function validarAdmin() {
     }
 
     //validar fecha de ingreso
-    if (dFecha = '') {
+    if (dFecha == '') {
         inputFecha.classList.add('errorInput');
         bError = true;
     } else {
-        inputFecha.classList.add('errorInput');
+        inputFecha.classList.remove('errorInput');
+    }
+
+    //validar estado de la solicitud
+    if (sEstado == '') {
+        selectEstado.classList.add('errorInput');
+        bError = true;
+    } else {
+        selectEstado.classList.remove('errorInput');
     }
 
     return bError;
 };
+
+function crearUsuario() {
+
+}
