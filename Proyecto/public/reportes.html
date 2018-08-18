@@ -30,11 +30,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="img usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                    </a>
+                    <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -60,15 +65,43 @@
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
-        <div id="grafico" style="width: 100%; height: 100%;"></div>
+        <!--Menú de acciones (lateral)-->
+        <div class="tab">
+            <h2>Menú</h2>
+            <button class="tablinks" onclick="abrirFuncion(event, 'verReportes')" id="buscar">Total de horas asistente por asistente</button>
+        </div>
 
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <!--Función buscar bitácoras-->
+        <section id="verReportes" class="tabcontent">
+            <h2>Total de horas asistente realizadas por asistente</h2>
+            
+            <!-- <form action="" id="formRegistro" autocomplete="off">
+                <fieldset class="fieldset">
+                    <div>
+                        <label for="txtFechaInicial">Fecha Inicial</label>
+                        <input type="date" id="txtFechaInicial">
+                    </div>
+                    <div>
+                        <label for="txtFechaFinal">Fecha Final</label>
+                        <input type="date" id="txtFechaFinal">
+                    </div>
+                </fieldset>
+            </form> -->
+            <canvas id="myChart" width="300" height="100"></canvas>
+
+        </section>
+        
     </main>
 
     <!--Scripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>
+    <script src="js/bitacoras/servicioBitacoras.js"></script>
     <script src="js/controladorGeneral.js"></script>
     <script src="js/reportes/controladorReportes.js"></script>
 </body>

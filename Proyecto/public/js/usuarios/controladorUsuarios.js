@@ -120,6 +120,8 @@ function obtenerDatos(){
     let sSegundoApellidoContacto = inputSegundoApellidoContacto.value;
     let nTelefonoContacto = inputTelefonoContacto.value;
 
+    let msgError = '';
+
     let bError = false;
     bError = validarRegistro();
     
@@ -144,13 +146,17 @@ function obtenerDatos(){
             limpiarFormulario();
             document.getElementById("buscar").click();
         }else{
+            if(respuesta.msg['code'] == 11000){
+                console.log(respuesta.msg);
+                msgError = 'Ya existe un usuario con esa cédula o correo electrónico';
+            }
             swal({
                 title: 'Registro incorrecto',
-                text: respuesta.msg,
+                text: msgError,
                 type: 'error',
                 confirmButtonText: 'Entendido'
             });
-        }
+        } 
     }
 };
 
@@ -247,11 +253,15 @@ function validarRegistro(){
         inputPrimerNombre.classList.remove('errorInput');
     }
     // Validación del input para segundo nombre
-    if (sSegundoNombre == '' || (regexNombre.test(sSegundoNombre) == false) ){
-        inputSegundoNombre.classList.add('errorInput');
-        bError = true;
-    }else{
+    if(sSegundoNombre == ''){
         inputSegundoNombre.classList.remove('errorInput');
+    }else{
+        if (regexNombre.test(sSegundoNombre) == false){
+            inputSegundoNombre.classList.add('errorInput');
+            bError = true;
+        }else{
+            inputSegundoNombre.classList.remove('errorInput');
+        }
     }
     // Validación del input para primer apellido
     if (sPrimerApellido == '' || (regexNombre.test(sPrimerApellido) == false) ){
@@ -303,11 +313,15 @@ function validarRegistro(){
         inputPrimerNombreContacto.classList.remove('errorInput');
     }
     // Validación del input para segundo nombre del contacto de emergencia
-    if (sSegundoNombreContacto == '' || (regexNombre.test(sSegundoNombreContacto) == false) ){
-        inputSegundoNombreContacto.classList.add('errorInput');
-        bError = true;
-    }else{
+    if(sSegundoNombreContacto == ''){
         inputSegundoNombreContacto.classList.remove('errorInput');
+    }else{
+        if (regexNombre.test(sSegundoNombreContacto) == false){
+            inputSegundoNombreContacto.classList.add('errorInput');
+            bError = true;
+        }else{
+            inputSegundoNombreContacto.classList.remove('errorInput');
+        }
     }
     // Validación del input para primer apellido del contacto de emergencia
     if (sPrimerApellidoContacto == '' || (regexNombre.test(sPrimerApellidoContacto) == false) ){
@@ -399,11 +413,15 @@ function validarRegistroModificar(){
         inputEditarPrimerNombre.classList.remove('errorInput');
     }
     // Validación del input para segundo nombre
-    if (sSegundoNombre == '' || (regexNombre.test(sSegundoNombre) == false) ){
-        inputEditarSegundoNombre.classList.add('errorInput');
-        bError = true;
-    }else{
+    if(sSegundoNombre == ''){
         inputEditarSegundoNombre.classList.remove('errorInput');
+    }else{
+        if (regexNombre.test(sSegundoNombre) == false){
+            inputEditarSegundoNombre.classList.add('errorInput');
+            bError = true;
+        }else{
+            inputEditarSegundoNombre.classList.remove('errorInput');
+        }
     }
     // Validación del input para primer apellido
     if (sPrimerApellido == '' || (regexNombre.test(sPrimerApellido) == false) ){
@@ -427,7 +445,7 @@ function validarRegistroModificar(){
         inputEditarCedula.classList.remove('errorInput');
     }
     // Validación del input para dirección
-    if(sDireccion == 0 || (regexDireccion.test(sDireccion) == false) ){
+    if(regexDireccion.test(sDireccion) == false){
         inputEditarDireccion.classList.add('errorInput');
         bError = true;
     }else{
@@ -455,11 +473,15 @@ function validarRegistroModificar(){
         inputEditarPrimerNombreContacto.classList.remove('errorInput');
     }
     // Validación del input para segundo nombre del contacto de emergencia
-    if (sSegundoNombreContacto == '' || (regexNombre.test(sSegundoNombreContacto) == false) ){
-        inputEditarSegundoNombreContacto.classList.add('errorInput');
-        bError = true;
-    }else{
+    if(sSegundoNombreContacto == ''){
         inputEditarSegundoNombreContacto.classList.remove('errorInput');
+    }else{
+        if (regexNombre.test(sSegundoNombreContacto) == false){
+            inputEditarSegundoNombreContacto.classList.add('errorInput');
+            bError = true;
+        }else{
+            inputEditarSegundoNombreContacto.classList.remove('errorInput');
+        }
     }
     // Validación del input para primer apellido del contacto de emergencia
     if (sPrimerApellidoContacto == '' || (regexNombre.test(sPrimerApellidoContacto) == false) ){
@@ -510,7 +532,13 @@ function validarRegistroModificar(){
     }else{
         inputEditarCorreo.classList.remove('errorInput');
     }
-    //Rol
+    //Validación del rol
+    if (sRol == ''){
+        inputRol.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputRol.classList.remove('errorInput');
+    }
     return bError;
 }
 
@@ -542,8 +570,23 @@ function mostrarBusqueda(pFiltro){
 
             celdaNombre.innerHTML = nombreCompleto;
 
-            celdaCedula.innerHTML = listaUsuarios[i]['cedula'];
-            celdaTelefono.innerHTML = listaUsuarios[i]['telefono'];
+            let sCedula = '';
+            let nCedula = (listaUsuarios[i]['cedula']).toString();
+
+            sCedula += nCedula.substr(0,1);
+            sCedula += '-';
+            sCedula += nCedula.substr(1,4);
+            sCedula += '-';
+            sCedula += nCedula.substr(5,9);
+            celdaCedula.innerHTML = sCedula;
+
+            let sTelefono = '';
+            let nTelefono = (listaUsuarios[i]['telefono']).toString();
+            sTelefono += nTelefono.substr(0,4);
+            sTelefono += '-';
+            sTelefono += nTelefono.substr(4,8);
+            celdaTelefono.innerHTML = sTelefono;
+
             celdaCorreo.innerHTML = listaUsuarios[i]['correo'];
 
             let botonContactoEmergencia = document.createElement('a');
@@ -634,6 +677,13 @@ function mostrarCantones(){
     let selectCantones = document.getElementById('txtCanton');
     selectCantones.innerHTML = '';
 
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectCantones.add(placeholder);
+
     for(let i=0; i < sListaCantones.length; i++){
         if (nNumeroProvincia == sListaCantones[i]['Provincia_idProvincia']){
             let sCanton = sListaCantones[i]['nombre'];
@@ -652,6 +702,13 @@ function mostrarCantones(){
 function mostrarDistritos(){
     let selectDistritos = document.getElementById('txtDistrito');
     selectDistritos.innerHTML = '';
+
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectDistritos.add(placeholder);
 
     for(let i=0; i < sListaDistritos.length; i++){
         if (nNumeroCanton == sListaDistritos[i]['Canton_idCanton']){
@@ -727,7 +784,12 @@ function editar(){
     inputEditarSegundoApellido.value = usuario['segundoApellido'];
     inputEditarCedula.value = usuario['cedula'];
     inputEditarProvincia.value = usuario['provincia'];
+
+    setNumeroEditarProvincia();
+    mostrarEditarCantones();
     inputEditarCanton.value = usuario['canton'];
+
+    setNumeroEditarCanton();
     inputEditarDistrito.value = usuario['distrito'];
     inputEditarDireccion.value = usuario['direccion'];
     inputEditarFechaIngreso.valueAsDate = new Date(usuario['fechaIngreso']);

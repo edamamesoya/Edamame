@@ -44,6 +44,8 @@ function obtenerDatos(){
     let sCodigo = inputCodigo.value;
     let sNombre = inputNombre.value;
     let nCreditos = inputCreditos.value;
+
+    let msgError = '';
     // let sListaRequisitos = [];
 
     // let requisito = document.querySelectorAll('#lstRequisitos input[type=checkbox]');
@@ -79,9 +81,12 @@ function obtenerDatos(){
             limpiarFormulario();
             document.getElementById("buscar").click();
         }else{
+            if(respuesta.msg['code'] == 11000){
+                msgError = 'Ya existe un curso con ese código';
+            }
             swal({
                 title: 'Registro incorrecto',
-                text: respuesta.msg,
+                text: msgError,
                 type: 'error',
                 confirmButtonText: 'Entendido'
             });

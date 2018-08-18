@@ -1,9 +1,10 @@
 'use strict';
 
 let sListaSedes = obtenerSedes();
+let sListaCarreras = obtenerCarreras();
+mostrarSedes();
 mostrarBusqueda();
-
-document.getElementById("buscar").click();
+mostrarPestannas();
 
 const inputNombre = document.querySelector('#txtNombre');
 const inputProvincia = document.querySelector('#txtProvincia');
@@ -21,6 +22,15 @@ const chkEstado = document.querySelector('#chkEstado');
 const inputId = document.querySelector('#txtId');
 const botonModificar = document.querySelector('#btnEditar');
 
+const selectSede = document.querySelector('#txtSede');
+const btnCarrerasAsignadas = document.querySelector('#btnCarrerasAsignadas');
+const btnAsignarCarreras = document.querySelector('#btnAsignarCarreras');
+const btnAsignar = document.querySelector('#btnAsignar');
+const btnDesasignar = document.querySelector('#btnDesasignar');
+
+const btnCerrar = document.querySelector('#btnCerrar');
+btnCerrar.addEventListener('click', cerrarModal);
+
 let latitudSede = 0;
 let longitudSede = 0;
 
@@ -29,6 +39,14 @@ inputBuscar.addEventListener('keyup', function () {
 });
 selectTipo.addEventListener('change', function () {
     mostrarMapa(selectTipo.value)
+});
+
+btnAsignar.addEventListener('click', asignarCarreras);
+btnDesasignar.addEventListener('click', desasignarCarreras);
+btnCarrerasAsignadas.addEventListener('click', verAsignadas);
+btnAsignarCarreras.addEventListener('click', verPorAsignar);
+selectSede.addEventListener('change', function(){
+    verAsignadas()
 });
 
 
@@ -63,6 +81,8 @@ function obtenerDatos() {
     let sDistrito = inputDistrito.value;
     let sTipo = selectTipo.value;
 
+    let msgError = '';
+
     let bError = false;
     bError = validar();
     if (bError == true) {
@@ -84,18 +104,21 @@ function obtenerDatos() {
             sListaSedes = obtenerSedes();
             mostrarBusqueda();
             limpiarFormulario();
+            mostrarCarrerasAsignadas();
+            mostrarSedes();
             document.getElementById("buscar").click();
-        } else {
+        }else{
+            if(respuesta.msg['code'] == 11000){
+                msgError = 'Ya existe una sede con ese nombre';
+            }
             swal({
                 title: 'Registro incorrecto',
-                text: respuesta.msg,
+                text: msgError,
                 type: 'error',
                 confirmButtonText: 'Entendido'
             });
-        }
+        }  
     }
-    // mostrarListaSedes();
-
 };
 
 function modificarDatos(){
@@ -138,10 +161,6 @@ function modificarDatos(){
               });
         }   
     }
-
-
-
-
 };
 
 function validar() {
@@ -161,7 +180,7 @@ function validar() {
         inputNombre.classList.remove('errorInput');
     }
     // Validación del input para provincia
-    if(sTipo == 'Fisica'){
+    if(sTipo == 'Física'){
         if (sProvincia == '') {
             inputProvincia.classList.add('errorInput');
             bError = true;
@@ -170,7 +189,7 @@ function validar() {
         }
     }
     // Validación del input para canton
-    if(sTipo == 'Fisica'){
+    if(sTipo == 'Física'){
         if (sCanton == '') {
             inputCanton.classList.add('errorInput');
             bError = true;
@@ -179,7 +198,7 @@ function validar() {
         }
     }
     // Validación del input para distrito
-    if(sTipo == 'Fisica'){
+    if(sTipo == 'Física'){
         if (sDistrito == '') {
             inputDistrito.classList.add('errorInput');
             bError = true;
@@ -258,7 +277,7 @@ function mostrarBusqueda(pFiltro) {
             celdaNombre.innerHTML = sListaSedes[i]['nombre'];
             celdaTipo.innerHTML = sListaSedes[i]['tipo'];
 
-            if(sListaSedes[i]['tipo'] == 'Fisica'){
+            if(sListaSedes[i]['tipo'] == 'Física'){
                 celdaUbicacion.innerHTML = sListaSedes[i]['provincia'] + ', ' + sListaSedes[i]['canton'] + ', ' + sListaSedes[i]['distrito'];
             }else{
                 celdaUbicacion.innerHTML = 'Virtual';
@@ -297,7 +316,11 @@ function mostrarBusqueda(pFiltro) {
             botonEliminar.addEventListener('click', eliminar);
 
             celdaEliminar.appendChild(botonEliminar);
-
+        }
+        if(sListaSedes.length == 0){
+            document.getElementById('mensajeLista').classList.remove('listaVacia');
+        }else{
+            document.getElementById('mensajeLista').classList.add('listaVacia');
         }
     }
 };
@@ -326,6 +349,13 @@ function mostrarCantones() {
     let selectCantones = document.getElementById('txtCanton');
     selectCantones.innerHTML = '';
 
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectCantones.add(placeholder);
+
     for (let i = 0; i < sListaCantones.length; i++) {
         if (nNumeroProvincia == sListaCantones[i]['Provincia_idProvincia']) {
             let sCanton = sListaCantones[i]['nombre'];
@@ -340,6 +370,13 @@ function mostrarCantones() {
 function mostrarDistritos() {
     let selectDistritos = document.getElementById('txtDistrito');
     selectDistritos.innerHTML = '';
+
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectDistritos.add(placeholder);
 
     for (let i = 0; i < sListaDistritos.length; i++) {
         if (nNumeroCanton == sListaDistritos[i]['Canton_idCanton']) {
@@ -377,6 +414,7 @@ function limpiarFormulario() {
     inputProvincia.value = '';
     inputCanton.value = '';
     inputDistrito.value = '';
+    selectTipo.value = '';
 };
 
 function limpiarFormularioModificar() {
@@ -387,7 +425,7 @@ function limpiarFormularioModificar() {
 };
 
 function mostrarMapa(sTipo){
-    if(sTipo == 'Fisica'){
+    if(sTipo == 'Física'){
         document.getElementById('mapaSede').classList.add('visibleIB');
         document.getElementById('mapaSede').classList.remove('invisible');
 
@@ -484,6 +522,7 @@ function eliminar() {
         if (result.value) {
             eliminarSede(id);
             sListaSedes = obtenerSedes();
+            mostrarSedes();
             mostrarBusqueda();
             swal(
                 'Eliminada!',
@@ -509,6 +548,10 @@ function editar(){
     inputId.value = sede['_id'];
 };
 
+function cerrarModal(){
+    document.getElementById('modal').classList.add('ocultar');
+};
+
 function mostrarModel(){
     document.getElementById('modal').classList.remove('ocultar');
     let sede = '';
@@ -519,26 +562,265 @@ function mostrarModel(){
             sede = sListaSedes[i];
         }
     }
-    verUbicacionMapa(sede['latitud'], sede['longitud']);
+
+    document.querySelector('#nombreSede').innerHTML = 'Nombre: ' + sede['nombre'];
+
+    verUbicacionMapa(sede['latitudSede'], sede['longitudSede']);
+    if (sede['tipo'] == 'Virtual'){
+        document.querySelector('#descripcionUbicacionSede').innerHTML = 'Ubicación: virtual';
+        document.getElementById('ubicacionSede').classList.add('invisible');
+        document.getElementById('ubicacionSede').classList.remove('visible');
+    }else{
+        document.querySelector('#descripcionUbicacionSede').innerHTML = 'Ubicación: ' + sede['provincia'] + ', ' + sede['canton'] + ', ' + sede['distrito'];
+        document.getElementById('ubicacionSede').classList.add('visible');
+        document.getElementById('ubicacionSede').classList.remove('invisible');
+    }
+
+    let tbody = document.querySelector('#tblEntradas tbody');
+    tbody.innerHTML = '';
+    for(let i = 0; i < sede['carrerasAsignadas'].length; i++){
+        let fila = tbody.insertRow();
+
+        let celdaCodigo = fila.insertCell();
+        let celdaNombre = fila.insertCell();
+
+        celdaCodigo.innerHTML = sede['carrerasAsignadas'][i]['codigoCarrera'];
+        celdaNombre.innerHTML = sede['carrerasAsignadas'][i]['nombreCarrera'];
+    }
+    if(sede['carrerasAsignadas'].length == 0){
+        document.getElementById('carreraVacia').classList.remove('listaVacia');
+    }else{
+        document.getElementById('carreraVacia').classList.add('listaVacia');
+    }
 };
 
 function verUbicacionMapa(latitud, longitud){
     let opciones = {
         zoom: 15,
-        center: { lat: 9.934739, lng: -84.087502 },
+        center: { lat: latitud, lng: longitud },
         mapTypeControl: false,
         zoomControl: false,
         scaleControl: false,
         streetViewControl: false,
-        fullscreenControl: false,
-        draggable: false
+        fullscreenControl: false
     }
 
     let mapa = new google.maps.Map(document.getElementById('ubicacionSede'), opciones );
 
     let marker = new google.maps.Marker({
-        position: { lat: 0, lng: 0 },
+        position: { lat: latitud, lng: longitud },
         map: mapa,
         draggable: false
     });
+};
+
+function mostrarSedes(){
+    sListaSedes = obtenerSedes();
+
+    let selectSedes = document.getElementById('txtSede');
+    selectSedes.innerHTML = '';
+
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectSedes.add(placeholder);
+
+    for(let i=0; i < sListaSedes.length; i++){
+        let sSede = sListaSedes[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sSede;
+        nuevaOpcion.value = sSede;
+        selectSedes.add(nuevaOpcion);
+    }
+};
+
+function verAsignadas(){
+    document.querySelector('#btnAsignar').classList.add('invisible');
+    document.querySelector('#btnAsignar').classList.remove('visible');
+
+    document.querySelector('#btnDesasignar').classList.add('visible');
+    document.querySelector('#btnDesasignar').classList.remove('invisible');
+
+    mostrarCarrerasAsignadas();
+};
+
+function verPorAsignar(){
+    document.querySelector('#btnAsignar').classList.add('visible');
+    document.querySelector('#btnAsignar').classList.remove('invisible');
+
+    document.querySelector('#btnDesasignar').classList.add('invisible');
+    document.querySelector('#btnDesasignar').classList.remove('visible');
+
+    mostrarCarrerasPorAsignar();
+};
+
+function mostrarCarrerasAsignadas(){     
+    sListaCarreras = obtenerCarreras();
+    sListaSedes = obtenerSedes();
+    let sSedeActual = document.querySelector('#txtSede').value;
+    let nombreCarrera = '';
+    let codigoCarrera = '';
+    let nCantCarreras = 0;
+
+    let tbody = document.querySelector('#tblCarreras tbody');
+    tbody.innerHTML = '';
+
+    for(let i=0; i < sListaSedes.length; i++){
+        if (sSedeActual == sListaSedes[i]['nombre']){
+            nCantCarreras = sListaSedes[i]['carrerasAsignadas'].length;
+            for (let j=0; j < sListaSedes[i]['carrerasAsignadas'].length; j++) { 
+                nombreCarrera = sListaSedes[i]['carrerasAsignadas'][j]['nombreCarrera'];
+                codigoCarrera = sListaSedes[i]['carrerasAsignadas'][j]['codigoCarrera'];
+
+                let fila = tbody.insertRow();
+
+                let celdaSeleccionar = fila.insertCell();
+                let celdaCarrera = fila.insertCell();
+
+                let checkCarrera = document.createElement('input');
+                checkCarrera.type = "checkbox";
+                checkCarrera.name = nombreCarrera;
+                checkCarrera.value = codigoCarrera;
+
+                celdaSeleccionar.appendChild(checkCarrera);
+                celdaCarrera.innerHTML = nombreCarrera;
+            }
+        }
+    }
+    if(nCantCarreras == 0){
+        document.getElementById('mensajeAsignados').classList.add('visible');
+        document.getElementById('mensajeAsignados').classList.remove('invisible');
+    }else{
+        document.getElementById('mensajeAsignados').classList.add('invisible');
+        document.getElementById('mensajeAsignados').classList.remove('visible');
+    }
+    document.getElementById('mensajePorAsignar').classList.add('invisible');
+};
+
+function mostrarCarrerasPorAsignar(){     
+    sListaSedes = obtenerSedes();
+    sListaCarreras = obtenerCarreras();
+    let nCantCarreras = 0;
+    let sSedeActual = document.querySelector('#txtSede').value;
+
+    let tbody = document.querySelector('#tblCarreras tbody');
+    tbody.innerHTML = '';
+
+    for(let i=0; i < sListaSedes.length; i++){
+        if (sSedeActual == sListaSedes[i]['nombre']){
+            for(let k=0; k < sListaCarreras.length; k++){ 
+                let bAsignado = false;
+                for (let j=0; j < sListaSedes[i]['carrerasAsignadas'].length; j++) {
+                    if (sListaCarreras[k]['nombre'] == sListaSedes[i]['carrerasAsignadas'][j]['nombreCarrera']){
+                        bAsignado = true;
+                    }
+                }
+                if(!bAsignado){
+                    nCantCarreras++;
+
+                    let fila = tbody.insertRow();
+
+                    let celdaSeleccionar = fila.insertCell();
+                    let celdaCarrera = fila.insertCell();
+
+                    let checkCarrera = document.createElement('input');
+                    checkCarrera.type = "checkbox";
+                    checkCarrera.name = sListaCarreras[k]['nombre'];
+                    checkCarrera.value = sListaCarreras[k]['codigo'];
+
+                    celdaSeleccionar.appendChild(checkCarrera);
+                    celdaCarrera.innerHTML = sListaCarreras[k]['nombre'];
+                }
+
+            }
+        }
+    }
+    if(nCantCarreras == 0){
+        document.getElementById('mensajePorAsignar').classList.add('visible');
+        document.getElementById('mensajePorAsignar').classList.remove('invisible');
+    }else{
+        document.getElementById('mensajePorAsignar').classList.add('invisible');
+        document.getElementById('mensajePorAsignar').classList.remove('visible');
+    }
+    document.getElementById('mensajeAsignados').classList.add('invisible');
+};
+
+function mostrarPestannas() {
+    let x = document.querySelector('#btnPestanna');
+    x.classList.add('visible');
+    x.classList.remove('invisible');
+};
+
+function asignarCarreras(){
+    let idSede = '';
+
+    for (let j=0; j < sListaSedes.length; j++) {
+        if (sListaSedes[j]['nombre'] == selectSede.value){
+            idSede = sListaSedes[j]['_id'];
+        }
+    }
+    let carrera = document.querySelectorAll('#tblCarreras input[type=checkbox]');
+    for (let i=0; i < carrera.length; i++) {
+        if (carrera[i].checked){
+            let respuesta = agregarCarrera(idSede, carrera[i].value, carrera[i].name);
+        if(respuesta.success == true){
+            swal({
+                title: 'Registro correcto',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            btnCarrerasAsignadas.click();
+        }else{
+            swal({
+                title: 'Registro incorrecto',
+                text: respuesta.msg,
+                type: 'error',
+                confirmButtonText: 'Entendido'
+              });
+        } 
+        }
+    } 
+};
+
+function desasignarCarreras(){
+    let idSede = '';
+    let sede = '';
+    let idCarrera = '';
+
+    for (let j=0; j < sListaSedes.length; j++) {
+        if (sListaSedes[j]['nombre'] == selectSede.value){
+            idSede = sListaSedes[j]['_id'];
+            sede = sListaSedes[j];
+        }
+    }
+    let carrera = document.querySelectorAll('#tblCarreras input[type=checkbox]');
+    for (let i=0; i < carrera.length; i++) {
+        if (carrera[i].checked){
+            for (let j=0; j < sede['carrerasAsignadas'].length; j++){
+                if (carrera[i].name == sede['carrerasAsignadas'][j]['nombreCarrera']){
+                    idCarrera = sede['carrerasAsignadas'][j]['_id'];
+                }
+            }
+            let respuesta = desenlazarCarrera(idSede, idCarrera);
+        if(respuesta.success == true){
+            swal({
+                title: 'Desenlace correcto',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            btnCarrerasAsignadas.click();
+        }else{
+            swal({
+                title: 'Desenlace incorrecto',
+                text: respuesta.msg,
+                type: 'error',
+                confirmButtonText: 'Entendido'
+              });
+        } 
+        }
+    } 
 };

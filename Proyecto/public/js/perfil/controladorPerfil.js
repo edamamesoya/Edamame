@@ -50,6 +50,7 @@ function verificarAcceso(psUsuario) {
         let bError = true;
         for (let i = 0; i < listaPersonas.length; i++) {
             if (psUsuario == listaPersonas[i]['correo']) {
+                document.querySelector('#nombreUsuarioActivo').innerHTML = listaPersonas[i]['primerNombre'] + ' ' + listaPersonas[i]['primerApellido'] + ' ' + listaPersonas[i]['segundoApellido'].substring(0, 1) + '.';
                 bError = false;
             }                
             

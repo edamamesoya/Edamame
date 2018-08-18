@@ -24,11 +24,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="img usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                    </a>
+                    <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -50,7 +55,7 @@
                 </div>
             </div>
             <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
@@ -58,8 +63,8 @@
             <h2>Perfil de usuario</h2>
             <fieldset class="fieldset">
                 <div class="listaDatos">
-                    <i class="fas fa-user-tie fa-5x"></i>
-                    <!-- <img src="" alt="Foto de perfil"> -->
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                <img id="avatarPerfil" src="/public/img/img_avatar.png" alt="Avatar" style="width:120px">
                 </div>
                 <div class="dato">
                     <label for="txtNombre">Nombre completo:</label>

@@ -8,7 +8,8 @@ const express = require('express'),
       path = require('path'),
       bodyParser = require('body-parser'),
       morgan =  require('morgan'),
-      mongoose = require('mongoose');
+      mongoose = require('mongoose'),
+      Chart = require('chart.js');
 
 /**
  * Se definen las variables necesarias para la conexión con MongoDB

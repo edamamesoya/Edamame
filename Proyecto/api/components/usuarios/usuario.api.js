@@ -27,7 +27,7 @@ module.exports.registrar = function(req, res) {
 
     nuevoUsuario.save(function(error){
         if(error){
-            res.json({success : false, msg : 'No se pudo registrar el usuario' + error});
+            res.json({success : false, msg : error});
         }else{
             res.json({success : true, msg : 'El usuario se registró con éxito'});
         }

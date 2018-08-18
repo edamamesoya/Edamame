@@ -46,7 +46,9 @@ inputBuscar.addEventListener('keyup', function(){
 });
 botonCursosAsignados.addEventListener('click', verAsignados);
 botonAsignarCursos.addEventListener('click', verPorAsignar);
-inputCarrera.addEventListener('change', mostrarCursosAsignados);
+inputCarrera.addEventListener('change', function(){
+    verAsignados()
+});
 
 /**
  * Declaración de expresiones regulares.
@@ -95,8 +97,8 @@ function obtenerDatos(){
             document.getElementById("buscar").click();
         }else{
             if(respuesta.msg['code'] == 11000){
-                console.log(respuesta.msg['message']['dup key']);
-                msgError = 'Ya existe una carrera con ese nombre'
+                console.log(respuesta.msg);
+                msgError = 'Ya existe una carrera con ese nombre';
             }
             swal({
                 title: 'Registro incorrecto',
@@ -363,6 +365,13 @@ function mostrarCarreras(){
     let selectCarreras = document.getElementById('txtCarrera');
     selectCarreras.innerHTML = '';
 
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectCarreras.add(placeholder);
+
     for(let i=0; i < sListaCarreras.length; i++){
         let sCarrera = sListaCarreras[i]['nombre'];
         let nuevaOpcion = document.createElement('option');
@@ -377,15 +386,12 @@ function mostrarCarreras(){
  * carrera y hace invisible la pestaña de cursos sin asignar.
  */
 function verAsignados(){
-    let tabAsignados = document.querySelector('#pestannaAsignados');
-    let tabSinAsignar = document.querySelector('#pestannaAsignar');
+    document.querySelector('#btnAsignar').classList.add('invisible');
+    document.querySelector('#btnAsignar').classList.remove('visible');
 
-    tabAsignados.classList.remove('invisible');
-    tabAsignados.classList.add('visible');
+    document.querySelector('#btnDesasignar').classList.add('visible');
+    document.querySelector('#btnDesasignar').classList.remove('invisible');
 
-    tabSinAsignar.classList.remove('visible');
-    tabSinAsignar.classList.add('invisible');
-    
     mostrarCursosAsignados();
 };
 
@@ -394,14 +400,11 @@ function verAsignados(){
  * carrera y hace invisible la pestaña de cursos asignados.
  */
 function verPorAsignar(){
-    let tabAsignados = document.querySelector('#pestannaAsignados');
-    let tabSinAsignar = document.querySelector('#pestannaAsignar');
+    document.querySelector('#btnAsignar').classList.add('visible');
+    document.querySelector('#btnAsignar').classList.remove('invisible');
 
-    tabAsignados.classList.remove('visible');
-    tabAsignados.classList.add('invisible');
-
-    tabSinAsignar.classList.remove('invisible');
-    tabSinAsignar.classList.add('visible');
+    document.querySelector('#btnDesasignar').classList.add('invisible');
+    document.querySelector('#btnDesasignar').classList.remove('visible');
 
     mostrarCursosPorAsignar();
 };
@@ -417,40 +420,7 @@ function mostrarCursosAsignados(){
     let codigoCurso = '';
     let nCantCursos = 0;
 
-    // let selectCursosAsignados = document.querySelector('#lstCursosAsignados');
-    // selectCursosAsignados.innerHTML = '';
-
-    // for (let i=0; i < sListaCarreras.length; i++) { 
-    //     if (sCarreraActual == sListaCarreras[i]['nombre']){
-    //         nCantCursos = sListaCarreras[i]['cursosAsignados'].length;
-    //         for (let j=0; j < sListaCarreras[i]['cursosAsignados'].length; j++) { 
-    //             nombreCurso = sListaCarreras[i]['cursosAsignados'][j]['nombreCurso'];
-    //             codigoCurso = sListaCarreras[i]['cursosAsignados'][j]['codigoCurso'];
-
-    //             let etiquetaCursoAsignado = document.createElement('label');
-    //             let cursoAsignado = document.createElement('input');
-        
-    //             cursoAsignado.setAttribute('type', 'checkbox');
-    //             cursoAsignado.setAttribute('name', nombreCurso);
-    //             cursoAsignado.setAttribute('value', codigoCurso);
-        
-    //             etiquetaCursoAsignado.innerHTML = nombreCurso;
-    //             etiquetaCursoAsignado.setAttribute('for', nombreCurso);
-        
-    //             document.getElementById('lstCursosAsignados').appendChild(cursoAsignado);
-    //             document.getElementById('lstCursosAsignados').appendChild(etiquetaCursoAsignado);
-    //         }
-    //     }
-    // }
-    // if(nCantCursos == 0){
-    //     document.getElementById('mensajeAsignados').classList.add('visible');
-    //     document.getElementById('mensajeAsignados').classList.remove('invisible');
-    // }else{
-    //     document.getElementById('mensajeAsignados').classList.add('invisible');
-    //     document.getElementById('mensajeAsignados').classList.remove('visible');
-    // }
-
-    let tbody = document.querySelector('#tblCursosAsignados tbody');
+    let tbody = document.querySelector('#tblCursos tbody');
     tbody.innerHTML = '';
 
     for(let i=0; i < sListaCarreras.length; i++){
@@ -492,6 +462,7 @@ function mostrarCursosAsignados(){
         document.getElementById('mensajeAsignados').classList.add('invisible');
         document.getElementById('mensajeAsignados').classList.remove('visible');
     }
+    document.getElementById('mensajePorAsignar').classList.add('invisible');
 };
 
 /**
@@ -503,45 +474,7 @@ function mostrarCursosPorAsignar(){
     let nCantCursos = 0;
     let sCarreraActual = document.querySelector('#txtCarrera').value;
 
-    // let selectCursosPorAsignar = document.querySelector('#lstCursosPorAsignar');
-    // selectCursosPorAsignar.innerHTML = '';
-
-    // for (let i=0; i < sListaCarreras.length; i++) { 
-    //     if (sCarreraActual == sListaCarreras[i]['nombre']){
-    //         for(let k=0; k < sListaCursos.length; k++){ 
-    //             let bAsignado = false;
-    //             for (let j=0; j < sListaCarreras[i]['cursosAsignados'].length; j++) {
-    //                 if (sListaCursos[k]['nombre'] == sListaCarreras[i]['cursosAsignados'][j]['nombreCurso']){
-    //                     bAsignado = true;
-    //                 }
-    //             }
-    //             if(!bAsignado){
-    //                 nCantCursos++;
-    //                 let etiquetaCursoPorAsignar = document.createElement('label');
-    //                 let cursoPorAsignar = document.createElement('input');
-
-    //                 cursoPorAsignar.setAttribute('type', 'checkbox');
-    //                 cursoPorAsignar.setAttribute('name', sListaCursos[k]['nombre']);
-    //                 cursoPorAsignar.setAttribute('value', sListaCursos[k]['codigo']);
-
-    //                 etiquetaCursoPorAsignar.innerHTML = sListaCursos[k]['nombre'];
-    //                 etiquetaCursoPorAsignar.setAttribute('for', sListaCursos[k]['nombre']);
-
-    //                 document.getElementById('lstCursosPorAsignar').appendChild(cursoPorAsignar);
-    //                 document.getElementById('lstCursosPorAsignar').appendChild(etiquetaCursoPorAsignar);
-    //             }
-    //         }
-    //     }
-    // }
-    // if(nCantCursos == 0){
-    //     document.getElementById('mensajePorAsignar').classList.add('visible');
-    //     document.getElementById('mensajePorAsignar').classList.remove('invisible');
-    // }else{
-    //     document.getElementById('mensajePorAsignar').classList.add('invisible');
-    //     document.getElementById('mensajePorAsignar').classList.remove('visible');
-    // }
-
-    let tbody = document.querySelector('#tblCursosSinAsignar tbody');
+    let tbody = document.querySelector('#tblCursos tbody');
     tbody.innerHTML = '';
 
     for(let i=0; i < sListaCarreras.length; i++){
@@ -590,6 +523,7 @@ function mostrarCursosPorAsignar(){
         document.getElementById('mensajePorAsignar').classList.add('invisible');
         document.getElementById('mensajePorAsignar').classList.remove('visible');
     }
+    document.getElementById('mensajeAsignados').classList.add('invisible');
 };
 
 /**
@@ -614,7 +548,7 @@ function asignarCursos(){
             idCarrera = sListaCarreras[j]['_id'];
         }
     }
-    let curso = document.querySelectorAll('#tblCursosSinAsignar input[type=checkbox]');
+    let curso = document.querySelectorAll('#tblCursos input[type=checkbox]');
     for (let i=0; i < curso.length; i++) {
         if (curso[i].checked){
             let respuesta = agregarCurso(idCarrera, curso[i].value, curso[i].name);
@@ -649,7 +583,7 @@ function desasignarCursos(){
             carrera = sListaCarreras[j];
         }
     }
-    let curso = document.querySelectorAll('#tblCursosAsignados input[type=checkbox]');
+    let curso = document.querySelectorAll('#tblCursos input[type=checkbox]');
     for (let i=0; i < curso.length; i++) {
         if (curso[i].checked){
             for (let j=0; j < carrera['cursosAsignados'].length; j++){

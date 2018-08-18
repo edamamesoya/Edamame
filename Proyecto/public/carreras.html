@@ -24,11 +24,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="img usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                    </a>
+                    <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -50,7 +55,7 @@
                 </div>
             </div>
             <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
@@ -174,8 +179,8 @@
                         <button type="button" id="btnAsignarCursos">Cursos sin asignar</button>
                     </div>
 
-                    <div id="pestannaAsignados" class="invisible enlazar">
-                        <table id="tblCursosAsignados" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                    <div id="pestannaAsignados" class="enlazar">
+                        <table id="tblCursos" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                             <thead>
                                 <tr>
                                     <th width="25%">Seleccionar</th>
@@ -187,29 +192,12 @@
             
                             </tbody>
                         </table>
-                        <h3 id="mensajeAsignados">No existen cursos asignados</h3>
+                        <h3 id="mensajeAsignados" class="invisible">No existen cursos asignados</h3>
+                        <h3 id="mensajePorAsignar" class="invisible">No existen cursos por asignar</h3>
                         <div id="lstCursosAsignados">
                         </div>
-                        <button type="button" id="btnDesasignar" class="button buttonLargo">Desasignar</button>
-                    </div>
-
-                    <div id="pestannaAsignar" class="invisible enlazar">
-                        <table id="tblCursosSinAsignar" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
-                            <thead>
-                                <tr>
-                                    <th width="25%">Seleccionar</th>
-                                    <th width="50%">Curso</th>
-                                    <th width="25%">Requisitos</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            
-                            </tbody>
-                        </table>
-                        <h3 id="mensajePorAsignar">No existen cursos por asignar</h3>
-                        <div id="lstCursosPorAsignar">
-                        </div>
-                        <button type="button" id="btnAsignar" class="button buttonLargo">Asignar</button>
+                        <button type="button" id="btnDesasignar" class="button buttonLargo invisible">Desasignar</button>
+                        <button type="button" id="btnAsignar" class="button buttonLargo invisible">Asignar</button>
                     </div>
                 </fieldset>
             </form>
@@ -257,7 +245,8 @@
                         <i class="far fa-calendar-alt"></i>
                         <input type="date" id="txtEditarFecha" required>
                     </div>
-                    <div class="inputLargo">
+                    <div>
+                        <label for="chkEstado">Habilitar/deshabilitar</label>
                         <label class="switch">
                             <input type="checkbox" id="chkEstado">
                             <span class="slider round"></span>

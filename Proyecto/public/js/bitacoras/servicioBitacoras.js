@@ -1,5 +1,33 @@
 'use strict';
 
+function registrarBitacora(pCurso, pGrupo, pAsistente, pProfesor, pFechaCreacion){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/registrar_bitacora',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            curso : pCurso,
+            grupo : pGrupo,
+            asistente : pAsistente,
+            profesor : pProfesor,
+            fechaCreacion : pFechaCreacion
+        }
+    });
+
+    peticion.done(function(response){
+    respuesta = response;
+    });
+
+    peticion.fail(function(response){
+    
+    });
+
+    return respuesta;
+};
+
 function obtenerBitacoras(){
     let listaBitacoras = [];
     let peticion = $.ajax({

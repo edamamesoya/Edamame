@@ -11,7 +11,7 @@ module.exports.registrar = function(req, res) {
 
     nuevoCurso.save(function(error){
         if(error){
-            res.json({success : false, msg : 'No se pudo registrar el curso ' + error});
+            res.json({success : false, msg : error});
         }else{
             res.json({success : true, msg : 'El curso se registró con éxito'});
         }

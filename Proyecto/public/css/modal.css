@@ -87,6 +87,8 @@
 
 .tabla{
     margin-bottom: 50px;
+    border-bottom: solid 1px #30336b;
+    padding-bottom: 50px;
 }
 .tabla p{
     margin: 20px;

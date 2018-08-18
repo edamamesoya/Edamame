@@ -128,3 +128,54 @@ function eliminarSede(pId){
 
       return respuesta;
 };
+
+function agregarCarrera(id, pCodigoCarrera, pNombreCarrera){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/enlazar_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : id,
+            codigoCarrera : pCodigoCarrera,
+            nombreCarrera : pNombreCarrera
+        }
+    });
+    
+    peticion.done(function(response){
+    respuesta = response;
+    });
+
+    peticion.fail(function(response){
+    
+    });
+
+    return respuesta;
+};
+
+function desenlazarCarrera(pIdSede, pIdCarrera){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/desenlazar_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pIdSede,
+            _idCarrera : pIdCarrera
+        }
+    });
+    
+    peticion.done(function(response){
+    respuesta = response;
+    });
+
+    peticion.fail(function(response){
+    
+    });
+
+    return respuesta;
+};

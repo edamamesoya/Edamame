@@ -24,11 +24,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="img usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                    </a>
+                    <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -87,10 +92,10 @@
                         <i class="fas fa-list"></i>
                         <select id="txtActividad" required>
                             <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="opcion 1">opcion 1</option>
-                            <option value="opcion 2">opcion 2</option>
-                            <option value="opcion 3">opcion 3</option>
-                            <option value="opcion 4">opcion 4</option>
+                            <option value="Revisión de asignaciones">Revisión de asignaciones</option>
+                            <option value="Asistencia individual">Asistencia individual</option>
+                            <option value="Centro">Centro</option>
+                            <option value="Otro">Otro</option>
                             <option value="opcion 5">opcion 5</option>
                         </select>
                     </div>
@@ -163,10 +168,11 @@
                         <label for="txtEditarActividad">Actividad realizada *</label>
                         <i class="fas fa-list"></i>
                         <select id="txtEditarActividad" required>
-                            <option value="opcion 1">opcion 1</option>
-                            <option value="opcion 2">opcion 2</option>
-                            <option value="opcion 3">opcion 3</option>
-                            <option value="opcion 4">opcion 4</option>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Revisión de asignaciones">Revisión de asignaciones</option>
+                            <option value="Asistencia individual">Asistencia individual</option>
+                            <option value="Centro">Centro</option>
+                            <option value="Otro">Otro</option>
                             <option value="opcion 5">opcion 5</option>
                         </select>
                     </div>

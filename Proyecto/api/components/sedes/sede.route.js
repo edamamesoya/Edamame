@@ -27,4 +27,19 @@ router.route('/eliminar_sede')
     .post(function (req, res) {
         sedeApi.eliminar_sede(req, res);
     });
+
+router.route('/enlazar_carrera')
+    .post(function(req, res){
+        sedeApi.agregar_carrera(req, res);
+    });
+
+router.route('/desenlazar_carrera')
+    .post(function(req, res){
+        sedeApi.desenlazar_carrera(req, res);
+    });
+
+router.route('/modificar_enlace_carrera')
+    .post(function(req, res){
+        sedeApi.modificar_enlace_carrera(req, res);
+    });
 module.exports = router;

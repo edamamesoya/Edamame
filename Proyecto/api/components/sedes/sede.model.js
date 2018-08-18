@@ -9,7 +9,13 @@ let sedeSchema = new mongoose.Schema({
     tipo : {type : String, required : true},
     longitudSede : {type : Number},
     latitudSede : {type : Number},
-    estado : {type : Boolean, required : true}
+    estado : {type : Boolean, required : true},
+    carrerasAsignadas : [
+        {
+            codigoCarrera : {type : String},
+            nombreCarrera : {type : String}
+        }
+    ]
 
 });
 

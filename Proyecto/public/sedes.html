@@ -24,11 +24,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="img usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
                     </a>
                     <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -50,7 +55,7 @@
                 </div>
             </div>
             <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
@@ -62,6 +67,7 @@
             <button class="tablinks" onclick="abrirFuncion(event, 'registrarSedes')">Registrar sede</button>
             <button class="tablinks" onclick="abrirFuncion(event, 'modificarSede')" id="modificar">Modificar sede</button>
             <button class="tablinks" onclick="abrirFuncion(event, 'listarSedes')" id="buscar">Listar sedes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'enlazarCarreras')">Asignación de carreras a sede</button>
         </div>
 
         <!--registro de sede-->
@@ -82,7 +88,7 @@
                         <i class="fas fa-list"></i>
                         <select id="txtTipo" required>
                             <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="Fisica">Física</option>
+                            <option value="Física">Física</option>
                             <option value="Virtual">Virtual</option>
                         </select>
                     </div>
@@ -142,6 +148,7 @@
 
                 </tbody>
             </table>
+            <h3 id="mensajeLista">No existen sedes registradas</h3>
         </section>
 
         <!--modificacion de sede-->
@@ -152,7 +159,6 @@
             </p>
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
-                    <legend>Información de sedes</legend>
                     <div>
                         <label for="txtEditarNombre">Nombre de la sede:</label>
                         <i class="fas fa-pencil-alt"></i>
@@ -176,8 +182,8 @@
                         <select id="txtEditarDistrito" required>
                         </select>
                     </div>
-                    <div class="inputLargo">
-                        <label for="chkEstado">Cambia estado </label>
+                    <div>
+                        <label for="chkEstado">Habilitar/deshabilitar</label>
                         <label class="switch">
                             <input type="checkbox" id="chkEstado">
                             <span class="slider round"></span>
@@ -202,15 +208,78 @@
                     </section>
                 </div>
 
-                <div id="ubicacionSede" class="mapaSede"></div>
-                <button type="button" class="button" id="btnAprobar">Agregar carreras</button>
+                <div class="tabla">
+                    <div id="ubicacionSede" class="mapaSede"></div>
+                    <p id="descripcionUbicacionSede" class="titulo">Ubicación: </p>
+                </div>
+                
+                <div class="tabla">
+                    <p class="titulo">Carreras impartidas en esta sede</p>
+                    <table id="tblEntradas" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <h3 id="carreraVacia">No existen carreras asignadas</h3>
+                </div>
             </div>
         </div>
 
+        <!--Función enlazar carreras-->
+        <section id="enlazarCarreras" class="tabcontent">
+            <h2>Asignación de carreras a sede</h2>
+            <p>Seleccione una sede de la lista. Podrá ver las carreras pertenecientes a esa sede seleccionando el botón "Carreras asignadas"
+                o bien asignar nuevas carreras al seleccionar el botón "Carreras sin asignar", donde puede seleccionar las carreras deseadas de la lista
+                y luego agregarlas al presionar "Asignar".
+            </p>
+
+            <form action="" id="formRegistro" autocomplete="off">
+                <fieldset class="fieldset">
+                    <div class="inputLargo">
+                        <label for="txtSede">Sede *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtSede" required>
+                    
+                        </select>
+                    </div>
+
+                    <div id="btnPestanna" class="invisible">
+                        <button type="button" id="btnCarrerasAsignadas">Carreras asignadas</button>
+                        <button type="button" id="btnAsignarCarreras">Carreras sin asignar</button>
+                    </div>
+
+                    <div id="pestannaAsignados" class="enlazar">
+                        <table id="tblCarreras" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                            <thead>
+                                <tr>
+                                    <th width="25%">Seleccionar</th>
+                                    <th width="50%">Carrera</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            
+                            </tbody>
+                        </table>
+                        <h3 id="mensajeAsignados" class="invisible">No existen carreras asignadas</h3>
+                        <h3 id="mensajePorAsignar" class="invisible">No existen carreras por asignar</h3>
+                        
+                        <button type="button" id="btnDesasignar" class="button buttonLargo invisible">Desasignar</button>
+                        <button type="button" id="btnAsignar" class="button buttonLargo invisible">Asignar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>
+    <script src="js/carreras/servicioCarreras.js"></script>
     <script src="js/servicioUbicacion.js"></script>
     <script src="js/sedes/servicioSedes.js"></script>
     <script src="js/controladorGeneral.js"></script>

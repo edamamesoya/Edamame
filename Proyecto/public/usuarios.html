@@ -22,11 +22,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="Avatar usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                    </a>
+                    <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -47,8 +52,8 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
@@ -346,7 +351,8 @@
                         <i class="fas fa-phone"></i>
                         <input type="tel" id="txtEditarTelefonoContacto" required>
                     </div>
-                    <div class="inputLargo">
+                    <div>
+                        <label for="chkEstado">Habilitar/deshabilitar</label>
                         <label class="switch">
                             <input type="checkbox" id="chkEstado">
                             <span class="slider round"></span>
