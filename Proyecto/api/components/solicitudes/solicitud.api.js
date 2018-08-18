@@ -11,7 +11,8 @@ module.exports.registrar = function (req, res) {
         sedes: req.body.sedes,
         grupos: req.body.grupos,
         periodos: req.body.periodos,
-
+        asistentePrevio: req.body.asistentePrevio,
+        fecha: req.body.fecha,
 
     });
 
