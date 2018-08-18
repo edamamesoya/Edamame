@@ -22,11 +22,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="img usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
                     </a>
                     <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -47,8 +52,8 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
@@ -62,7 +67,7 @@
             <button class="tablinks" onclick="abrirFuncion(event, 'buscarLaboratorio')" id="buscar">Listar laboratorios</button>
         </div>
 
-        <div id="registrarLaboratorio" class="tabcontent">
+        <section id="registrarLaboratorio" class="tabcontent">
             <h2>Registrar laboratorios</h2>
             <p>
                 Favor introducir la información que se le solicita. Al terminar, presione "Registrar" para que el laboratorio se registre.
@@ -70,38 +75,34 @@
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
                     <div>
-                        <label for="txtCodigo">Código:</label>
+                        <label for="txtCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtCodigo" placeholder="Ej, Lab01">
-                        <label for="txtCodigo" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtNombre">Nombre:</label>
+                        <label for="txtNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" placeholder="Ej, Laboratorio 01">
-                        <label for="txtNombre" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtCupos">Cupo:</label>
+                        <label for="txtCupos">Cupo *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="number" id="txtCupos" min="0" placeholder="Ej, 30">
-                        <label for="txtCupos" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtSede">Sede:</label>
+                        <label for="txtSede">Sede *</label>
                         <i class="fas fa-list"></i>
                         <select id="txtSede" required>
 
                         </select>
-                        <label for="txtSede" class="labelError">*</label>
                     </div>
                     <label for="" id="labelRequerido">*: campos requeridos</label>
                     <button type="button" id="btnRegistrar" class="button">Registrar</button>
                 </fieldset>
             </form>
-        </div>
+        </section>
 
-        <div id="buscarLaboratorio" class="tabcontent">
+        <section id="buscarLaboratorio" class="tabcontent">
             <h2>Lista de laboratorios</h2>
             <p>Aquí se encuentran listadas todas las entrardas pertenecientes a la sección "Laboratorios". Ingrese el nombre
                 completo, parcial, o el código del laboratorio en "Filtrar".
@@ -128,9 +129,9 @@
                 </tbody>
             </table>
             <h3 id="mensajeLista">No existen laboratorios registrados</h3>
-        </div>
+        </section>
 
-        <div id="listarLaboratorio" class="tabcontent">
+        <section id="listarLaboratorio" class="tabcontent">
             <h2>Lista de laboratorios</h2>
             <p>
                 Aquí se encuentran listados todos los laboratorios que se encuentren registrados en este momento.
@@ -151,9 +152,9 @@
 
                 </tbody>
             </table>
-        </div>
+        </section>
 
-        <div id="modificarLaboratorio" class="tabcontent">
+        <section id="modificarLaboratorio" class="tabcontent">
             <h2>Editar laboratorios</h2>
             <p>
                 Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar" para guardar
@@ -162,32 +163,29 @@
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
                     <div>
-                        <label for="txtEditarCodigo">Código:</label>
+                        <label for="txtEditarCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtEditarCodigo">
-                        <label for="txtEditarCodigo" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtEditarNombre">Nombre:</label>
+                        <label for="txtEditarNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtEditarNombre">
-                        <label for="txtEditarNombre" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtEditarCupo">Cupo:</label>
+                        <label for="txtEditarCupo">Cupo *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="number" id="txtEditarCupo" min="0">
-                        <label for="txtEditarCupo" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtEditarSede">Sede:</label>
+                        <label for="txtEditarSede">Sede *</label>
                         <i class="fas fa-list"></i>
                         <select id="txtEditarSede" required>
 
                         </select>
-                        <label for="txtEditarSede" class="labelError">*</label>
                     </div>
-                    <div class="inputLargo">
+                    <div>
+                        <label for="chkEstado">Habilitar/deshabilitar</label>
                         <label class="switch">
                             <input type="checkbox" id="chkEstado">
                             <span class="slider round"></span>
@@ -197,7 +195,7 @@
                     <button type="button" id="btnEditar" class="button">Registrar</button>
                 </fieldset>
             </form>
-        </div>
+        </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>

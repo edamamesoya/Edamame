@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarLaboratorio(pCodigo, pNombre, pCupo,pSede, pEstado){
+function registrarLaboratorio(pCodigo, pNombre, pCupo, pSede, pEstado){
 
     let respuesta = '';
     let peticion = $.ajax({

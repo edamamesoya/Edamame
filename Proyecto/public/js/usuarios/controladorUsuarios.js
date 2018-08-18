@@ -564,7 +564,7 @@ function mostrarBusqueda(pFiltro){
             let celdaNombre = fila.insertCell();
             let celdaTelefono = fila.insertCell();
             let celdaCorreo = fila.insertCell();
-            let celdaContactoEmergencia = fila.insertCell();
+            let celdaRol = fila.insertCell();
             let celdaEditar = fila.insertCell();
             let celdaEliminar = fila.insertCell();
 
@@ -589,11 +589,34 @@ function mostrarBusqueda(pFiltro){
 
             celdaCorreo.innerHTML = listaUsuarios[i]['correo'];
 
-            let botonContactoEmergencia = document.createElement('a');
-            botonContactoEmergencia.href = '#';
-            botonContactoEmergencia.classList.add('far');
-            botonContactoEmergencia.classList.add('fa-address-card');
-            celdaContactoEmergencia.appendChild(botonContactoEmergencia);
+            // let botonContactoEmergencia = document.createElement('a');
+            // botonContactoEmergencia.href = '#';
+            // botonContactoEmergencia.classList.add('far');
+            // botonContactoEmergencia.classList.add('fa-address-card');
+            if(listaUsuarios[i]['rol'] == 'profesor'){
+                celdaRol.innerHTML = 'Profesor';
+            }else{
+                if(listaUsuarios[i]['rol'] == 'asistente'){
+                    celdaRol.innerHTML = 'Asistente';
+                }else{
+                    if(listaUsuarios[i]['rol'] == 'asistDecanatura'){
+                        celdaRol.innerHTML = 'Asistente de decanatura';
+                    }else{
+                        if(listaUsuarios[i]['rol'] == 'decanatura'){
+                            celdaRol.innerHTML = 'Decanatura';
+                        }else{
+                            if(listaUsuarios[i]['rol'] == 'rectoria'){
+                                celdaRol.innerHTML = 'Rectoría';
+                            }else{
+                                if(listaUsuarios[i]['rol'] == 'administrador'){
+                                    celdaRol.innerHTML = 'Administrador';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // celdaRol.innerHTML = listaUsuarios[i]['rol'];
             
             let botonEditar = document.createElement('a');
             botonEditar.classList.add('far');

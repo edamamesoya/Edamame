@@ -289,6 +289,7 @@ function mostrarBusqueda(pFiltro){
 
         let celdaCodigo = fila.insertCell();
         let celdaNombre = fila.insertCell();
+        let celdaGrado = fila.insertCell();
         let celdaCreditos = fila.insertCell();
         let celdaFechaCreacion = fila.insertCell();
         let celdaEstado = fila.insertCell();
@@ -297,6 +298,7 @@ function mostrarBusqueda(pFiltro){
 
         celdaCodigo.innerHTML = sListaCarreras[i]['codigo'];
         celdaNombre.innerHTML = sListaCarreras[i]['nombre'];
+        celdaGrado.innerHTML = sListaCarreras[i]['grado'];
         celdaCreditos.innerHTML = sListaCarreras[i]['creditos'];
         
         let dFecha = new Date(sListaCarreras[i]['fechaCreacion']);
@@ -434,7 +436,7 @@ function mostrarCursosAsignados(){
 
                 let celdaSeleccionar = fila.insertCell();
                 let celdaCurso = fila.insertCell();
-                let celdaRequisitos = fila.insertCell();
+                // let celdaRequisitos = fila.insertCell();
 
                 let checkCurso = document.createElement('input');
                 checkCurso.type = "checkbox";
@@ -444,14 +446,12 @@ function mostrarCursosAsignados(){
                 celdaSeleccionar.appendChild(checkCurso);
                 celdaCurso.innerHTML = nombreCurso;
 
-                let botonRequisitos = document.createElement('a');
-                botonRequisitos.classList.add('fas');
-                botonRequisitos.classList.add('fa-plus');
-
+                // let botonRequisitos = document.createElement('a');
+                // botonRequisitos.classList.add('fas');
+                // botonRequisitos.classList.add('fa-plus');
                 // botonEditar.dataset.id = sListaCarreras[i]['_id'];
                 // botonRequisitos.addEventListener('click', editar);
-
-                celdaRequisitos.appendChild(botonRequisitos);
+                // celdaRequisitos.appendChild(botonRequisitos);
             }
         }
     }
@@ -493,7 +493,7 @@ function mostrarCursosPorAsignar(){
 
                     let celdaSeleccionar = fila.insertCell();
                     let celdaCurso = fila.insertCell();
-                    let celdaRequisitos = fila.insertCell();
+                    // let celdaRequisitos = fila.insertCell();
 
                     let checkCurso = document.createElement('input');
                     checkCurso.type = "checkbox";
@@ -503,14 +503,12 @@ function mostrarCursosPorAsignar(){
                     celdaSeleccionar.appendChild(checkCurso);
                     celdaCurso.innerHTML = sListaCursos[k]['nombre'];
 
-                    let botonRequisitos = document.createElement('a');
-                    botonRequisitos.classList.add('fas');
-                    botonRequisitos.classList.add('fa-plus');
-
+                    // let botonRequisitos = document.createElement('a');
+                    // botonRequisitos.classList.add('fas');
+                    // botonRequisitos.classList.add('fa-plus');
                     // botonEditar.dataset.id = sListaCarreras[i]['_id'];
                     // botonRequisitos.addEventListener('click', editar);
-
-                    celdaRequisitos.appendChild(botonRequisitos);
+                    // celdaRequisitos.appendChild(botonRequisitos);
                 }
 
             }

@@ -1,6 +1,7 @@
 'use strict';
 
 let listaSedes = obtenerSedes();
+let listaLaboratorios = obtenerLaboratorios();
 mostrarSedes();
 mostrarListaLaboratorios();
 
@@ -129,6 +130,14 @@ function mostrarListaLaboratorios() {
 function mostrarSedes() {
     let selectSede = document.getElementById('txtSede');
     selectSede.innerHTML = '';
+
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectSede.add(placeholder);
+
     let selectEditarSede = document.getElementById('txtEditarSede');
 
     for (let i = 0; i < listaSedes.length; i++) {
@@ -224,7 +233,6 @@ function validarRegistroModificar() {
     return bError
 };
 
-
 function mostrarBusquedaLaboratorios() {
     let listaLaboratorios = obtenerBusquedaLaboratorios(inputBuscar.value);
 
@@ -304,7 +312,7 @@ function eliminar() {
             mostrarBusquedaLaboratorios();
             mostrarListaLaboratorios();
             swal(
-                'Eliminada!',
+                'Eliminado!',
                 'El laboratorio ha sido eliminado.',
                 'success'
             )
@@ -330,7 +338,7 @@ function modificarDatos() {
     let sCodigo = inputEditarCodigo.value;
     let sNombre = inputEditarNombre.value;
     let nCupo = inputEditarCupo.value;
-    let sSede = selectEditarSede;
+    let sSede = selectEditarSede.value;
     let sEstado = chkEstado.checked;
     let sId = inputId.value;
 
@@ -353,8 +361,7 @@ function modificarDatos() {
                 type: 'success',
                 confirmButtonText: 'Entendido'
             });
-            ListaLaboratorios = obtenerLaboratorios();
-            limpiarFormularioModificar();
+            listaLaboratorios = obtenerLaboratorios();
             location.reload();
             mostrarBusquedaLaboratorios();
             mostrarListaLaboratorios();

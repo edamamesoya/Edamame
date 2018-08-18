@@ -1,7 +1,7 @@
 'use strict'
 
 let ListaPeriodos = obtenerPeriodos();
-mostrarListaPeriodos()
+mostrarListaPeriodos();
 
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputNombre = document.querySelector('#txtNombre');
@@ -24,6 +24,7 @@ botonRegistrar.addEventListener('click', obtenerDatos);
 botonModificar.addEventListener('click', modificarDatos);
 inputBuscar.addEventListener('keyup', mostrarBusquedaPeriodos);
 
+limpiarFormulario();
 
 //Regex//
 let regexCodigo = /^[a-zA-Z0-9\-\_ ]+$/;
@@ -66,8 +67,9 @@ function obtenerDatos() {
                 confirmButtonText: 'Entendido'
             });
         }
+        ListaPeriodos = obtenerPeriodos();
         limpiarFormulario();
-        location.reload();
+        // location.reload();
         mostrarBusquedaPeriodos();
         mostrarListaPeriodos();
         document.getElementById("buscar").click();
@@ -143,7 +145,10 @@ function validar() {
     let sNombre = inputNombre.value;
     let dFechaInicio = new Date(inputFechaInicio.value);
     let dFechaConclusion = new Date(inputFechaConclusion.value);
-    let dFechaConclusionPasada = new Date(listaPeriodos[listaPeriodos.length - 1]['fechaconclusion']);
+    let dFechaConclusionPasada = '';
+    if(listaPeriodos.length > 0){
+        dFechaConclusionPasada = new Date(listaPeriodos[listaPeriodos.length - 1]['fechaconclusion']);
+    }
 
     if (sCodigo == '' || (regexCodigo.test(sCodigo) == false)) {
         inputCodigo.classList.add('errorInput');
@@ -159,14 +164,22 @@ function validar() {
         inputNombre.classList.remove('errorInput');
     }
 
-    if (inputFechaInicio.value == '' || dFechaInicio < dFechaConclusionPasada) {
-        inputFechaInicio.classList.add('errorInput');
-        bError = true
-    } else {
-        inputFechaInicio.classList.remove('errorInput');
+    //Validación fecha de inicio
+    if(listaPeriodos.length == 0){
+        if (inputFechaInicio.value == '' || dFechaInicio < dFechaConclusionPasada) {
+            inputFechaInicio.classList.add('errorInput');
+            bError = true
+        } else {
+            inputFechaInicio.classList.remove('errorInput');
+        }
+    }else{
+        if (inputFechaInicio.value == '' || dFechaInicio < dFechaConclusionPasada) {
+            inputFechaInicio.classList.add('errorInput');
+            bError = true
+        } else {
+            inputFechaInicio.classList.remove('errorInput');
+        }
     }
-
-
 
     if (inputFechaConclusion.value == '' || dFechaConclusion < dFechaInicio) {
         inputFechaConclusion.classList.add('errorInput');
@@ -282,12 +295,21 @@ function mostrarBusquedaPeriodos() {
 
 };
 
-
 function limpiarFormulario() {
-    inputCodigo.value = '';
-    inputNombre.value = '';
-    inputFechaInicio.value = '';
-    inputFechaConclusion.value = '';
+    let listaPeriodos = obtenerPeriodos();
+    let dFechaActual = new Date();
+    if (listaPeriodos.length > 0) {
+        let dFechaConclusionPasada = new Date(listaPeriodos[listaPeriodos.length - 1]['fechaconclusion']);
+        inputCodigo.value = '';
+        inputNombre.value = '';
+        if (dFechaActual > dFechaConclusionPasada) {
+            inputFechaInicio.valueAsDate = dFechaActual;
+        } else {
+            inputFechaInicio.valueAsDate = dFechaConclusionPasada;
+        }
+    } else {
+        inputFechaInicio.valueAsDate = dFechaActual;
+    }
 };
 
 function limpiarFormularioModificar() {
@@ -315,7 +337,7 @@ function eliminar() {
             mostrarBusquedaPeriodos();
             mostrarListaPeriodos();
             swal(
-                'Eliminada!',
+                'Eliminado!',
                 'El periodo ha sido eliminado.',
                 'success'
             )
@@ -337,7 +359,7 @@ function editar() {
     inputId.value = periodo['_id'];
 };
 
-function modificarDatos(){
+function modificarDatos() {
     let sCodigo = inputEditarCodigo.value;
     let sNombre = inputEditarNombre.value;
     let dFechaInicio = inputEditarFechaInicio.value;
@@ -347,17 +369,17 @@ function modificarDatos(){
 
     let bError = false;
     bError = validarRegistroModificar();
-    
-    if(bError == true){
+
+    if (bError == true) {
         swal({
             title: 'Modificación incorrecta',
             text: 'No se pudo modificar el periodo, revise los campos en rojo',
             type: 'warning',
             confirmButtonText: 'Entendido'
-          });
-    }else{
-        let respuesta = actualizarPeriodo(sId, sCodigo , sNombre, dFechaInicio, dFechaConclusion, sEstado);
-        if(respuesta.success == true){
+        });
+    } else {
+        let respuesta = actualizarPeriodo(sId, sCodigo, sNombre, dFechaInicio, dFechaConclusion, sEstado);
+        if (respuesta.success == true) {
             swal({
                 title: 'Modificación correcta',
                 text: respuesta.msg,
@@ -366,17 +388,17 @@ function modificarDatos(){
             });
             ListaPeriodos = obtenerPeriodos();
             limpiarFormularioModificar();
-            location.reload();
+            // location.reload();
             mostrarBusquedaPeriodos();
             mostrarListaPeriodos();
             document.getElementById("buscar").click();
-        }else{
+        } else {
             swal({
                 title: 'Registro incorrecto',
                 text: respuesta.msg,
                 type: 'error',
                 confirmButtonText: 'Entendido'
-              });
-        }   
+            });
+        }
     }
 };

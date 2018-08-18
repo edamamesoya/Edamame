@@ -22,11 +22,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="img usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
                     </a>
                     <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -47,8 +52,8 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
 
@@ -62,7 +67,7 @@
             <button class="tablinks" onclick="abrirFuncion(event, 'buscarPeriodo')" id="buscar">Listar periodos</button>
         </div>
 
-        <div id="registrarPeriodo" class="tabcontent">
+        <section id="registrarPeriodo" class="tabcontent">
             <h2>Registrar Periodos</h2>
             <p>
                 Favor introducir la información que se le solicita. Al terminar, presione "Registrar" para que el periodo se registre.
@@ -70,33 +75,29 @@
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
                     <div>
-                        <label for="txtCodigo">Código:</label>
+                        <label for="txtCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtCodigo" placeholder="Ej, I-2018">
-                        <label for="txtNombre" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtNombre">Nombre:</label>
+                        <label for="txtNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" placeholder="Ej, Primer periodo 2018">
-                        <label for="txtNombre" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtFechaInicio">Fecha de Inicio:</label>
+                        <label for="txtFechaInicio">Fecha de Inicio *</label>
                         <i class="far fa-calendar-alt"></i>
                         <input type="date" id="txtFechaInicio">
-                        <label for="txtNombre" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtFechaConclusion">Fecha de Conclusión:</label>
+                        <label for="txtFechaConclusion">Fecha de Conclusión *</label>
                         <i class="far fa-calendar-alt"></i>
                         <input type="date" id="txtFechaConclusion">
-                        <label for="txtNombre" class="labelError">*</label>
                     </div>
                     <button type="button" id="btnRegistrar" class="button">Registrar</button>
                 </fieldset>
             </form>
-        </div>
+        </section>
 
         <section id="buscarPeriodo" class="tabcontent">
             <h2>Lista de periodos</h2>
@@ -147,7 +148,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="modificarPeriodo" class="tabcontent">
+        <section id="modificarPeriodo" class="tabcontent">
             <h2>Modificar Periodos</h2>
             <p>
                 Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar" para guardar
@@ -156,30 +157,27 @@
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
                     <div>
-                        <label for="txtEditarCodigo">Código:</label>
+                        <label for="txtEditarCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtEditarCodigo" placeholder="Ej, I-2018">
-                        <label for="txtEditarCodigo" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtEditarNombre">Nombre:</label>
+                        <label for="txtEditarNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtEditarNombre" placeholder="Ej, Primer periodo 2018">
-                        <label for="txtEditarNombre" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtEditarFechaInicio">Fecha de Inicio:</label>
+                        <label for="txtEditarFechaInicio">Fecha de Inicio *</label>
                         <i class="far fa-calendar-alt"></i>
                         <input type="date" id="txtEditarFechaInicio">
-                        <label for="txtEditarFechaInicio" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtEditarFechaConclusion">Fecha de Conclusión:</label>
+                        <label for="txtEditarFechaConclusion">Fecha de Conclusión *</label>
                         <i class="far fa-calendar-alt"></i>
                         <input type="date" id="txtEditarFechaConclusion">
-                        <label for="txtEditarFechaConclusion" class="labelError">*</label>
                     </div>
-                    <div class="inputLargo">
+                    <div>
+                        <label for="chkEstado">Habilitar/deshabilitar</label>
                         <label class="switch">
                             <input type="checkbox" id="chkEstado">
                             <span class="slider round"></span>
@@ -189,7 +187,7 @@
                 </fieldset>
                 <button type="button" id="btnEditar" class="button">Registrar</button>
             </form>
-        </div>
+        </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>

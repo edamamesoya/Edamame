@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Solicitud de Asistentes</title>
-    
+
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/estilosGenerales.css">
     <link rel="stylesheet" href="css/funciones.css">
@@ -22,11 +22,16 @@
             </div>
             <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
             <div class="w3-display-right">
-                <i class="fas fa-user-tie fa-5x"></i>
-                <!-- <img src="" alt="img usuario"> -->
-                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                <div id="divAvatar">
+                    <!-- <i class="fas fa-user-tie fa-5x"></i> -->
+                    <img id="avatar" src="/public/img/img_avatar.png" alt="Avatar" style="width:80px">
+                    <p id="nombreUsuarioActivo">Daniel Herrera P</p>
+                </div>
+                <div class="w3-display-right">
+                    <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                    </a>
+                    <label for="bLogOut">Salir</label>
+                </div>
             </div>
         </div>
 
@@ -47,17 +52,25 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
+
+        <input type="text" id="txtId" hidden>
 
         <!--Menú de acciones (lateral)-->
         <div class="tab">
             <h2>Menú</h2>
-            <button class="tablinks" onclick="abrirFuncion(event, 'registrarSolicitudes')" >Registrar solicitudes de asistentes</button>
-
-            <button class="tablinks" onclick="abrirFuncion(event, 'listarSolicitudes')" id="buscar">Listar solicitudes de asistentes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarSolicitudes')" id="registrar">Registrar solicitudes de asistentes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarSolicitudesProfe')" id="buscar">Listar solicitudes de asistentes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarSolicitudesAsistente')" id="listarSolicitudesAsistenteDecanatura">Listar solicitudes de asistentes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarSolicitudesDeca')" id="listarSolicitudesDecanatura">Listar solicitudes de asistentes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarSolicitudesRec')" id="listarSolicitudesRectoria">Listar solicitudes de asistentes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'listarSolicitudesAdmin')" id="listarSolicitudesAdministrador">Listar solicitudes de asistentes</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarSolicitudes')" id="editar"></button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarSolicitudesAsistenteDecanatura')" id="editarAsistDecanatura"></button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarSolicitudesAdmin')" id="editarAdmin"></button>
         </div>
         <!--registro de solicitudes-->
         <section id="registrarSolicitudes" class="tabcontent">
@@ -67,16 +80,39 @@
             </p>
             <form id="formRegistro">
                 <fieldset class="fieldset">
+
+                    <div>
+                        <label for="txtSedes">Sedes:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtSedes" placeholder="Seleccione una sede de la lista" required>
+                        </select>
+                        <label for="txtSedes" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtPeriodos">Periodos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtPeriodos" placeholder="Seleccione un periodo de la lista" required>
+
+                        </select>
+                        <label for="txtPeriodos" class="labelError">*</label>
+                    </div>
                     <div>
                         <label for="txtCursos">Cursos:</label>
                         <i class="fas fa-list"></i>
                         <select id="txtCursos" placeholder="Seleccione un curso de la lista" required>
-                            
+
                         </select>
                         <label for="txtCursos" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtNombre">Nombre:</label>
+                        <label for="txtGrupos">Grupos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtGrupos" placeholder="Seleccione un Grupo de la lista" required>
+                        </select>
+                        <label for="txtGrupos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtNombre">Nombre de estudiante postulante:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" required>
                         <label for="txtNombre" class="labelError">*</label>
@@ -85,17 +121,184 @@
                 </fieldset>
             </form>
         </section>
+
+        <!--Modificar Solicitudes por Profesor-->
+        <section id="modificarSolicitudes" class="tabcontent">
+            <h2>Registrar solicitudes de asistentes</h2>
+            <p>
+                Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar" para guardar
+                los datos.
+            </p>
+            <form id="formRegistro">
+                <fieldset class="fieldset">
+
+                    <div>
+                        <label for="txtEditarSedes">Sedes:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarSedes" placeholder="Seleccione una sede de la lista" required>
+                        </select>
+                        <label for="txtEditarSedes" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarPeriodos">Periodos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarPeriodos" placeholder="Seleccione un periodo de la lista" required>
+
+                        </select>
+                        <label for="txtEditarPeriodos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarCursos">Cursos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarCursos" placeholder="Seleccione un curso de la lista" required>
+
+                        </select>
+                        <label for="txtEditarCursos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarGrupos">Grupos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarGrupos" placeholder="Seleccione un Grupo de la lista" required>
+                        </select>
+                        <label for="txtEditarGrupos" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtEditarNombre">Nombre de estudiante postulante:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNombre" required>
+                        <label for="txtEditarNombre" class="labelError">*</label>
+                    </div>
+                    <button type="button" id="btnGuardar" class="button">Registrar</button>
+                </fieldset>
+            </form>
+        </section>
+        <!--Agregar datos a solicitud por asistente de decanatura-->
+        <section id="modificarSolicitudesAsistenteDecanatura" class="tabcontent">
+            <h2>Registrar solicitudes de asistentes</h2>
+            <p>
+                Agregue la información pertinente para la solicitud y luego presione el botón "Guardar".
+            </p>
+            <form id="formRegistro">
+                <fieldset class="fieldset">
+
+                    <div>
+                        <label for="txtSedesAsistente">Sedes:</label>
+                        <i class="fas fa-list"></i>
+                        <p id="txtSedesAsistente" placeholder="Seleccione una sede de la lista" required></p>
+                    </div>
+                    <div>
+                        <label for="txtPeriodosAsistente">Periodos:</label>
+                        <i class="fas fa-list"></i>
+                        <p id="txtPeriodosAsistente" placeholder="Seleccione un periodo de la lista" required></p>
+                    </div>
+                    <div>
+                        <label for="txtCursosAsistente">Cursos:</label>
+                        <p id="txtCursosAsistente" placeholder="Seleccione un curso de la lista" required></p>
+                    </div>
+                    <div>
+                        <label for="txtGruposAsistente">Grupos:</label>
+                        <i class="fas fa-list"></i>
+                        <p id="txtGruposAsistente" placeholder="Seleccione un Grupo de la lista" required>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="txtNombreAsistente">Nombre de estudiante postulante:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <p type="text" id="txtNombreAsistente" required></p>
+                    </div>
+                    <div>
+                        <label for="txtFechaIngreso">Fecha de ingreso a la institución:</label>
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="txtFechaIngreso" required>
+                        <label for="txtFechaIngreso" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <input id="asistentePrevio" type="checkbox" checked>
+                        <label for="asistentePrevio"> Este curso ha tenido asistentes previamente</label>
+
+                    </div>
+                    <button type="button" id="btnGuardar" class="button">Guardar</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <!--Editar solicitudes por parte de admin-->
+        <section id="modificarSolicitudesAdmin" class="tabcontent">
+            <h2>Registrar solicitudes de asistentes</h2>
+            <p>
+                Agregue la información pertinente para la solicitud y luego presione el botón "Guardar".
+            </p>
+            <form id="formRegistro">
+                <fieldset class="fieldset">
+
+                    <div>
+                        <label for="txtSedesAdmin">Sedes:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtSedesAdmin" placeholder="Seleccione una sede de la lista" required></select>>
+                    </div>
+                    <div>
+                        <label for="txtPeriodosAdmin">Periodos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtPeriodosAdmin" placeholder="Seleccione un periodo de la lista" required></select>
+                    </div>
+                    <div>
+                        <label for="txtCursosAdmin">Cursos:</label>
+                        <select id="txtCursosAdmin" placeholder="Seleccione un curso de la lista" required></select>
+                    </div>
+                    <div>
+                        <label for="txtGruposAdmin">Grupos:</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtGruposAdmin" placeholder="Seleccione un Grupo de la lista" required>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="txtNombreAdmin">Nombre de estudiante postulante:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNombreAdmin" required>
+                    </div>
+                    <div>
+                        <label for="txtFechaIngresoAdmin">Fecha de ingreso a la institución:</label>
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="txtFechaIngresoAdmin" required>
+                        <label for="txtFechaIngresoAdmin" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <input id="asistentePrevioAdmin" type="checkbox" checked>
+                        <label for="asistentePrevioadmin"> Este curso ha tenido asistentes previamente</label>
+
+                    </div>
+                    <div>
+                        <select id="txtEstado">
+                            <option value="Sin enviar">Sin enviar</option>
+                            <option value="En proceso: Asist. Decanatura">En proceso: Asist. Decanatura</option>
+                            <option value="En proceso: Decanatura">En proceso: Decanatura</option>
+                            <option value="En proceso: Rectoría">En proceso: Rectoría</option>
+                            <option value="Aprobada">Aprobada</option>
+                            <option value="Rechazada">Rechazada</option>
+                        </select>
+                    </div>
+                    <button type="button" id="btnGuardar" class="button">Actualizar</button>
+                </fieldset>
+            </form>
+        </section>
         <!--listado de solicitudes-->
-        <div id="listarSolicitudes" class="tabcontent">
+        <div id="listarSolicitudesProfe" class="tabcontent">
             <h2>Lista de solicitudes</h2>
             <p>
                 Aquí se encuentran listados todas las solicitudes de asistentes que se encuentren registrados en este momento.
             </p>
-            <table id="tblSolicitudes" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+            <table id="tblSolicitudesProfe" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Curso</th>
+                        <th>Grupo</th>
+                        <th>Sede</th>
+                        <th>Periodo</th>
+                        <th>Estado</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                        <th>Enviar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,10 +307,86 @@
             </table>
         </div>
 
+        <div id="listarSolicitudesAsistente" class="tabcontent">
+            <h2>Lista de solicitudes</h2>
+            <p>
+                Aquí se encuentran listados todas las solicitudes de asistentes que se encuentren registrados en este momento.
+            </p>
+            <table id="tblSolicitudesAsistente" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Curso</th>
+                        <th>Grupo</th>
+                        <th>Profesor Solicitante</th>
+                        <th>Sede</th>
+                        <th>Periodo</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                        <th>Enviar</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div id="listarSolicitudesDeca" class="tabcontent">
+            <h2>Lista de solicitudes</h2>
+            <p>
+                Aquí se encuentran listados todas las solicitudes de asistentes que se encuentren registrados en este momento.
+            </p>
+            <table id="tblSolicitudesDeca" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Curso</th>
+                        <th>Grupo</th>
+                        <th>Profesor Solicitante</th>
+                        <th>Sede</th>
+                        <th>Periodo</th>
+                        <th>Rechazar</th>
+                        <th>Aceptar</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div id="listarSolicitudesAdmin" class="tabcontent">
+            <h2>Lista de solicitudes</h2>
+            <p>
+                Aquí se encuentran listados todas las solicitudes de asistentes que se encuentren registrados en este momento.
+            </p>
+            <table id="tblSolicitudesAdmin" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Curso</th>
+                        <th>Grupo</th>
+                        <th>Profesor Solicitante</th>
+                        <th>Sede</th>
+                        <th>Periodo</th>
+                        <th>Estado</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
     <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/periodos/servicioPeriodos.js"></script>
+    <script src="js/sedes/servicioSedes.js"></script>
+    <script src="js/grupos/servicioGrupos.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>
     <script src="js/cursos/servicioCursos.js"></script>
     <script src="js/solicitudes/servicioSolicitudes.js"></script>

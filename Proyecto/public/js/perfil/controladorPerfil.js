@@ -21,7 +21,16 @@ verificarAcceso(sUsuario);
 for (let i = 0; i < listaPersonas.length; i++) {
     if(sUsuario == listaPersonas[i]['correo']){
         sNombre.innerHTML = listaPersonas[i]['primerNombre'] + ' '  + listaPersonas[i]['segundoNombre'] + ' ' + listaPersonas[i]['primerApellido'] + ' ' + listaPersonas[i]['segundoApellido'];
-        sCedula.innerHTML = listaPersonas[i]['cedula'];
+
+        let Cedula = '';
+        let nCedula = (listaPersonas[i]['cedula']).toString();
+
+        Cedula += nCedula.substr(0,1);
+        Cedula += '-';
+        Cedula += nCedula.substr(1,4);
+        Cedula += '-';
+        Cedula += nCedula.substr(5,9);
+        sCedula.innerHTML = Cedula;
 
         let dFechaIngreso = new Date(listaPersonas[i]['fechaIngreso'])
         let nDia = dFechaIngreso.getUTCDate();
@@ -29,8 +38,15 @@ for (let i = 0; i < listaPersonas.length; i++) {
         let nAnno = dFechaIngreso.getUTCFullYear();
 
         dFecha.innerHTML = nDia + '/' + nMes + '/' + nAnno;
-        sTelefono.innerHTML = listaPersonas[i]['telefono'];
-        sDireccion.innerHTML = listaPersonas[i]['provincia'] + ',' + listaPersonas[i]['canton'] + ',' + listaPersonas[i]['distrito'] + ',' + listaPersonas[i]['direccion'];
+
+        let Telefono = '';
+        let nTelefono = (listaPersonas[i]['telefono']).toString();
+        Telefono += nTelefono.substr(0,4);
+        Telefono += '-';
+        Telefono += nTelefono.substr(4,8);
+        sTelefono.innerHTML = Telefono;
+
+        sDireccion.innerHTML = listaPersonas[i]['provincia'] + ', ' + listaPersonas[i]['canton'] + ', ' + listaPersonas[i]['distrito'] + ', ' + listaPersonas[i]['direccion'];
 
     }
 };

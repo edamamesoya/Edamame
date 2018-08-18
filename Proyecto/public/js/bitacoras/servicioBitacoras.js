@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarBitacora(pCurso, pGrupo, pAsistente, pProfesor, pFechaCreacion){
+function registrarBitacora(pCurso, pAsistente, pProfesor, pFechaCreacion){
     let respuesta = '';
     let peticion = $.ajax({
         url : 'http://localhost:4000/api/registrar_bitacora',
@@ -10,7 +10,6 @@ function registrarBitacora(pCurso, pGrupo, pAsistente, pProfesor, pFechaCreacion
         async : false,
         data:{
             curso : pCurso,
-            grupo : pGrupo,
             asistente : pAsistente,
             profesor : pProfesor,
             fechaCreacion : pFechaCreacion
