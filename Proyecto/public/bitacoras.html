@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bitácoras</title>
+
+    <!--Páginas de estilo css-->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/estilosGenerales.css">
+    <link rel="stylesheet" href="css/funciones.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/modal.css">
+</head>
+
+<body>
+    <main>
+        <!--Header de la página-->
+        <div class="header">
+            <div class="w3-display-left">
+                <img src="img/logoCenfo.png" alt="Logo U">
+            </div>
+            <h1 class="w3-display-middle">Plataforma administrativa de asistentes</h1>
+            <div class="w3-display-right">
+                <i class="fas fa-user-tie fa-5x"></i>
+                <!-- <img src="" alt="img usuario"> -->
+                <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
+                </a>
+                <label for="bLogOut">Salir</label>
+            </div>
+        </div>
+
+        <!--Menú general (arriba)-->
+        <div class="menuGeneral">
+            <!-- <a href="index.html" class="w3-bar-item w3-button" id="menuInicio">Inicio</a> -->
+            <a href="perfil.html" class="w3-bar-item w3-button" id="menuPerfil">Perfil</a>
+            <a href="solicitudes.html" class="w3-bar-item w3-button" id="menuSolicitudes">Solicitudes</a>
+            <div class="w3-dropdown-hover" id="menuFunciones">
+                <button class="w3-bar-item w3-button">Funciones</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 opcionMenu">
+                    <a href="usuarios.html" class="w3-bar-item w3-button">Usuarios</a>
+                    <a href="periodos.html" class="w3-bar-item w3-button">Periodos</a>
+                    <a href="sedes.html" class="w3-bar-item w3-button">Sedes</a>
+                    <a href="carreras.html" class="w3-bar-item w3-button">Carreras</a>
+                    <a href="cursos.html" class="w3-bar-item w3-button">Cursos</a>
+                    <a href="grupos.html" class="w3-bar-item w3-button">Grupos</a>
+                    <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
+                </div>
+            </div>
+            <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="reportes.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
+            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
+        </div>
+
+        <input type="text" id="txtIdBitacora" hidden>
+        <input type="text" id="txtIdEntrada" hidden>
+        
+        <!--Menú de acciones (lateral)-->
+        <div class="tab">
+            <h2>Menú</h2>
+            <button class="tablinks" onclick="abrirFuncion(event, 'registrarEntrada')" id="defaultOpen">Nueva entrada</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'modificarEntrada')" id="modificar">Modificar entrada</button>
+            <button class="tablinks" onclick="abrirFuncion(event, 'buscarBitacora')" id="buscar">Listar bitácoras</button>
+        </div>
+    
+        <!--Función registrar entradas de bitácora-->
+        <section id="registrarEntrada" class="tabcontent">
+            <h2>Agregar nueva entrada a bitácora</h2>
+            <p>Ingrese la información solicitada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
+                para guardar los datos.
+            </p>
+
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <h3>Información de actividad</h3>
+                    <div>
+                        <label for="txtBitacora">Curso *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtBitacora" required>
+                    
+                        </select>
+                    </div>
+                    <div>
+                        <label for="txtActividad">Actividad realizada *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtActividad" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="opcion 1">opcion 1</option>
+                            <option value="opcion 2">opcion 2</option>
+                            <option value="opcion 3">opcion 3</option>
+                            <option value="opcion 4">opcion 4</option>
+                            <option value="opcion 5">opcion 5</option>
+                        </select>
+                    </div>
+                    <div class="inputLargo">
+                        <label for="txtDescripcion">Descripción</label>
+                        <textarea id="txtDescripcion"> </textarea>
+                    </div>
+                    <div>
+                        <label for="txtHoras">Horas *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtHoras" min="0" placeholder="Ej, 5" required>
+                    </div>
+                    <div>
+                        <label for="txtFecha">Fecha *</label>
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" id="txtFecha" placeholder="Fecha" required>
+                    </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
+                </fieldset>
+                <button type="button" class="button" id="btnRegistrar">Registrar</button>
+            </form>
+        </section>
+
+        <!--Función buscar bitácoras-->
+        <section id="buscarBitacora" class="tabcontent">
+            <h2>Lista de bitácoras</h2>
+            <p>Despliegue total de bitácoras registradas. Para búsquedas específicas, ingrese el nombre del curso en "Filtrar".
+            </p>
+
+            <div>
+                <label for="txtBuscar">Filtrar:</label>
+                <input type="text" id="txtBuscar">
+            </div>
+
+            <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                <thead>
+                    <tr>
+                        <th width="10%">Curso</th>
+                        <th width="25%">Asistente</th>
+                        <th width="25%">Profesor</th>
+                        <th width="5%">Horas</th>
+                        <th width="15%">Fecha de creación</th>
+                        <th width="10%">Estado</th>
+                        <th width="10%">Ver más</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <h3 id="mensajeLista">No existen bitácoras registradas</h3>
+        </section>
+
+        <!--Función modificar entrada de bitácora-->
+        <section id="modificarEntrada" class="tabcontent">
+            <h2>Modificar entrada</h2>
+            <p>Modifique la información deseada en el siguiente formulario. Una vez completado, seleccione el botón "Registrar"
+                para guardar los datos.
+            </p>
+
+            <form action="" id="formRegistro">
+                <fieldset class="fieldset">
+                    <h3>Información de actividad</h3>
+                    <div>
+                        <label for="txtEditarBitacora">Curso *</label>
+                        <i class="fas fa-list"></i>
+                        <input type="text" id="txtEditarBitacora" disabled required>
+                    </div>
+                    <div>
+                        <label for="txtEditarActividad">Actividad realizada *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtEditarActividad" required>
+                            <option value="opcion 1">opcion 1</option>
+                            <option value="opcion 2">opcion 2</option>
+                            <option value="opcion 3">opcion 3</option>
+                            <option value="opcion 4">opcion 4</option>
+                            <option value="opcion 5">opcion 5</option>
+                        </select>
+                    </div>
+                    <div class="inputLargo">
+                        <label for="txtEditarDescripcion">Descripción</label>
+                        <textarea id="txtEditarDescripcion"> </textarea>
+                    </div>
+                    <div>
+                        <label for="txtEditarHoras">Horas *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtEditarHoras" min="0" placeholder="Ej, 5" required>
+                    </div>
+                    <div>
+                        <label for="txtEditarFecha">Fecha *</label>
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" id="txtEditarFecha" placeholder="Fecha" required>
+                    </div>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
+                </fieldset>
+                <button type="button" class="button" id="btnEditar">Registrar</button>
+            </form>
+        </section>
+
+        <!-- Listar entradas de bitácora -->
+        <div id="modal" class="modal ocultar">
+            <div class="modal-content" id="scrollModal">
+                <div class="close">
+                    <i id="btnCerrar" class="far fa-times-circle"></i>
+                </div>
+                <div class="modal-body">
+                    <section id="topInformation">
+                    <div>
+                        <p id="infCurso" class="textoTitulo"></p>
+                        <p id="infAsistente" class="textDescripcion"></p>
+                        <p id="infProfesor" class="textDescripcion"></p>
+                        <p id="infHoras" class="textDescripcion"></p>
+                        <p id="infEstado" class="textDescripcion"></p>
+                    </div>
+                    </section>
+                </div>
+
+                <div class="tabla">
+                    <p class="titulo">Detalles</p>
+                    <table id="tblEntradas" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                        <thead>
+                            <tr>
+                                <th>Actividad</th>
+                                <th>Horas</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <h3 id="bitacoraVacia">No existen actividades registradas</h3>
+                </div>
+
+                <button type="button" class="button" id="btnAprobar">Aprobar bitácora</button>
+                <button type="button" class="button" id="btnRechazar">Rechazar bitácora</button>
+            </div>
+        </div>
+    </main>
+
+    <!--Scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bitacoras/servicioBitacoras.js"></script>
+    <script src="js/usuarios/servicioUsuarios.js"></script>
+    <script src="js/cursos/servicioCursos.js"></script>
+    <script src="js/controladorGeneral.js"></script>
+    <script src="js/bitacoras/controladorBitacoras.js"></script>
+</body>
+
+</html>

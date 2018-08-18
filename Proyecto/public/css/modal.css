@@ -1,0 +1,144 @@
+/* Modal (background) */
+.modal {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #FFF;
+    margin: 0 10%;
+    margin-top: 150px;
+    padding: 0;
+    border: 1px solid #BEBEBE;
+    border-radius: 2px;
+    width: 80%;
+    height: 70%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: modalAnimation;
+    animation-duration: 0.4s;
+    text-align: center;
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  padding: 0.5px;
+  border-radius: 50%;
+  transform: scale(2.5);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  left: 97%;
+  top: 15px;;
+  width: 21.33px;
+  height: 21.33px;
+}
+
+.close span {
+  color: #4285F4;
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 15px 16px;
+  color: #9E2169;
+}
+
+.textDescripcion{
+  width: 40%;
+  display: inline-block;
+  text-align: center;
+  padding: 0;
+}
+
+.textoTitulo{
+  text-align: center;
+}
+
+.titulo{
+  font-size: 20px;
+}
+#modalHeader {
+  color: rgb(252, 19, 19);
+}
+.ocultar{
+    display : none;
+}
+
+.modal-content p {
+    border: none;
+    color: #130f40;
+    margin-bottom: 2px;
+    padding-top: 0px;
+    padding-bottom: 2px;
+}
+
+.modal-body {
+    border-bottom: solid 2px #30336b;
+}
+
+.tabla{
+    margin-bottom: 50px;
+}
+.tabla p{
+    margin: 20px;
+}
+.tabla #tblEntradas{
+    width: 90%;
+    margin: 0 5% 0 5%;
+}
+
+/* Modal Animation */
+@keyframes modalAnimation {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+}
+/*------------------------------------------*/
+
+/* Scroll Bar */
+::-webkit-scrollbar{
+  width: 5px;
+  background: #30336b;
+  opacity: 0.2;
+  border: none;
+}
+
+::-webkit-scrollbar-track{
+  background:#ddd;
+  border: none;
+}
+::-webkit-scrollbar-thumb{
+  background: -webkit-linear-gradient(top, #30336b,  #30336b);
+}
+::-webkit-scrollbar-thumb:hover{
+    background: #30336b;
+}
+/* Pseudo-clase */
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #ddd;
+}
+
+#scrollModal{
+  margin: 5% auto;
+  width: 80%;
+  height: 70%;
+  overflow: auto;
+}
