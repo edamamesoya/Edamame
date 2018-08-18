@@ -1,5 +1,6 @@
 'use strict';
 
+
 let sListaSolicitudes = obtenerSolicitudes();
 let sListaSedes = obtenerSedes();
 let sListaPeriodos = obtenerPeriodos();
@@ -12,6 +13,7 @@ const sProfe = localStorage.getItem('correoUsuarioActivo');
 const inputId = document.querySelector('#txtId');
 const sProfeNombre = localStorage.getItem('nombreUsuarioActivo');
 
+esconder();
 
 mostrarListaSolicitudes();
 mostrarSedes();
@@ -122,6 +124,7 @@ function modificarDatos() {
     let sNombre = inputEditarNombre.value;
     let asistentePrevio = true;
     let fecha = new Date();
+    let id = inputId.value;
     let estado = 'Sin enviar';
     let bError = false;
     bError = validarEditar();
@@ -133,7 +136,7 @@ function modificarDatos() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = actualizarSolicitud(sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
+        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
         if (respuesta.success == true) {
             swal({
                 title: 'Modificación correcta',
@@ -165,6 +168,7 @@ function obtenerDatosAsistenteDecanatura() {
     let asistentePrevio = chkAsistentePrevioAsistente.value;
     let estado = 'En proceso: Asist. Decanatura';
     let bError = false;
+    let id = inputId.value;
     bError = validarAsistenteDecanatura();
     if (bError == true) {
         swal({
@@ -174,7 +178,7 @@ function obtenerDatosAsistenteDecanatura() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = actualizarSolicitud(sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
+        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
         if (respuesta.success == true) {
             swal({
                 title: 'Modificación correcta',
@@ -206,6 +210,7 @@ function obtenerDatosAdmin() {
     let fecha = inputFechaAdmin.value;
     let asistentePrevio = chkAsistentePrevioAdmin.value;
     let estado = selectEstadoAdmin.value;
+    let id = inputId.value;
     let bError = false;
     bError = validarAdmin();
     if (bError == true) {
@@ -216,7 +221,7 @@ function obtenerDatosAdmin() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = actualizarSolicitud(sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
+        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
         if (respuesta.success == true) {
             swal({
                 title: 'Modificación correcta',
@@ -272,7 +277,7 @@ function enviar() {
                         'La solicitud ha sido enviada.',
                         'success'
                     )
-                    location.reload();
+                    document.getElementById('buscar').click();
                 }
             })
 
@@ -294,12 +299,12 @@ function enviar() {
                     if (result.value) {
                         actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
                         mostrarListaSolicitudes();
-                        swal(
-                            'Enviada!',
-                            'La solicitud ha sido enviada.',
-                            'success'
-                        )
-                        location.reload();
+                        swal({
+                            title: 'Enviada!',
+                            text: 'La solicitud ha sido enviada.',
+                            type: 'success'
+                        })
+                        document.getElementById('listarSolicitudesAsistenteDecanatura');
                     }
                 })
             } else {
@@ -317,12 +322,12 @@ function enviar() {
                     if (result.value) {
                         actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
                         mostrarListaSolicitudes();
-                        swal(
-                            'Enviada!',
-                            'La solicitud ha sido enviada.',
-                            'success'
-                        )
-                        location.reload();
+                        swal({
+                            title: 'Enviada!',
+                            text: 'La solicitud ha sido enviada.',
+                            type: 'success'
+                        })
+                        document.getElementById('listarSolicitudesAsistenteDecanatura');
                     }
                 })
             }
@@ -605,12 +610,7 @@ function mostrarListaSolicitudes() {
 
     switch (sRol) {
         case 'profesor':
-            document.getElementById("listarSolicitudesDecanatura").remove();
-            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
-            document.getElementById("listarSolicitudesRectoria").remove();
-            document.getElementById("listarSolicitudesAdministrador").remove();
-            document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("editarAdmin").remove();
+
             let tbodyProfe = document.querySelector('#tblSolicitudesProfe tbody');
             tbodyProfe.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -687,14 +687,7 @@ function mostrarListaSolicitudes() {
             }
             break;
         case 'asistDecanatura':
-            document.getElementById("listarSolicitudesAsistenteDecanatura").click();
-            document.getElementById("listarSolicitudesDecanatura").remove();
-            document.getElementById("listarSolicitudesRectoria").remove();
-            document.getElementById("listarSolicitudesAdministrador").remove();
-            document.getElementById("editarAdmin").remove();
-            document.getElementById("registrar").remove();
-            document.getElementById("buscar").remove();
-            document.getElementById("editar").remove();
+
             let tbodyAsistente = document.querySelector('#tblSolicitudesAsistente tbody');
             tbodyAsistente.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -707,7 +700,6 @@ function mostrarListaSolicitudes() {
                     let celdaSede = fila.insertCell();
                     let celdaPeriodo = fila.insertCell();
                     let celdaEditar = fila.insertCell();
-                    let celdaEliminar = fila.insertCell();
                     let celdaEnviar = fila.insertCell();
 
                     celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
@@ -726,15 +718,6 @@ function mostrarListaSolicitudes() {
 
                     celdaEditar.appendChild(botonEditar);
 
-                    let botonEliminar = document.createElement('a');
-                    botonEliminar.classList.add('far');
-                    botonEliminar.classList.add('fa-trash-alt');
-
-                    botonEliminar.dataset.id = listaSolicitudes[i]['_id'];
-                    botonEliminar.addEventListener('click', eliminar);
-
-                    celdaEliminar.appendChild(botonEliminar);
-
                     let botonEnviar = document.createElement('a');
                     botonEnviar.classList.add('far');
                     botonEnviar.classList.add('fa-paper-plane');
@@ -747,15 +730,7 @@ function mostrarListaSolicitudes() {
             }
             break;
         case 'decanatura':
-            document.getElementById("listarSolicitudesAdministrador").remove();
-            document.getElementById("listarSolicitudesRectoria").remove();
-            document.getElementById("listarSolicitudesDecanatura").click();
-            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
-            document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("editarAdmin").remove();
-            document.getElementById("registrar").remove();
-            document.getElementById("buscar").remove();
-            document.getElementById("editar").remove();
+
             let tbodyDecanatura = document.querySelector('#tblSolicitudesDeca tbody');
             tbodyDecanatura.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -780,6 +755,7 @@ function mostrarListaSolicitudes() {
                     let botonRechazar = document.createElement('a');
                     botonRechazar.classList.add('far');
                     botonRechazar.classList.add('fa-times-circle');
+                    botonRechazar.dataset.id = listaSolicitudes[i]['_id'];
 
                     celdaRechazar.appendChild(botonRechazar);
 
@@ -788,6 +764,7 @@ function mostrarListaSolicitudes() {
                     let botonAprobar = document.createElement('a');
                     botonAprobar.classList.add('far');
                     botonAprobar.classList.add('fa-check-circle');
+                    botonAprobar.dataset.id = listaSolicitudes[i]['_id'];
 
                     celdaAprobar.appendChild(botonAprobar);
 
@@ -797,15 +774,7 @@ function mostrarListaSolicitudes() {
             };
             break;
         case 'rectoria':
-            document.getElementById("listaSolicitudesRectoria").click();
-            document.getElementById("listarSolicitudesAdministrador").remove();
-            document.getElementById("listarSolicitudesDecanatura").remove();
-            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
-            document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("editarAdmin").remove();
-            document.getElementById("registrar").remove();
-            document.getElementById("buscar").remove();
-            document.getElementById("editar").remove();
+
             let tbodyRectoria = document.querySelector('#tblSolicitudesRec tbody');
             tbodyRectoria.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -832,6 +801,7 @@ function mostrarListaSolicitudes() {
                     botonRechazar.classList.add('fa-times-circle');
 
                     celdaRechazar.appendChild(botonRechazar);
+                    botonRechazar.dataset.id = listaSolicitudes[i]['_id'];
 
                     botonRechazar.addEventListener('click', rechazar);
 
@@ -840,20 +810,13 @@ function mostrarListaSolicitudes() {
                     botonAprobar.classList.add('fa-check-circle');
 
                     celdaAprobar.appendChild(botonAprobar);
-
+                    botonAprobar.dataset.id = listaSolicitudes[i]['_id'];
                     botonAprobar.addEventListener('click', aprobar);
                 };
             };
             break;
         case 'administrador':
-            document.getElementById("listarSolicitudesRectoria").remove();
-            document.getElementById("listarSolicitudesAdministrador").click();
-            document.getElementById("listarSolicitudesDecanatura").remove();
-            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
-            document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("registrar").remove();
-            document.getElementById("buscar").remove();
-            document.getElementById("editar").remove();
+
             let tbodyAdministrador = document.querySelector('#tblSolicitudesAdmin tbody');
             tbodyAdministrador.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -976,6 +939,7 @@ function editarAdministrador() {
     selectEditarGruposAdmin.value = solicitud['grupos'];
     inputEditarNombreAdmin.value = solicitud['nombre'];
     selectEditarPeriodosAdmin.value = solicitud['periodos'];
+    inputId.value = solicitud['_id']
 
 };
 
@@ -991,6 +955,8 @@ function aprobar() {
     let sNombre = solicitud['nombre'];
     let profe = solicitud['profe'];
     let estado = 'Aprobada';
+    let asistentePrevio = solicitud['asistentePrevio'];
+    let fecha = solicitud['fecha'];
 
     swal({
         title: '¿Seguro que desea aprobar la solicitud?',
@@ -1003,7 +969,6 @@ function aprobar() {
     }).then((result) => {
         if (result.value) {
             actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
-            listaSolicitudes = obtenerSolicitudes();
             mostrarListaSolicitudes();
             swal(
                 'Aprobada!',
@@ -1027,6 +992,8 @@ function rechazar() {
     let sNombre = solicitud['nombre'];
     let profe = solicitud['profe'];
     let estado = 'Rechazada';
+    let asistentePrevio = solicitud['asistentePrevio'];
+    let fecha = solicitud['fecha'];
 
     swal({
         title: '¿Seguro que desea rechazar la solicitud?',
@@ -1039,7 +1006,6 @@ function rechazar() {
     }).then((result) => {
         if (result.value) {
             actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
-            listaSolicitudes = obtenerSolicitudes();
             mostrarListaSolicitudes();
             swal(
                 'Rechazada!',
@@ -1102,7 +1068,7 @@ function validarAsistenteDecanatura() {
     }
 
     //validar fecha de ingreso
-    if (dFecha = '') {
+    if (dFecha == '') {
         inputFechaAsistente.classList.add('errorInput');
         bError = true;
     } else {
@@ -1181,3 +1147,58 @@ function validarAdmin() {
 
     return bError;
 };
+
+function esconder() {
+    switch (sRol) {
+        case 'profesor':
+            document.getElementById('listarSolicitudesDecanatura').remove();
+            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
+            document.getElementById("listarSolicitudesRectoria").remove();
+            document.getElementById("listarSolicitudesAdministrador").remove();
+            document.getElementById("editarAsistDecanatura").remove();
+            document.getElementById("editarAdmin").remove();
+            break;
+        case 'asistDecanatura':
+            document.getElementById("listarSolicitudesAsistenteDecanatura").click();
+            document.getElementById("listarSolicitudesDecanatura").remove();
+            document.getElementById("listarSolicitudesRectoria").remove();
+            document.getElementById("listarSolicitudesAdministrador").remove();
+            document.getElementById("editarAdmin").remove();
+            document.getElementById("registrar").remove();
+            document.getElementById("buscar").remove();
+            document.getElementById("editar").remove();
+            break;
+        case 'decanatura':
+            document.getElementById("listarSolicitudesAdministrador").remove();
+            document.getElementById("listarSolicitudesRectoria").remove();
+            document.getElementById("listarSolicitudesDecanatura").click();
+            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
+            document.getElementById("editarAsistDecanatura").remove();
+            document.getElementById("editarAdmin").remove();
+            document.getElementById("registrar").remove();
+            document.getElementById("buscar").remove();
+            document.getElementById("editar").remove();
+            break;
+        case 'rectoria':
+            document.getElementById("listaSolicitudesRectoria").click();
+            document.getElementById("listarSolicitudesAdministrador").remove();
+            document.getElementById("listarSolicitudesDecanatura").remove();
+            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
+            document.getElementById("editarAsistDecanatura").remove();
+            document.getElementById("editarAdmin").remove();
+            document.getElementById("registrar").remove();
+            document.getElementById("buscar").remove();
+            document.getElementById("editar").remove();
+            break;
+        case 'administrador':
+            document.getElementById("listarSolicitudesRectoria").remove();
+            document.getElementById("listarSolicitudesAdministrador").click();
+            document.getElementById("listarSolicitudesDecanatura").remove();
+            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
+            document.getElementById("editarAsistDecanatura").remove();
+            document.getElementById("registrar").remove();
+            document.getElementById("buscar").remove();
+            document.getElementById("editar").remove();
+            break;
+    }
+}
