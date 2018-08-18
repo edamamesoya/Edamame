@@ -34,6 +34,39 @@ module.exports.registrar = function(req, res) {
     });
 };
 
+module.exports.registrarAsistente = function(req, res) {
+    let nuevoUsuario = new usuarioModel({
+        primerNombre : req.body.primerNombre,
+        segundoNombre : '',
+        primerApellido : req.body.primerApellido,
+        segundoApellido : req.body.segundoApellido,
+        cedula : req.body.cedula,
+        provincia : 'San José',
+        canton : 'San José',
+        distrito : 'San José',
+        direccion : 'San José',
+        fechaIngreso : req.body.fechaIngreso,
+        telefono : req.body.telefono,
+        correo : req.body.correo,
+        rol : 'asistente',
+        contrasenna : req.body.cedula,
+        primerNombreContacto : req.body.primerNombre,
+        segundoNombreContacto : '',
+        primerApellidoContacto : req.body.primerApellido,
+        segundoApellidoContacto : req.body.segundoApellido,
+        telefonoContacto : req.body.telefono,
+        estado : 'true'
+    });
+
+    nuevoUsuario.save(function(error){
+        if(error){
+            res.json({success : false, msg : error});
+        }else{
+            res.json({success : true, msg : 'El usuario se registró con éxito'});
+        }
+    });
+};
+
 module.exports.listar_todos = function(req, res){
     usuarioModel.find().sort({primerNombre : 'asc'}).then(
         function(usuarios){

@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarSolicitud (pSede, pPeriodo, pCurso, pGrupo, pNombre, pEstado, pProfesor) {
+function registrarSolicitud (pSede, pPeriodo, pCurso, pGrupo, pNombre, pPrimerApellido, pSegundoApellido, pTelefono, pCedula, pCorreo, pEstado, pProfesor) {
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_solicitud',
@@ -14,6 +14,11 @@ function registrarSolicitud (pSede, pPeriodo, pCurso, pGrupo, pNombre, pEstado, 
             cursos: pCurso,
             grupos: pGrupo,
             nombre: pNombre,
+            primerApellido: pPrimerApellido,
+            segundoApellido: pSegundoApellido,
+            telefono: pTelefono,
+            cedula: pCedula,
+            correo: pCorreo,
             estado: pEstado,
             profe: pProfesor
         }

@@ -1,19 +1,33 @@
 'use strict';
 
+
 let sListaSolicitudes = obtenerSolicitudes();
 let sListaSedes = obtenerSedes();
 let sListaPeriodos = obtenerPeriodos();
 let sListaGrupos = obtenerGrupos();
 let sListaCursos = obtenerCursos();
+let listaUsuarios = obtenerUsuarios();
+
 const sRol = localStorage.getItem('rolUsuarioActivo');
 const sProfe = localStorage.getItem('correoUsuarioActivo');
 const inputId = document.querySelector('#txtId');
+const sProfeNombre = localStorage.getItem('nombreUsuarioActivo');
+
+esconder();
 
 mostrarListaSolicitudes();
 mostrarSedes();
 mostrarPeriodos();
 mostrarGrupos();
 mostrarCursos();
+mostrarSedesEditar();
+mostrarPeriodosEditar();
+mostrarGruposEditar();
+mostrarCursosEditar();
+mostrarSedesAdmin();
+mostrarPeriodosAdmin();
+mostrarGruposAdmin();
+mostrarCursosAdmin();
 
 let inputNombre = document.querySelector('#txtNombre');
 let selectSedes = document.querySelector('#txtSedes');
@@ -22,11 +36,45 @@ let selectGrupos = document.querySelector('#txtGrupos');
 let selectCursos = document.querySelector('#txtCursos');
 const selectEstado = document.querySelector('#txtEstado');
 let botonRegistrar = document.querySelector('#btnRegistrar');
+const selectEditarSedeAdmin = document.querySelector('#txtSedesAdmin');
+const inputEditarNombreAdmin = document.querySelector('#txtNombreAdmin');
+const selectEditarCursosAdmin = document.querySelector('#txtCursosAdmin');
+const selectEditarGruposAdmin = document.querySelector('#txtGruposAdmin');
+const selectEditarPeriodosAdmin = document.querySelector('#txtPeriodosAdmin');
+const selectEstadoAdmin = document.querySelector('#txtEstado');
+const chkAsistentePrevioAdmin = document.querySelector('#asistentePrevioAdmin');
+const inputFechaAdmin = document.querySelector('#txtFechaIngresoAdmin');
+const selectEditarSede = document.querySelector('#txtEditarSedes');
+const selectEditarCurso = document.querySelector('#txtEditarCursos');
+const selectEditarPeriodo = document.querySelector('#txtEditarPeriodos');
+const inputEditarNombre = document.querySelector('#txtEditarNombre');
+const selectEditarGrupo = document.querySelector('#txtEditarGrupos');
+const selectEditarSedeAsistente = document.querySelector('#txtSedesAsistente');
+const selectEditarCursoAsistente = document.querySelector('#txtCursosAsistente');
+const selectEditarPeriodoAsistente = document.querySelector('#txtPeriodosAsistente');
+const inputEditarNombreAsistente = document.querySelector('#txtNombreAsistente');
+const selectEditarGrupoAsistente = document.querySelector('#txtGruposAsistente');
+const chkAsistentePrevioAsistente = document.querySelector('#asistentePrevio');
+const inputFechaAsistente = document.querySelector('#txtFechaIngresoAsistente');
+const primerApellido = document.querySelector('#txtPrimerApellido');
+const segundoApellido = document.querySelector('#txtSegundoApellido');
+const correo = document.querySelector('#txtCorreo');
+const telefono = document.querySelector('#txtTelefono');
+const cedula = document.querySelector('#txtCedula');
+
+selectCursos.addEventListener('change', mostrarGrupos);
+selectEditarCurso.addEventListener('change', mostrarGruposEditar);
+selectEditarCursosAdmin.addEventListener('change', mostrarGruposAdmin);
+
 
 const botonModificar = document.querySelector('#btnGuardar');
+const botonModificarAsistenteDecanatura = document.querySelector('#btnGuardarAsist');
+const botonModificarAdmin = document.querySelector('#btnGuardarAdmin');
 
 botonRegistrar.addEventListener('click', obtenerDatos);
-botonModificar.addEventListener('click', obtenerDatosAsistenteDecanatura);
+botonModificar.addEventListener('click', modificarDatos);
+botonModificarAsistenteDecanatura.addEventListener('click', obtenerDatosAsistenteDecanatura);
+botonModificarAdmin.addEventListener('click', obtenerDatosAdmin);
 
 let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
 
@@ -37,6 +85,13 @@ function obtenerDatos() {
     let grupo = selectGrupos.value;
     let curso = selectCursos.value;
     let sNombre = inputNombre.value;
+    let asistentePrevio = true;
+    let sCedula = cedula.value;
+    let sPrimerApellido = primerApellido.value;
+    let sSegundoApellido = segundoApellido.value;
+    let sTelefono = telefono.value;
+    let sCorreo = correo.value;
+    let fecha = new Date();
     let estado = 'Sin enviar';
     let bError = false;
     bError = validar();
@@ -48,7 +103,7 @@ function obtenerDatos() {
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = registrarSolicitud(sede, periodo, curso, grupo, sNombre, estado, sProfe);
+        let respuesta = registrarSolicitud(sede, periodo, curso, grupo, sNombre, sPrimerApellido, sSegundoApellido, sTelefono, sCedula, sCorreo, estado, sProfeNombre, asistentePrevio, fecha);
         if (respuesta.success == true) {
             swal({
                 title: 'Registro Correcto',
@@ -58,7 +113,7 @@ function obtenerDatos() {
             });
             limpiarFormulario();
             mostrarListaSolicitudes();
-            document.getElementById("buscar").click();
+            location.reload();
         } else {
             swal({
                 title: 'Registro incorrecto',
@@ -70,30 +125,31 @@ function obtenerDatos() {
     }
 };
 
-//modificacion por el asistente de decanatura
-function obtenerDatosAsistenteDecanatura() {
-    let sede = selectEditarSedes.value;
-    let periodo = selectEditarPeriodos.value;
-    let grupo = selectEditarGrupos.value;
-    let curso = selectEditarCursos.value;
+//Modificacion por parte del profesor
+function modificarDatos() {
+    let sede = selectEditarSede.value;
+    let periodo = selectEditarPeriodo.value;
+    let grupo = selectEditarGrupo.value;
+    let curso = selectEditarCurso.value;
     let sNombre = inputEditarNombre.value;
-    let fecha = inputFecha.value;
-    let asistentePrevio = chkAsistentePrevio.value;
+    let asistentePrevio = true;
+    let fecha = new Date();
+    let id = inputId.value;
     let estado = 'Sin enviar';
     let bError = false;
-    bError = validar();
+    bError = validarEditar();
     if (bError == true) {
         swal({
-            title: 'Registro incorrecto',
-            text: 'No se pudo registrar la solicitud, revise los campos en rojo',
+            title: 'Modificación incorrecta',
+            text: 'No se pudo modificar la solicitud, revise los campos en rojo',
             type: 'warning',
             confirmButtonText: 'Entendido'
         });
     } else {
-        let respuesta = actualizarSolicitud(sede, periodo, curso, grupo, sNombre, estado, sProfe, asistentePrevio, fecha);
+        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
         if (respuesta.success == true) {
             swal({
-                title: 'Registro Correcto',
+                title: 'Modificación correcta',
                 text: respuesta.msg,
                 type: 'success',
                 confirmButtonText: 'Entendido'
@@ -103,7 +159,92 @@ function obtenerDatosAsistenteDecanatura() {
             document.getElementById("buscar").click();
         } else {
             swal({
-                title: 'Registro incorrecto',
+                title: 'Modificación incorrecta',
+                text: respuesta.msg,
+                type: 'warning',
+                confirmButtonText: 'Entendido'
+            });
+        }
+    }
+};
+//modificacion por el asistente de decanatura
+function obtenerDatosAsistenteDecanatura() {
+    let sede = selectEditarSedeAsistente.value;
+    let periodo = selectEditarPeriodoAsistente.value;
+    let grupo = selectEditarGrupoAsistente.value;
+    let curso = selectEditarCursoAsistente.value;
+    let sNombre = inputEditarNombreAsistente.value;
+    let fecha = inputFechaAsistente.value;
+    let asistentePrevio = chkAsistentePrevioAsistente.value;
+    let estado = 'En proceso: Asist. Decanatura';
+    let bError = false;
+    let id = inputId.value;
+    bError = validarAsistenteDecanatura();
+    if (bError == true) {
+        swal({
+            title: 'Modificación incorrecta',
+            text: 'No se pudo registrar la solicitud, revise los campos en rojo',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
+        if (respuesta.success == true) {
+            swal({
+                title: 'Modificación correcta',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            limpiarFormulario();
+            mostrarListaSolicitudes();
+            document.getElementById("buscar").click();
+        } else {
+            swal({
+                title: 'Modificación incorrecta',
+                text: respuesta.msg,
+                type: 'warning',
+                confirmButtonText: 'Entendido'
+            });
+        }
+    }
+};
+
+//modificacion por el asistente de decanatura
+function obtenerDatosAdmin() {
+    let sede = selectEditarSedeAdmin.value;
+    let periodo = selectEditarPeriodosAdmin.value;
+    let grupo = selectEditarGruposAdmin.value;
+    let curso = selectEditarCursosAdmin.value;
+    let sNombre = inputEditarNombreAdmin.value;
+    let fecha = inputFechaAdmin.value;
+    let asistentePrevio = chkAsistentePrevioAdmin.value;
+    let estado = selectEstadoAdmin.value;
+    let id = inputId.value;
+    let bError = false;
+    bError = validarAdmin();
+    if (bError == true) {
+        swal({
+            title: 'Modificación incorrecta',
+            text: 'No se pudo registrar la solicitud, revise los campos en rojo',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, sProfeNombre, asistentePrevio, fecha);
+        if (respuesta.success == true) {
+            swal({
+                title: 'Modificación correcta',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            limpiarFormulario();
+            mostrarListaSolicitudes();
+            document.getElementById("buscar").click();
+        } else {
+            swal({
+                title: 'Modificación incorrecta',
                 text: respuesta.msg,
                 type: 'warning',
                 confirmButtonText: 'Entendido'
@@ -140,14 +281,13 @@ function enviar() {
             }).then((result) => {
                 if (result.value) {
                     actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
-                    listaSolicitudes = obtenerSolicitudes();
                     mostrarListaSolicitudes();
                     swal(
                         'Enviada!',
                         'La solicitud ha sido enviada.',
                         'success'
                     )
-                    location.reload();
+                    document.getElementById('buscar').click();
                 }
             })
 
@@ -169,12 +309,12 @@ function enviar() {
                     if (result.value) {
                         actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
                         mostrarListaSolicitudes();
-                        swal(
-                            'Enviada!',
-                            'La solicitud ha sido enviada.',
-                            'success'
-                        )
-                        location.reload();
+                        swal({
+                            title: 'Enviada!',
+                            text: 'La solicitud ha sido enviada.',
+                            type: 'success'
+                        })
+                        document.getElementById('listarSolicitudesAsistenteDecanatura');
                     }
                 })
             } else {
@@ -192,12 +332,12 @@ function enviar() {
                     if (result.value) {
                         actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
                         mostrarListaSolicitudes();
-                        swal(
-                            'Enviada!',
-                            'La solicitud ha sido enviada.',
-                            'success'
-                        )
-                        location.reload();
+                        swal({
+                            title: 'Enviada!',
+                            text: 'La solicitud ha sido enviada.',
+                            type: 'success'
+                        })
+                        document.getElementById('listarSolicitudesAsistenteDecanatura');
                     }
                 })
             }
@@ -258,9 +398,61 @@ function validar() {
     return bError;
 };
 
+//validación de modificar
+function validarEditar() {
+    let bError = false;
+
+    let sede = selectEditarSede.value;
+    let periodo = selectEditarPeriodo.value;
+    let grupo = selectEditarGrupo.value;
+    let curso = selectEditarCurso.value;
+    let sNombre = inputEditarNombre.value;
+
+    //validar nombre
+    if (sNombre == '' || (regexNombre.test(sNombre) == false)) {
+        inputNombre.classList.add('errorInput');
+        bError = true;
+    } else {
+        inputNombre.classList.remove('errorInput');
+    }
+
+    //validar cursos
+    if (curso == '') {
+        selectCursos.classList.add('errorInput');
+        bError = true;
+    } else {
+        selectCursos.classList.remove('errorInput');
+    }
+
+    //validar periodo
+    if (periodo == '') {
+        selectPeriodos.classList.add('errorInput');
+        bError = true;
+    } else {
+        selectPeriodos.classList.remove('errorInput');
+    }
+
+    //validar grupo
+    if (grupo == '') {
+        selectGrupos.classList.add('errorInput');
+        bError = true;
+    } else {
+        selectGrupos.classList.remove('errorInput');
+    }
+
+    //validar sede
+    if (sede == '') {
+        selectSedes.classList.add('errorInput');
+        bError = true;
+    } else {
+        selectSedes.classList.remove('errorinput');
+    }
+
+    return bError;
+};
+//mostrar opciones
 function mostrarSedes() {
     let selectSedes = document.getElementById('txtSedes');
-    selectSedes.innerHTML = '';
 
     for (let i = 0; i < sListaSedes.length; i++) {
         let sSede = sListaSedes[i]['nombre'];
@@ -273,7 +465,6 @@ function mostrarSedes() {
 
 function mostrarPeriodos() {
     let selectPeriodos = document.getElementById('txtPeriodos');
-    selectPeriodos.innerHTML = '';
 
     for (let i = 0; i < sListaPeriodos.length; i++) {
         let sPeriodo = sListaPeriodos[i]['nombre'];
@@ -288,22 +479,132 @@ function mostrarPeriodos() {
 function mostrarGrupos() {
     let selectGrupos = document.getElementById('txtGrupos');
     let selectCursos = document.getElementById('txtCursos');
-    selectGrupos.innerHTML = '';
 
     for (let i = 0; i < sListaGrupos.length; i++) {
-        if (selectCursos == sListaGrupos[i]['cursos']) {
-            let sGrupo = sListaGrupos[i]['numeroGrupo'];
+        if (selectCursos.value == sListaGrupos[i]['curso']) {
+            let sGrupo = sListaGrupos[i]['numero'];
             let nuevaOpcion = document.createElement('option');
             nuevaOpcion.text = sGrupo;
             nuevaOpcion.value = sGrupo;
             selectGrupos.add(nuevaOpcion);
+
         }
     }
 };
 
 function mostrarCursos() {
     let selectCursos = document.getElementById('txtCursos');
-    selectCursos.innerHTML = '';
+
+    for (let i = 0; i < sListaCursos.length; i++) {
+        let sCurso = sListaCursos[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sCurso;
+        nuevaOpcion.value = sCurso;
+        selectCursos.add(nuevaOpcion);
+    }
+};
+
+//mostrar opciones asistente decanatura
+
+//mostrar opciones editar
+function mostrarSedesEditar() {
+    let selectSedes = document.getElementById('txtEditarSedes');
+
+    for (let i = 0; i < sListaSedes.length; i++) {
+        let sSede = sListaSedes[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sSede;
+        nuevaOpcion.value = sSede;
+        selectSedes.add(nuevaOpcion);
+    }
+};
+
+function mostrarPeriodosEditar() {
+    let selectPeriodos = document.getElementById('txtEditarPeriodos');
+
+    for (let i = 0; i < sListaPeriodos.length; i++) {
+        let sPeriodo = sListaPeriodos[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sPeriodo;
+        nuevaOpcion.value = sPeriodo;
+        selectPeriodos.add(nuevaOpcion);
+    }
+};
+
+
+function mostrarGruposEditar() {
+    let selectGrupos = document.getElementById('txtEditarGrupos');
+    let selectCursos = document.getElementById('txtEditarCursos');
+
+    for (let i = 0; i < sListaGrupos.length; i++) {
+        if (selectCursos.value == sListaGrupos[i]['curso']) {
+            let sGrupo = sListaGrupos[i]['numero'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sGrupo;
+            nuevaOpcion.value = sGrupo;
+            selectGrupos.add(nuevaOpcion);
+
+        }
+    }
+};
+
+function mostrarCursosEditar() {
+    let selectCursos = document.getElementById('txtEditarCursos');
+
+    for (let i = 0; i < sListaCursos.length; i++) {
+        let sCurso = sListaCursos[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sCurso;
+        nuevaOpcion.value = sCurso;
+        selectCursos.add(nuevaOpcion);
+    }
+};
+
+
+//Mostrar opciones admin
+function mostrarSedesAdmin() {
+    let selectSedes = document.getElementById('txtSedesAdmin');
+
+    for (let i = 0; i < sListaSedes.length; i++) {
+        let sSede = sListaSedes[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sSede;
+        nuevaOpcion.value = sSede;
+        selectSedes.add(nuevaOpcion);
+    }
+};
+
+function mostrarPeriodosAdmin() {
+    let selectPeriodos = document.getElementById('txtPeriodosAdmin');
+
+    for (let i = 0; i < sListaPeriodos.length; i++) {
+        let sPeriodo = sListaPeriodos[i]['nombre'];
+        let nuevaOpcion = document.createElement('option');
+        nuevaOpcion.text = sPeriodo;
+        nuevaOpcion.value = sPeriodo;
+        selectPeriodos.add(nuevaOpcion);
+    }
+};
+
+
+function mostrarGruposAdmin() {
+    let selectGrupos = document.getElementById('txtGruposAdmin');
+    let selectCursos = document.getElementById('txtCursosAdmin');
+
+    for (let i = 0; i < sListaGrupos.length; i++) {
+        if (selectCursos.value == sListaGrupos[i]['curso']) {
+            let sGrupo = sListaGrupos[i]['numero'];
+            let nuevaOpcion = document.createElement('option');
+            nuevaOpcion.text = sGrupo;
+            nuevaOpcion.value = sGrupo;
+            selectGrupos.add(nuevaOpcion);
+
+        }
+    }
+};
+
+function mostrarCursosAdmin() {
+    let selectCursos = document.getElementById('txtCursosAdmin');
 
     for (let i = 0; i < sListaCursos.length; i++) {
         let sCurso = sListaCursos[i]['nombre'];
@@ -319,17 +620,12 @@ function mostrarListaSolicitudes() {
 
     switch (sRol) {
         case 'profesor':
-            document.getElementById("listarSolicitudesDecanatura").remove();
-            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
-            document.getElementById("listarSolicitudesRectoria").remove();
-            document.getElementById("listarSolicitudesAdministrador").remove();
-            document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("editarAdmin").remove();
+
             let tbodyProfe = document.querySelector('#tblSolicitudesProfe tbody');
             tbodyProfe.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
                 let fila = tbodyProfe.insertRow();
-                if (sUsuario == listaSolicitudes[i]['profe']) {
+                if (sProfeNombre == listaSolicitudes[i]['profe']) {
                     if (listaSolicitudes[i]['estado'] == 'Sin enviar') {
                         let celdaNombre = fila.insertCell();
                         let celdaCurso = fila.insertCell();
@@ -375,43 +671,33 @@ function mostrarListaSolicitudes() {
 
                         celdaEnviar.appendChild(botonEnviar);
                     } else {
-                        if (listaSolicitudes[i]['estado'] == 'Aprobada') {
 
-                        } else {
-                            let celdaNombre = fila.insertCell();
-                            let celdaCurso = fila.insertCell();
-                            let celdaGrupo = fila.insertCell();
-                            let celdaPeriodo = fila.insertCell();
-                            let celdaSede = fila.insertCell();
-                            let celdaEstado = fila.insertCell();
-                            let celdaEditar = fila.insertCell();
-                            let celdaEliminar = fila.insertCell();
-                            let celdaEnviar = fila.insertCell();
+                        let celdaNombre = fila.insertCell();
+                        let celdaCurso = fila.insertCell();
+                        let celdaGrupo = fila.insertCell();
+                        let celdaPeriodo = fila.insertCell();
+                        let celdaSede = fila.insertCell();
+                        let celdaEstado = fila.insertCell();
+                        let celdaEditar = fila.insertCell();
+                        let celdaEliminar = fila.insertCell();
+                        let celdaEnviar = fila.insertCell();
 
-                            celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
-                            celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
-                            celdaGrupo.innerHTML = listaSolicitudes[i]['grupos'];
-                            celdaPeriodo.innerHTML = listaSolicitudes[i]['periodos'];
-                            celdaSede.innerHTML = listaSolicitudes[i]['sedes'];
-                            celdaEstado.innerHTML = listaSolicitudes[i]['estado'];
-                            celdaEditar.innerHTML = 'No disponible';
-                            celdaEliminar.innerHTML = 'No disponible';
-                            celdaEnviar.innerHTML = 'Enviada';
+                        celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
+                        celdaCurso.innerHTML = listaSolicitudes[i]['cursos'];
+                        celdaGrupo.innerHTML = listaSolicitudes[i]['grupos'];
+                        celdaPeriodo.innerHTML = listaSolicitudes[i]['periodos'];
+                        celdaSede.innerHTML = listaSolicitudes[i]['sedes'];
+                        celdaEstado.innerHTML = listaSolicitudes[i]['estado'];
+                        celdaEditar.innerHTML = 'No disponible';
+                        celdaEliminar.innerHTML = 'No disponible';
+                        celdaEnviar.innerHTML = 'Enviada';
 
-                        }
                     }
                 }
             }
             break;
         case 'asistDecanatura':
-            document.getElementById("listarSolicitudesAsistenteDecanatura").click();
-            document.getElementById("listarSolicitudesDecanatura").remove();
-            document.getElementById("listarSolicitudesRectoria").remove();
-            document.getElementById("listarSolicitudesAdministrador").remove();
-            document.getElementById("editarAdmin").remove();
-            document.getElementById("registrar").remove();
-            document.getElementById("buscar").remove();
-            document.getElementById("editar").remove();
+
             let tbodyAsistente = document.querySelector('#tblSolicitudesAsistente tbody');
             tbodyAsistente.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -424,7 +710,6 @@ function mostrarListaSolicitudes() {
                     let celdaSede = fila.insertCell();
                     let celdaPeriodo = fila.insertCell();
                     let celdaEditar = fila.insertCell();
-                    let celdaEliminar = fila.insertCell();
                     let celdaEnviar = fila.insertCell();
 
                     celdaNombre.innerHTML = listaSolicitudes[i]['nombre'];
@@ -439,18 +724,9 @@ function mostrarListaSolicitudes() {
                     botonEditar.classList.add('fa-edit');
 
                     botonEditar.dataset.id = listaSolicitudes[i]['_id'];
-                    botonEditar.addEventListener('click', editar);
+                    botonEditar.addEventListener('click', editarAsistenteDecanatura);
 
                     celdaEditar.appendChild(botonEditar);
-
-                    let botonEliminar = document.createElement('a');
-                    botonEliminar.classList.add('far');
-                    botonEliminar.classList.add('fa-trash-alt');
-
-                    botonEliminar.dataset.id = listaSolicitudes[i]['_id'];
-                    botonEliminar.addEventListener('click', eliminar);
-
-                    celdaEliminar.appendChild(botonEliminar);
 
                     let botonEnviar = document.createElement('a');
                     botonEnviar.classList.add('far');
@@ -464,15 +740,7 @@ function mostrarListaSolicitudes() {
             }
             break;
         case 'decanatura':
-            document.getElementById("listarSolicitudesAdministrador").remove();
-            document.getElementById("listarSolicitudesRectoria").remove();
-            document.getElementById("listarSolicitudesDecanatura").click();
-            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
-            document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("editarAdmin").remove();
-            document.getElementById("registrar").remove();
-            document.getElementById("buscar").remove();
-            document.getElementById("editar").remove();
+
             let tbodyDecanatura = document.querySelector('#tblSolicitudesDeca tbody');
             tbodyDecanatura.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -497,6 +765,7 @@ function mostrarListaSolicitudes() {
                     let botonRechazar = document.createElement('a');
                     botonRechazar.classList.add('far');
                     botonRechazar.classList.add('fa-times-circle');
+                    botonRechazar.dataset.id = listaSolicitudes[i]['_id'];
 
                     celdaRechazar.appendChild(botonRechazar);
 
@@ -505,6 +774,7 @@ function mostrarListaSolicitudes() {
                     let botonAprobar = document.createElement('a');
                     botonAprobar.classList.add('far');
                     botonAprobar.classList.add('fa-check-circle');
+                    botonAprobar.dataset.id = listaSolicitudes[i]['_id'];
 
                     celdaAprobar.appendChild(botonAprobar);
 
@@ -514,15 +784,7 @@ function mostrarListaSolicitudes() {
             };
             break;
         case 'rectoria':
-            document.getElementById("listaSolicitudesRectoria").click();
-            document.getElementById("listarSolicitudesAdministrador").remove();
-            document.getElementById("listarSolicitudesDecanatura").remove();
-            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
-            document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("editarAdmin").remove();
-            document.getElementById("registrar").remove();
-            document.getElementById("buscar").remove();
-            document.getElementById("editar").remove();
+
             let tbodyRectoria = document.querySelector('#tblSolicitudesRec tbody');
             tbodyRectoria.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -549,6 +811,7 @@ function mostrarListaSolicitudes() {
                     botonRechazar.classList.add('fa-times-circle');
 
                     celdaRechazar.appendChild(botonRechazar);
+                    botonRechazar.dataset.id = listaSolicitudes[i]['_id'];
 
                     botonRechazar.addEventListener('click', rechazar);
 
@@ -557,20 +820,13 @@ function mostrarListaSolicitudes() {
                     botonAprobar.classList.add('fa-check-circle');
 
                     celdaAprobar.appendChild(botonAprobar);
-
+                    botonAprobar.dataset.id = listaSolicitudes[i]['_id'];
                     botonAprobar.addEventListener('click', aprobar);
                 };
             };
             break;
         case 'administrador':
-            document.getElementById("listarSolicitudesRectoria").remove();
-            document.getElementById("listarSolicitudesAdministrador").click();
-            document.getElementById("listarSolicitudesDecanatura").remove();
-            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
-            document.getElementById("editarAsistDecanatura").remove();
-            document.getElementById("registrar").remove();
-            document.getElementById("buscar").remove();
-            document.getElementById("editar").remove();
+
             let tbodyAdministrador = document.querySelector('#tblSolicitudesAdmin tbody');
             tbodyAdministrador.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
@@ -600,7 +856,7 @@ function mostrarListaSolicitudes() {
                 botonEditar.classList.add('fa-edit');
 
                 botonEditar.dataset.id = listaSolicitudes[i]['_id'];
-                botonEditar.addEventListener('click', editar);
+                botonEditar.addEventListener('click', editarAdministrador);
 
                 celdaEditar.appendChild(botonEditar);
 
@@ -639,7 +895,6 @@ function eliminar() {
     }).then((result) => {
         if (result.value) {
             eliminarSolicitud(id);
-            mostrarListaSolicitudes();
             swal(
                 'Eliminada!',
                 'La solicitud ha sido eliminada.',
@@ -653,71 +908,49 @@ function eliminar() {
 function editar() {
     let id = this.dataset.id;
     let solicitud = obtenerSolicitudPorId(id);
+    document.getElementById('editar').click();
 
-    switch (sRol) {
-        case 'profesor':
 
-            selectEditarSede = document.querySelector('#txtEditarSedes');
-            selectEditarCurso = document.querySelector('#txtEditarCursos');
-            selectEditarPeriodo = document.querySelector('#txtEditarPeriodos');
-            inputEditarNombre = document.querySelector('#txtEditarNombre');
-            selectEditarGrupo = document.querySelector('#txtEditarGrupos');
+    inputEditarNombre.value = solicitud['nombre'];
+    selectEditarSede.value = solicitud['sedes'];
+    selectEditarCurso.value = solicitud['cursos'];
+    selectEditarGrupo.value = solicitud['grupos'];
+    selectEditarPeriodo.value = solicitud['periodos'];
+    inputId.value = solicitud['_id'];
+};
 
-            document.getElementById("editar").click();
+function editarAsistenteDecanatura() {
 
-            inputEditarNombre.value = solicitud['nombre'];
-            selectEditarSede.value = solicitud['sedes'];
-            selectEditarCurso.value = solicitud['cursos'];
-            selectEditarGrupo.value = solicitud['grupos'];
-            selectEditarPeriodo.value = solicitud['periodos'];
-            inputId.value = solicitud['_id'];
+    let id = this.dataset.id;
+    let solicitud = obtenerSolicitudPorId(id);
+    document.getElementById('editarAsistDecanatura').click();
 
-            break;
+    selectEditarCursoAsistente.innerHTML = solicitud['cursos'];
+    inputEditarNombreAsistente.innerHTML = solicitud['nombre']
+    selectEditarSedeAsistente.innerHTML = solicitud['sedes'];
+    selectEditarGrupoAsistente.innerHTML = solicitud['grupos'];
+    selectEditarPeriodoAsistente.innerHTML = solicitud['periodos'];
+    chkAsistentePrevioAsistente.value = solicitud['asistentePrevio'];
+    inputFechaAsistente.value = solicitud['fecha'];
+    inputId.value = solicitud['_id'];
+};
 
-        case 'asistDecanatura':
+function editarAdministrador() {
+    let id = this.dataset.id;
+    let solicitud = obtenerSolicitudPorId(id);
+    document.getElementById('editarAdmin').click();
 
-            selectEditarSede = document.querySelector('#txtSedesAsistente');
-            selectEditarCurso = document.querySelector('#txtCursosAsistente');
-            selectEditarPeriodo = document.querySelector('#txtPeriodosAsistente');
-            inputEditarNombre = document.querySelector('#txtNombreAsistente');
-            selectEditarGrupo = document.querySelector('#txtGruposAsistente');
-            chkAsistentePrevio = document.querySelector('#asistentePrevio');
-            inputFecha = document.querySelector('#txtFechaIngreso');
 
-            document.getElementById("editarAsistDecanatura").click;
+    selectEditarCursosAdmin.value = solicitud['cursos'];
+    selectEstadoAdmin.value = solicitud['estado'];
+    chkAsistentePrevioAdmin.value = solicitud['asistentePrevio'];
+    inputFechaAdmin.value = solicitud['fecha'];
+    selectEditarSedeAdmin.value = solicitud['sedes'];
+    selectEditarGruposAdmin.value = solicitud['grupos'];
+    inputEditarNombreAdmin.value = solicitud['nombre'];
+    selectEditarPeriodosAdmin.value = solicitud['periodos'];
+    inputId.value = solicitud['_id']
 
-            selectEditarCurso.innerHTML = solicitud['cursos'];
-            inputEditarNombre.innerHTML = solicitud['nombre']
-            selectEditarSede.innerHTML = solicitud['sedes'];
-            selectEditarGrupo.innerHTML = solicitud['grupos'];
-            selectEditarPeriodo.innerHTML = solicitud['periodos'];
-            chkAsistentePrevio.value = solicitud['asistentePrevio'];
-            inputFecha.value = solicitud['fecha'];
-            inputId.value = solicitud['_id'];
-
-            break;
-        case 'administrador':
-
-            let selectEditarSede = document.querySelector('#txtSedesAdmin');
-            let inputEditarNombre = document.querySelector('#txtNombreAdmin');
-            let selectEditarCurso = document.querySelector('#txtCursosAdmin');
-            let selectEditarGrupo = document.querySelector('#txtGruposAdmin');
-            let selectEditarPeriodo = document.querySelector('#txtPeriodosAdmin');
-            let selectEstado = document.querySelector('#txtEstado');
-            let chkAsistentePrevio = document.querySelector('#asistentePrevioAdmin');
-            let inputFecha = document.querySelector('#txtFechaIngreso');
-
-            document.getElementById("editarAdmin").click;
-
-            selectEditarCurso.value = solicitud['cursos'];
-            selectEstado.value = solicitud['estado'];
-            chkAsistentePrevio.value = solicitud['asistentePrevio'];
-            inputFecha.value = solicitud['fecha'];
-            selectEditarSede.value = solicitud['sedes'];
-            selectEditarGrupo.value = solicitud['grupos'];
-            inputEditarNombre.value = solicitud['nombre'];
-            selectEditarPeriodo.value = solicitud['periodos'];
-    }
 };
 
 function aprobar() {
@@ -730,9 +963,18 @@ function aprobar() {
     let grupo = solicitud['grupos'];
     let curso = solicitud['cursos'];
     let sNombre = solicitud['nombre'];
+    let sPrimerApellido = solicitud['primerApellido'];
+    let sSegundoApellido = solicitud['segundoApellido'];
+    let sCedula = solicitud['cedula'];
+    let sCorreo = solicitud['correo'];
+    let sTelefono = solicitud['telefono'];
     let profe = solicitud['profe'];
     let estado = 'Aprobada';
+    let asistentePrevio = solicitud['asistentePrevio'];
+    let fecha = new Date();
 
+    let nombreAsistente = sNombre + ' ' +  sPrimerApellido + ' ' + sSegundoApellido;
+    let bitacora = curso + ' - ' + grupo;
     swal({
         title: '¿Seguro que desea aprobar la solicitud?',
         text: "Esta acción no se puede revertir",
@@ -744,7 +986,8 @@ function aprobar() {
     }).then((result) => {
         if (result.value) {
             actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
-            listaSolicitudes = obtenerSolicitudes();
+            registrarAsistente(sNombre, sPrimerApellido, sSegundoApellido, sCedula, fecha, sTelefono, sCorreo);
+            registrarBitacora(bitacora, nombreAsistente, profe, fecha);
             mostrarListaSolicitudes();
             swal(
                 'Aprobada!',
@@ -768,6 +1011,8 @@ function rechazar() {
     let sNombre = solicitud['nombre'];
     let profe = solicitud['profe'];
     let estado = 'Rechazada';
+    let asistentePrevio = solicitud['asistentePrevio'];
+    let fecha = solicitud['fecha'];
 
     swal({
         title: '¿Seguro que desea rechazar la solicitud?',
@@ -780,7 +1025,6 @@ function rechazar() {
     }).then((result) => {
         if (result.value) {
             actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
-            listaSolicitudes = obtenerSolicitudes();
             mostrarListaSolicitudes();
             swal(
                 'Rechazada!',
@@ -795,59 +1039,59 @@ function rechazar() {
 function validarAsistenteDecanatura() {
     let bError = false;
 
-    let sede = selectSedes.value;
-    let periodo = selectPeriodos.value;
-    let grupo = selectGrupos.value;
-    let curso = selectCursos.value;
-    let sNombre = inputNombre.value;
-    let dFecha = inputFecha.value;
+    let sede = selectEditarSedeAsistente.value;
+    let periodo = selectEditarPeriodoAsistente.value;
+    let grupo = selectEditarGrupoAsistente.value;
+    let curso = selectEditarCursoAsistente.value;
+    let sNombre = inputEditarNombreAsistente.value;
+    let dFecha = inputFechaAsistente.value;
 
     //validar nombre
     if (sNombre == '' || (regexNombre.test(sNombre) == false)) {
-        inputNombre.classList.add('errorInput');
+        inputEditarNombreAsistente.classList.add('errorInput');
         bError = true;
     } else {
-        inputNombre.classList.remove('errorInput');
+        inputEditarNombreAsistente.classList.remove('errorInput');
     }
 
     //validar cursos
     if (curso == '') {
-        selectCursos.classList.add('errorInput');
+        selectEditarCursoAsistente.classList.add('errorInput');
         bError = true;
     } else {
-        selectCursos.classList.remove('errorInput');
+        selectEditarCursoAsistente.classList.remove('errorInput');
     }
 
     //validar periodo
     if (periodo == '') {
-        selectPeriodos.classList.add('errorInput');
+        selectEditarPeriodoAsistente.classList.add('errorInput');
         bError = true;
     } else {
-        selectPeriodos.classList.remove('errorInput');
+        selectEditarPeriodoAsistente.classList.remove('errorInput');
     }
 
     //validar grupo
     if (grupo == '') {
-        selectGrupos.classList.add('errorInput');
+        selectEditarGrupoAsistente.classList.add('errorInput');
         bError = true;
     } else {
-        selectGrupos.classList.remove('errorInput');
+        selectEditarGrupoAsistente.classList.remove('errorInput');
     }
 
     //validar sede
     if (sede == '') {
-        selectSedes.classList.add('errorInput');
+        selectEditarSedeAsistente.classList.add('errorInput');
         bError = true;
     } else {
-        selectSedes.classList.remove('errorinput');
+        selectEditarSedeAsistente.classList.remove('errorinput');
     }
 
     //validar fecha de ingreso
-    if (dFecha = '') {
-        inputFecha.classList.add('errorInput');
+    if (dFecha == '') {
+        inputFechaAsistente.classList.add('errorInput');
         bError = true;
     } else {
-        inputFecha.classList.add('errorInput');
+        inputFechaAsistente.classList.add('errorInput');
     }
 
     return bError;
@@ -856,69 +1100,124 @@ function validarAsistenteDecanatura() {
 function validarAdmin() {
     let bError = false;
 
-    let sede = selectSedes.value;
-    let periodo = selectPeriodos.value;
-    let grupo = selectGrupos.value;
-    let curso = selectCursos.value;
-    let sNombre = inputNombre.value;
-    let dFecha = inputFecha.value;
-    let sEstado = selectEstado.value;
+    let sede = selectEditarSedeAdmin.value;
+    let periodo = selectEditarPeriodosAdmin.value;
+    let grupo = selectEditarGruposAdmin.value;
+    let curso = selectEditarCursosAdmin.value;
+    let sNombre = inputEditarNombreAdmin.value;
+    let dFecha = inputFechaAdmin.value;
+    let sEstado = selectEstadoAdmin.value;
 
     //validar nombre
     if (sNombre == '' || (regexNombre.test(sNombre) == false)) {
-        inputNombre.classList.add('errorInput');
+        inputEditarNombreAdmin.classList.add('errorInput');
         bError = true;
     } else {
-        inputNombre.classList.remove('errorInput');
+        inputEditarNombreAdmin.classList.remove('errorInput');
     }
 
     //validar cursos
     if (curso == '') {
-        selectCursos.classList.add('errorInput');
+        selectEditarCursosAdmin.classList.add('errorInput');
         bError = true;
     } else {
-        selectCursos.classList.remove('errorInput');
+        selectEditarCursosAdmin.classList.remove('errorInput');
     }
 
     //validar periodo
     if (periodo == '') {
-        selectPeriodos.classList.add('errorInput');
+        selectEditarPeriodosAdmin.classList.add('errorInput');
         bError = true;
     } else {
-        selectPeriodos.classList.remove('errorInput');
+        selectEditarPeriodosAdmin.classList.remove('errorInput');
     }
 
     //validar grupo
     if (grupo == '') {
-        selectGrupos.classList.add('errorInput');
+        selectEditarGruposAdmin.classList.add('errorInput');
         bError = true;
     } else {
-        selectGrupos.classList.remove('errorInput');
+        selectEditarGruposAdmin.classList.remove('errorInput');
     }
 
     //validar sede
     if (sede == '') {
-        selectSedes.classList.add('errorInput');
+        selectEditarSedeAdmin.classList.add('errorInput');
         bError = true;
     } else {
-        selectSedes.classList.remove('errorinput');
+        selectEditarSedeAdmin.classList.remove('errorinput');
     }
 
     //validar fecha de ingreso
     if (dFecha == '') {
-        inputFecha.classList.add('errorInput');
+        inputFechaAdmin.classList.add('errorInput');
         bError = true;
     } else {
-        inputFecha.classList.remove('errorInput');
+        inputFechaAdmin.classList.remove('errorInput');
     }
 
     //validar estado de la solicitud
     if (sEstado == '') {
-        selectEstado.classList.add('errorInput');
+        selectEstadoAdmin.classList.add('errorInput');
         bError = true;
     } else {
-        selectEstado.classList.remove('errorInput');
+        selectEstadoAdmin.classList.remove('errorInput');
     }
 
     return bError;
 };
+
+function esconder() {
+    switch (sRol) {
+        case 'profesor':
+            document.getElementById('listarSolicitudesDecanatura').remove();
+            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
+            document.getElementById("listarSolicitudesRectoria").remove();
+            document.getElementById("listarSolicitudesAdministrador").remove();
+            document.getElementById("editarAsistDecanatura").remove();
+            document.getElementById("editarAdmin").remove();
+            break;
+        case 'asistDecanatura':
+            document.getElementById("listarSolicitudesAsistenteDecanatura").click();
+            document.getElementById("listarSolicitudesDecanatura").remove();
+            document.getElementById("listarSolicitudesRectoria").remove();
+            document.getElementById("listarSolicitudesAdministrador").remove();
+            document.getElementById("editarAdmin").remove();
+            document.getElementById("registrar").remove();
+            document.getElementById("buscar").remove();
+            document.getElementById("editar").remove();
+            break;
+        case 'decanatura':
+            document.getElementById("listarSolicitudesAdministrador").remove();
+            document.getElementById("listarSolicitudesRectoria").remove();
+            document.getElementById("listarSolicitudesDecanatura").click();
+            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
+            document.getElementById("editarAsistDecanatura").remove();
+            document.getElementById("editarAdmin").remove();
+            document.getElementById("registrar").remove();
+            document.getElementById("buscar").remove();
+            document.getElementById("editar").remove();
+            break;
+        case 'rectoria':
+            document.getElementById("listaSolicitudesRectoria").click();
+            document.getElementById("listarSolicitudesAdministrador").remove();
+            document.getElementById("listarSolicitudesDecanatura").remove();
+            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
+            document.getElementById("editarAsistDecanatura").remove();
+            document.getElementById("editarAdmin").remove();
+            document.getElementById("registrar").remove();
+            document.getElementById("buscar").remove();
+            document.getElementById("editar").remove();
+            break;
+        case 'administrador':
+            document.getElementById("listarSolicitudesRectoria").remove();
+            document.getElementById("listarSolicitudesAdministrador").click();
+            document.getElementById("listarSolicitudesDecanatura").remove();
+            document.getElementById("listarSolicitudesAsistenteDecanatura").remove();
+            document.getElementById("editarAsistDecanatura").remove();
+            document.getElementById("registrar").remove();
+            document.getElementById("buscar").remove();
+            document.getElementById("editar").remove();
+            break;
+    }
+}

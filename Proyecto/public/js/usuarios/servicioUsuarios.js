@@ -51,6 +51,35 @@ function registrarUsuario(pPrimerNombre, pSegundoNombre, pPrimerApellido, pSegun
     return respuesta;
 };
  
+function registrarAsistente(pPrimerNombre, pPrimerApellido, pSegundoApellido, pCedula, pFechaIngreso, pTelefono, pCorreo){
+  let respuesta = '';
+  let peticion = $.ajax({
+      url: 'http://localhost:4000/api/registrar_asistente',
+      type: 'post',
+      contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+      dataType : 'json',
+      async:false,
+      data:{
+        primerNombre : pPrimerNombre,
+        primerApellido : pPrimerApellido,
+        segundoApellido : pSegundoApellido,
+        cedula : pCedula,
+        fechaIngreso : pFechaIngreso,
+        telefono : pTelefono,
+        correo : pCorreo
+      }
+    });
+  
+    peticion.done(function(response){
+     respuesta = response;
+    });
+  
+    peticion.fail(function(response){
+     
+    });
+
+    return respuesta;
+};
 
 /**
  * Descripción: Realiza una petición tipo 'get' a la base de datos para obtener un arreglo de los usuarios registrados.

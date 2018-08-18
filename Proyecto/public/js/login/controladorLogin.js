@@ -32,63 +32,44 @@ function verificarCredenciales(psUsuario, psContrasenna) {
                 bError = false;
                 localStorage.setItem('correoUsuarioActivo', listaPersonas[i]['correo']);
                 localStorage.setItem('rolUsuarioActivo', sRol);
-
-                // swal({
-                //     title: 'Inicio Correcto',
-                //     text: 'Sesión iniciada correctamente.',
-                //     type: 'success'
-                // });
-            } else {
-                // swal({
-                //     title: 'Inicio Fallido',
-                //     text: 'No se pudo iniciar sesión. La combinación de correo electrónico y contraseña no coinciden.',
-                //     type: 'warning',
-                //     confirmButtonText: 'Entendido'
-                // });
-            };
-        } else {
-            // swal({
-            //     title: 'Inicio Fallido',
-            //     text: 'No se pudo iniciar sesión. La combinación de correo electrónico y contraseña no coinciden.',
-            //     type: 'warning',
-            //     confirmButtonText: 'Entendido'
-            // });
-        };
+                localStorage.setItem('nombreUsuarioActivo', (listaPersonas[i]['primerNombre'] + ' ' + listaPersonas[i]['primerApellido'] + ' ' + listaPersonas[i]['segundoApellido']));
+            }
+        }
     };
 
-    if(bError){
+    if (bError) {
         swal({
             title: 'Inicio Fallido',
             text: 'No se pudo iniciar sesión. La combinación de correo electrónico y contraseña no coinciden.',
             type: 'warning',
             confirmButtonText: 'Entendido'
         });
-    }else{
+    } else {
         swal({
             title: 'Inicio Correcto',
             text: 'Sesión iniciada correctamente.',
             type: 'success'
         });
     }
-    
+
     switch (sRol) {
         case 'administrador':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
         case 'asistente':
-            window.location.href = 'perfil.html';
+            window.location.href = 'bitacoras.html';
             break;
         case 'profesor':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
         case 'rectoria':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
         case 'decanatura':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
         case 'asistDecanatura':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
     }
 
@@ -132,33 +113,33 @@ function autoLogin(psUsuario) {
     };
     switch (sRol) {
         case 'administrador':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
         case 'asistente':
-            window.location.href = 'perfil.html';
+            window.location.href = 'bitacoras.html';
             break;
         case 'profesor':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
         case 'rectoria':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
         case 'decanatura':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
         case 'asistDecanatura':
-            window.location.href = 'perfil.html';
+            window.location.href = 'solicitudes.html';
             break;
     }
 };
 
-function mostrarContrasenna(){
+function mostrarContrasenna() {
     let inputContrasenna = document.querySelector('#txtContrasenna');
-    if (inputContrasenna.type == 'password'){
+    if (inputContrasenna.type == 'password') {
         inputContrasenna.type = 'text';
         ojito.classList.remove('fa-eye');
         ojito.classList.add('fa-eye-slash');
-    }else{
+    } else {
         inputContrasenna.type = 'password';
         ojito.classList.add('fa-eye');
         ojito.classList.remove('fa-eye-slash');

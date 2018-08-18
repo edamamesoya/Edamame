@@ -5,13 +5,19 @@ module.exports.registrar = function (req, res) {
     let nuevaSolicitud = new solicitudModel({
 
         nombre: req.body.nombre,
+        primerApellido: req.body.primerApellido,
+        segundoApellido: req.body.segundoApellido,
+        telefono: req.body.telefono,
+        cedula: req.body.cedula,
+        correo: req.body.correo,
         cursos: req.body.cursos,
         profe: req.body.profe,
         estado: req.body.estado,
         sedes: req.body.sedes,
         grupos: req.body.grupos,
         periodos: req.body.periodos,
-
+        asistentePrevio: req.body.asistentePrevio,
+        fecha: req.body.fecha,
 
     });
 

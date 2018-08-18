@@ -405,7 +405,7 @@ function mostrarModel(){
     let bitacora = obtenerBitacoraPorId(id);
     let bEstado = bitacora['estado'];
 
-    document.querySelector('#infCurso').innerHTML = 'Curso: ' + bitacora['curso'];
+    document.querySelector('#infCurso').innerHTML = 'Bitácora: ' + bitacora['curso'];
     document.querySelector('#infAsistente').innerHTML = 'Asistente: ' + bitacora['asistente'];
     document.querySelector('#infProfesor').innerHTML = 'Profesor: ' + bitacora['profesor'];
 

@@ -112,10 +112,40 @@
                         <label for="txtGrupos" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtNombre">Nombre de estudiante postulante:</label>
+                        <label for="txtNombre">Nombre de postulante:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" required>
                         <label for="txtNombre" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtPrimerApellido">Primer apellido del postulante:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtPrimerApellido">
+                        <label for="txtPrimerApellido" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtSegundoApellido">Segundo apellido del postulante:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtSegundoApellido">
+                        <label for="txtSegundoApellido" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtTelefono">Número telefónico:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtTelefono">
+                        <label for="txtTelefono" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtCedula">Número de cédula:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtCedula">
+                        <label for="txtCedula" class="labelError">*</label>
+                    </div>
+                    <div>
+                        <label for="txtCorreo">Correo electrónico:</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtCorreo">
+                        <label for="txtCorreo" class="labelError">*</label>
                     </div>
                     <button type="button" id="btnRegistrar" class="button">Registrar</button>
                 </fieldset>
@@ -165,7 +195,7 @@
                     <div>
                         <label for="txtEditarNombre">Nombre de estudiante postulante:</label>
                         <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtNombre" required>
+                        <input type="text" id="txtEditarNombre" required>
                         <label for="txtEditarNombre" class="labelError">*</label>
                     </div>
                     <button type="button" id="btnGuardar" class="button">Registrar</button>
@@ -207,17 +237,17 @@
                         <p type="text" id="txtNombreAsistente" required></p>
                     </div>
                     <div>
-                        <label for="txtFechaIngreso">Fecha de ingreso a la institución:</label>
+                        <label for="txtFechaIngresoAsistente">Fecha de ingreso a la institución:</label>
                         <i class="fas fa-calendar-alt"></i>
-                        <input type="date" id="txtFechaIngreso" required>
-                        <label for="txtFechaIngreso" class="labelError">*</label>
+                        <input type="date" id="txtFechaIngresoAsistente" required>
+                        <label for="txtFechaIngresoAsistente" class="labelError">*</label>
                     </div>
                     <div>
                         <input id="asistentePrevio" type="checkbox" checked>
                         <label for="asistentePrevio"> Este curso ha tenido asistentes previamente</label>
 
                     </div>
-                    <button type="button" id="btnGuardar" class="button">Guardar</button>
+                    <button type="button" id="btnGuardarAsist" class="button">Guardar</button>
                 </fieldset>
             </form>
         </section>
@@ -234,7 +264,7 @@
                     <div>
                         <label for="txtSedesAdmin">Sedes:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtSedesAdmin" placeholder="Seleccione una sede de la lista" required></select>>
+                        <select id="txtSedesAdmin" placeholder="Seleccione una sede de la lista" required></select>
                     </div>
                     <div>
                         <label for="txtPeriodosAdmin">Periodos:</label>
@@ -243,6 +273,7 @@
                     </div>
                     <div>
                         <label for="txtCursosAdmin">Cursos:</label>
+                        <i class="fas fa-list"></i>
                         <select id="txtCursosAdmin" placeholder="Seleccione un curso de la lista" required></select>
                     </div>
                     <div>
@@ -268,6 +299,7 @@
 
                     </div>
                     <div>
+                            <i class="fas fa-list"></i>
                         <select id="txtEstado">
                             <option value="Sin enviar">Sin enviar</option>
                             <option value="En proceso: Asist. Decanatura">En proceso: Asist. Decanatura</option>
@@ -277,7 +309,7 @@
                             <option value="Rechazada">Rechazada</option>
                         </select>
                     </div>
-                    <button type="button" id="btnGuardar" class="button">Actualizar</button>
+                    <button type="button" id="btnGuardarAdmin" class="button">Actualizar</button>
                 </fieldset>
             </form>
         </section>
@@ -322,7 +354,6 @@
                         <th>Sede</th>
                         <th>Periodo</th>
                         <th>Editar</th>
-                        <th>Eliminar</th>
                         <th>Enviar</th>
                     </tr>
                 </thead>
@@ -388,6 +419,7 @@
     <script src="js/sedes/servicioSedes.js"></script>
     <script src="js/grupos/servicioGrupos.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>
+    <script src="js/bitacoras/servicioBitacoras.js"></script>
     <script src="js/cursos/servicioCursos.js"></script>
     <script src="js/solicitudes/servicioSolicitudes.js"></script>
     <script src="js/controladorGeneral.js"></script>
