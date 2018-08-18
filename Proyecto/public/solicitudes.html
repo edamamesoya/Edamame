@@ -78,7 +78,7 @@
                     <div>
                         <label for="txtSedes">Sedes:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtSedes" placeholder="Seleccione uns sede de la lista" required>
+                        <select id="txtSedes" placeholder="Seleccione una sede de la lista" required>
                         </select>
                         <label for="txtSedes" class="labelError">*</label>
                     </div>
@@ -127,42 +127,42 @@
                 <fieldset class="fieldset">
 
                     <div>
-                        <label for="txtSedes">Sedes:</label>
+                        <label for="txtEditarSedes">Sedes:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtSedes" placeholder="Seleccione uns sede de la lista" required>
+                        <select id="txtEditarSedes" placeholder="Seleccione una sede de la lista" required>
                         </select>
-                        <label for="txtSedes" class="labelError">*</label>
+                        <label for="txtEditarSedes" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtPeriodos">Periodos:</label>
+                        <label for="txtEditarPeriodos">Periodos:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtPeriodos" placeholder="Seleccione un periodo de la lista" required>
+                        <select id="txtEditarPeriodos" placeholder="Seleccione un periodo de la lista" required>
 
                         </select>
-                        <label for="txtPeriodos" class="labelError">*</label>
+                        <label for="txtEditarPeriodos" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtCursos">Cursos:</label>
+                        <label for="txtEditarCursos">Cursos:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtCursos" placeholder="Seleccione un curso de la lista" required>
+                        <select id="txtEditarCursos" placeholder="Seleccione un curso de la lista" required>
 
                         </select>
-                        <label for="txtCursos" class="labelError">*</label>
+                        <label for="txtEditarCursos" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtGrupos">Grupos:</label>
+                        <label for="txtEditarGrupos">Grupos:</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtGrupos" placeholder="Seleccione un Grupo de la lista" required>
+                        <select id="txtEditarGrupos" placeholder="Seleccione un Grupo de la lista" required>
                         </select>
-                        <label for="txtGrupos" class="labelError">*</label>
+                        <label for="txtEditarGrupos" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for="txtNombre">Nombre de estudiante postulante:</label>
+                        <label for="txtEditarNombre">Nombre de estudiante postulante:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" required>
-                        <label for="txtNombre" class="labelError">*</label>
+                        <label for="txtEditarNombre" class="labelError">*</label>
                     </div>
-                    <button type="button" id="btnEditar" class="button">Registrar</button>
+                    <button type="button" id="btnGuardar" class="button">Registrar</button>
                 </fieldset>
             </form>
         </section>
@@ -178,7 +178,7 @@
                     <div>
                         <label for="txtSedesAsistente">Sedes:</label>
                         <i class="fas fa-list"></i>
-                        <p id="txtSedesAsistente" placeholder="Seleccione uns sede de la lista" required></p>
+                        <p id="txtSedesAsistente" placeholder="Seleccione una sede de la lista" required></p>
                     </div>
                     <div>
                         <label for="txtPeriodosAsistente">Periodos:</label>
@@ -211,7 +211,7 @@
                         <label for="asistentePrevio"> Este curso ha tenido asistentes previamente</label>
 
                     </div>
-                    <button type="button" id="btnRegistrarAsist" class="button">Guardar</button>
+                    <button type="button" id="btnGuardar" class="button">Guardar</button>
                 </fieldset>
             </form>
         </section>
@@ -228,27 +228,33 @@
                     <div>
                         <label for="txtSedesAdmin">Sedes:</label>
                         <i class="fas fa-list"></i>
-                        <p id="txtSedesAdmin" placeholder="Seleccione uns sede de la lista" required></p>
+                        <select id="txtSedesAdmin" placeholder="Seleccione una sede de la lista" required></select>>
                     </div>
                     <div>
                         <label for="txtPeriodosAdmin">Periodos:</label>
                         <i class="fas fa-list"></i>
-                        <p id="txtPeriodosAdmin" placeholder="Seleccione un periodo de la lista" required></p>
+                        <select id="txtPeriodosAdmin" placeholder="Seleccione un periodo de la lista" required></select>
                     </div>
                     <div>
                         <label for="txtCursosAdmin">Cursos:</label>
-                        <p id="txtCursosAdmin" placeholder="Seleccione un curso de la lista" required></p>
+                        <select id="txtCursosAdmin" placeholder="Seleccione un curso de la lista" required></select>
                     </div>
                     <div>
                         <label for="txtGruposAdmin">Grupos:</label>
                         <i class="fas fa-list"></i>
-                        <p id="txtGruposAdmin" placeholder="Seleccione un Grupo de la lista" required>
-                        </p>
+                        <select id="txtGruposAdmin" placeholder="Seleccione un Grupo de la lista" required>
+                        </select>
                     </div>
                     <div>
                         <label for="txtNombreAdmin">Nombre de estudiante postulante:</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombreAdmin" required>
+                    </div>
+                    <div>
+                        <label for="txtFechaIngresoAdmin">Fecha de ingreso a la institución:</label>
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="txtFechaIngresoAdmin" required>
+                        <label for="txtFechaIngresoAdmin" class="labelError">*</label>
                     </div>
                     <div>
                         <input id="asistentePrevioAdmin" type="checkbox" checked>
@@ -265,7 +271,7 @@
                             <option value="Rechazada">Rechazada</option>
                         </select>
                     </div>
-                    <button type="button" id="btnActualizar" class="button">Actualizar</button>
+                    <button type="button" id="btnGuardar" class="button">Actualizar</button>
                 </fieldset>
             </form>
         </section>
@@ -284,8 +290,8 @@
                         <th>Sede</th>
                         <th>Periodo</th>
                         <th>Estado</th>
-                        <th id="editarProfe">Editar</th>
-                        <th id="eliminarProfe">Eliminar</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                         <th>Enviar</th>
                     </tr>
                 </thead>
@@ -335,7 +341,7 @@
                         <th>Sede</th>
                         <th>Periodo</th>
                         <th>Rechazar</th>
-                        <th>Eliminar</th>
+                        <th>Aceptar</th>
                     </tr>
                 </thead>
                 <tbody>

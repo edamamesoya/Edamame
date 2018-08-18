@@ -76,7 +76,7 @@ function obtenerSolicitudPorId(pId){
       return usuario;
 };
 
-function actualizarSolicitud(pId, pSede, pPeriodo, pCurso, pGrupo, pNombre, pEstado, pProfesor){
+function actualizarSolicitud(pId, pSede, pPeriodo, pCurso, pGrupo, pNombre, pEstado, pProfesor, pAsistentePrevio, pFecha){
     let respuesta = '';
     let peticion = $.ajax({
         url : 'http://localhost:4000/api/modificar_solicitud',
@@ -92,7 +92,9 @@ function actualizarSolicitud(pId, pSede, pPeriodo, pCurso, pGrupo, pNombre, pEst
             grupos: pGrupo,
             nombre: pNombre,
             estado: pEstado,
-            profe: pProfesor
+            profe: pProfesor,
+            asistentePrevio: pAsistentePrevio,
+            fecha: pFecha,
         }
       });
     

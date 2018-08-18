@@ -10,6 +10,8 @@ let solicitudSchema = new mongoose.Schema({
     nombre : {type : String, required : true},
     estado : {type : String, required : true},
     profe : {type : String, required : true},
+    asistentePrevio : {type : Boolean, required : false},
+    fecha : {type : Date, required : false},
 });
 
 module.exports = mongoose.model('Solicitud', solicitudSchema);

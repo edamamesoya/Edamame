@@ -23,14 +23,14 @@ let selectCursos = document.querySelector('#txtCursos');
 const selectEstado = document.querySelector('#txtEstado');
 let botonRegistrar = document.querySelector('#btnRegistrar');
 
-
 const botonModificar = document.querySelector('#btnGuardar');
-const inputFecha = document.querySelector('#txtFechaIngreso');
 
 botonRegistrar.addEventListener('click', obtenerDatos);
+botonModificar.addEventListener('click', obtenerDatosAsistenteDecanatura);
 
 let regexNombre = /^[a-zA-ZÑñáéíóúÁÉÍÓÚ ]+$/;
 
+//registro por el profesor
 function obtenerDatos() {
     let sede = selectSedes.value;
     let periodo = selectPeriodos.value;
@@ -70,6 +70,48 @@ function obtenerDatos() {
     }
 };
 
+//modificacion por el asistente de decanatura
+function obtenerDatosAsistenteDecanatura() {
+    let sede = selectEditarSedes.value;
+    let periodo = selectEditarPeriodos.value;
+    let grupo = selectEditarGrupos.value;
+    let curso = selectEditarCursos.value;
+    let sNombre = inputEditarNombre.value;
+    let fecha = inputFecha.value;
+    let asistentePrevio = chkAsistentePrevio.value;
+    let estado = 'Sin enviar';
+    let bError = false;
+    bError = validar();
+    if (bError == true) {
+        swal({
+            title: 'Registro incorrecto',
+            text: 'No se pudo registrar la solicitud, revise los campos en rojo',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        let respuesta = actualizarSolicitud(sede, periodo, curso, grupo, sNombre, estado, sProfe, asistentePrevio, fecha);
+        if (respuesta.success == true) {
+            swal({
+                title: 'Registro Correcto',
+                text: respuesta.msg,
+                type: 'success',
+                confirmButtonText: 'Entendido'
+            });
+            limpiarFormulario();
+            mostrarListaSolicitudes();
+            document.getElementById("buscar").click();
+        } else {
+            swal({
+                title: 'Registro incorrecto',
+                text: respuesta.msg,
+                type: 'warning',
+                confirmButtonText: 'Entendido'
+            });
+        }
+    }
+};
+
 function enviar() {
     let id = this.dataset.id;
     let solicitud = obtenerSolicitudPorId(id);
@@ -79,53 +121,87 @@ function enviar() {
     let curso = solicitud['cursos'];
     let sNombre = solicitud['nombre'];
     let profe = solicitud['profe'];
+    let fecha = solicitud['fecha'];
+    let asistentePrevio = solicitud['asistentePrevio'];
 
     switch (sRol) {
         case 'profesor':
 
-        let estado = 'En proceso: Asist. Decanatura';
-    
-        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
-        if (respuesta.success == true) {
+            let estado = 'En proceso: Asist. Decanatura';
+
             swal({
-                title: '¡Enviada!',
-                text: respuesta.msg,
-                type: 'success',
-                confirmButtonText: 'Entendido'
-            });
-            listaSolicitudes = obtenerSolicitudes();
-            location.reload();
-        } else {
-            swal({
-                title: 'Envío incorrecto.',
-                text: respuesta.msg,
+                title: '¿Seguro que desea enviar la solicitud?',
+                text: "Esta acción no se puede revertir",
                 type: 'warning',
-                confirmButtonText: 'Entendido'
-            });
-        }
-    
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Enviar'
+            }).then((result) => {
+                if (result.value) {
+                    actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
+                    listaSolicitudes = obtenerSolicitudes();
+                    mostrarListaSolicitudes();
+                    swal(
+                        'Enviada!',
+                        'La solicitud ha sido enviada.',
+                        'success'
+                    )
+                    location.reload();
+                }
+            })
+
+
             break;
         case 'asistDecanatura':
-        let estado = 'En Proceso: Decanatura';
-    
-        let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
-        if (respuesta.success == true) {
-            swal({
-                title: '¡Enviada!',
-                text: respuesta.msg,
-                type: 'success',
-                confirmButtonText: 'Entendido'
-            });
-            listaSolicitudes = obtenerSolicitudes();
-            location.reload();
-        } else {
-            swal({
-                title: 'Envío incorrecto.',
-                text: respuesta.msg,
-                type: 'warning',
-                confirmButtonText: 'Entendido'
-            });
-        }
+            if (solicitud['asistentePrevio'] == true) {
+                let estado = 'En proceso: Rectoría';
+
+                swal({
+                    title: '¿Seguro que desea enviar la solicitud?',
+                    text: "Esta acción no se puede revertir",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Enviar'
+                }).then((result) => {
+                    if (result.value) {
+                        actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
+                        mostrarListaSolicitudes();
+                        swal(
+                            'Enviada!',
+                            'La solicitud ha sido enviada.',
+                            'success'
+                        )
+                        location.reload();
+                    }
+                })
+            } else {
+                let estado = 'En proceso: Decanatura';
+
+                swal({
+                    title: '¿Seguro que desea enviar la solicitud?',
+                    text: "Esta acción no se puede revertir",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Enviar'
+                }).then((result) => {
+                    if (result.value) {
+                        actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
+                        mostrarListaSolicitudes();
+                        swal(
+                            'Enviada!',
+                            'La solicitud ha sido enviada.',
+                            'success'
+                        )
+                        location.reload();
+                    }
+                })
+            }
+
             break;
     }
 
@@ -401,7 +477,7 @@ function mostrarListaSolicitudes() {
             tbodyDecanatura.innerHTML = '';
             for (let i = 0; i < listaSolicitudes.length; i++) {
                 let fila = tbodyDecanatura.insertRow();
-                if (listaSolicitudes[i]['estado'] == 'En Proceso: Decanatura') {
+                if (listaSolicitudes[i]['estado'] == 'En proceso: Decanatura') {
                     let celdaNombre = fila.insertCell();
                     let celdaCurso = fila.insertCell();
                     let celdaGrupo = fila.insertCell();
@@ -553,7 +629,7 @@ function eliminar() {
     let id = this.dataset.id;
 
     swal({
-        title: '¿Seguro que desea eliminar el solicitud?',
+        title: '¿Seguro que desea eliminar la solicitud?',
         text: "Esta acción no se puede revertir",
         type: 'warning',
         showCancelButton: true,
@@ -563,7 +639,6 @@ function eliminar() {
     }).then((result) => {
         if (result.value) {
             eliminarSolicitud(id);
-            listaSolicitudes = obtenerSolicitudes();
             mostrarListaSolicitudes();
             swal(
                 'Eliminada!',
@@ -577,16 +652,72 @@ function eliminar() {
 
 function editar() {
     let id = this.dataset.id;
-
-    document.getElementById("editar").click();
     let solicitud = obtenerSolicitudPorId(id);
 
-    inputEditarCodigo.value = solicitud['codigo'];
-    inputEditarNombre.value = solicitud['nombre'];
-    inputEditarCupo.value = solicitud['cupo'];
-    selectEditarSede.value = solicitud['sede'];
-    chkEstado.checked = solicitud['estado'];
-    inputId.value = solicitud['_id'];
+    switch (sRol) {
+        case 'profesor':
+
+            selectEditarSede = document.querySelector('#txtEditarSedes');
+            selectEditarCurso = document.querySelector('#txtEditarCursos');
+            selectEditarPeriodo = document.querySelector('#txtEditarPeriodos');
+            inputEditarNombre = document.querySelector('#txtEditarNombre');
+            selectEditarGrupo = document.querySelector('#txtEditarGrupos');
+
+            document.getElementById("editar").click();
+
+            inputEditarNombre.value = solicitud['nombre'];
+            selectEditarSede.value = solicitud['sedes'];
+            selectEditarCurso.value = solicitud['cursos'];
+            selectEditarGrupo.value = solicitud['grupos'];
+            selectEditarPeriodo.value = solicitud['periodos'];
+            inputId.value = solicitud['_id'];
+
+            break;
+
+        case 'asistDecanatura':
+
+            selectEditarSede = document.querySelector('#txtSedesAsistente');
+            selectEditarCurso = document.querySelector('#txtCursosAsistente');
+            selectEditarPeriodo = document.querySelector('#txtPeriodosAsistente');
+            inputEditarNombre = document.querySelector('#txtNombreAsistente');
+            selectEditarGrupo = document.querySelector('#txtGruposAsistente');
+            chkAsistentePrevio = document.querySelector('#asistentePrevio');
+            inputFecha = document.querySelector('#txtFechaIngreso');
+
+            document.getElementById("editarAsistDecanatura").click;
+
+            selectEditarCurso.innerHTML = solicitud['cursos'];
+            inputEditarNombre.innerHTML = solicitud['nombre']
+            selectEditarSede.innerHTML = solicitud['sedes'];
+            selectEditarGrupo.innerHTML = solicitud['grupos'];
+            selectEditarPeriodo.innerHTML = solicitud['periodos'];
+            chkAsistentePrevio.value = solicitud['asistentePrevio'];
+            inputFecha.value = solicitud['fecha'];
+            inputId.value = solicitud['_id'];
+
+            break;
+        case 'administrador':
+
+            let selectEditarSede = document.querySelector('#txtSedesAdmin');
+            let inputEditarNombre = document.querySelector('#txtNombreAdmin');
+            let selectEditarCurso = document.querySelector('#txtCursosAdmin');
+            let selectEditarGrupo = document.querySelector('#txtGruposAdmin');
+            let selectEditarPeriodo = document.querySelector('#txtPeriodosAdmin');
+            let selectEstado = document.querySelector('#txtEstado');
+            let chkAsistentePrevio = document.querySelector('#asistentePrevioAdmin');
+            let inputFecha = document.querySelector('#txtFechaIngreso');
+
+            document.getElementById("editarAdmin").click;
+
+            selectEditarCurso.value = solicitud['cursos'];
+            selectEstado.value = solicitud['estado'];
+            chkAsistentePrevio.value = solicitud['asistentePrevio'];
+            inputFecha.value = solicitud['fecha'];
+            selectEditarSede.value = solicitud['sedes'];
+            selectEditarGrupo.value = solicitud['grupos'];
+            inputEditarNombre.value = solicitud['nombre'];
+            selectEditarPeriodo.value = solicitud['periodos'];
+    }
 };
 
 function aprobar() {
@@ -602,25 +733,27 @@ function aprobar() {
     let profe = solicitud['profe'];
     let estado = 'Aprobada';
 
-    let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
-    if (respuesta.success == true) {
-        swal({
-            title: '¡Aprobada!',
-            text: respuesta.msg,
-            type: 'success',
-            confirmButtonText: 'Entendido'
-        });
-        listaSolicitudes = obtenerSolicitudes();
-        location.reload();
-        crearUsuario();
-    } else {
-        swal({
-            title: 'Aprobación incorrecta.',
-            text: respuesta.msg,
-            type: 'warning',
-            confirmButtonText: 'Entendido'
-        });
-    }
+    swal({
+        title: '¿Seguro que desea aprobar la solicitud?',
+        text: "Esta acción no se puede revertir",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aprobar'
+    }).then((result) => {
+        if (result.value) {
+            actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
+            listaSolicitudes = obtenerSolicitudes();
+            mostrarListaSolicitudes();
+            swal(
+                'Aprobada!',
+                'La solicitud ha sido aprobada.',
+                'success'
+            )
+            location.reload();
+        }
+    })
 }
 
 function rechazar() {
@@ -636,24 +769,27 @@ function rechazar() {
     let profe = solicitud['profe'];
     let estado = 'Rechazada';
 
-    let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
-    if (respuesta.success == true) {
-        swal({
-            title: 'Rechazada',
-            text: respuesta.msg,
-            type: 'success',
-            confirmButtonText: 'Entendido'
-        });
-        listaSolicitudes = obtenerSolicitudes();
-        location.reload();
-    } else {
-        swal({
-            title: 'Rechazo incorrecto.',
-            text: respuesta.msg,
-            type: 'warning',
-            confirmButtonText: 'Entendido'
-        });
-    }
+    swal({
+        title: '¿Seguro que desea rechazar la solicitud?',
+        text: "Esta acción no se puede revertir",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Rechazar'
+    }).then((result) => {
+        if (result.value) {
+            actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe, asistentePrevio, fecha);
+            listaSolicitudes = obtenerSolicitudes();
+            mostrarListaSolicitudes();
+            swal(
+                'Rechazada!',
+                'La solicitud ha sido rechazada.',
+                'success'
+            )
+            location.reload();
+        }
+    })
 }
 
 function validarAsistenteDecanatura() {
@@ -786,7 +922,3 @@ function validarAdmin() {
 
     return bError;
 };
-
-function crearUsuario() {
-
-}
