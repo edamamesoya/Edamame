@@ -13,7 +13,7 @@ module.exports.registrar = function(req, res) {
 
     nuevaCarrera.save(function(error){
         if(error){
-            res.json({success : false, msg : 'No se pudo registrar la carrera ' + error});
+            res.json({success : false, msg : error});
         }else{
             res.json({success : true, msg : 'La carrera se registró con éxito'});
         }
@@ -80,4 +80,43 @@ module.exports.modificar_carrera = function (req, res) {
                 res.json({ success: true, msg: 'La carrera se ha actualizado correctamente. '});
             }
         });
+};
+
+module.exports.desenlazar_curso = function(req, res){  
+    carreraModel.update(
+        {_id: req.body._id}, 
+        {$pull: 
+            {'cursosAsignados':
+                {
+                    _id: req.body._idCurso
+                }
+            }
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo desenlazar el curso de esta carrera, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'El curso se desasignó con éxito'});
+            }
+        }
+    )
+};
+
+module.exports.modificar_enlace_curso = function(req, res){  
+    carreraModel.findOneAndUpdate(
+        {_id: req.body._id, "cursosAsignados._id": req.body._idCurso}, 
+        {
+            "$set": {
+                'cursosAsignados.$.codigoCurso': req.body.codigoCurso,
+                'cursosAsignados.$.nombreCurso': req.body.nombreCurso
+            }
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo actualizar el curso de esta carrera, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'El curso se actualizó con éxito'});
+            }
+        }
+    )
 };

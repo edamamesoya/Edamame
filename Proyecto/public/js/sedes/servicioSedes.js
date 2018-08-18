@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarSede (pNombre, pProvincia, pCanton, pDistrito, pLongitudSede, pLatitudSede) {
+function registrarSede (pNombre, pProvincia, pCanton, pDistrito, pTipo, pLongitud, pLatitud) {
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_sede',
@@ -13,8 +13,9 @@ function registrarSede (pNombre, pProvincia, pCanton, pDistrito, pLongitudSede, 
             provincia: pProvincia,
             canton: pCanton,
             distrito: pDistrito,
-            longitud: pLongitudSede,
-            latitud: pLatitudSede
+            tipo: pTipo,
+            longitudSede: pLongitud,
+            latitudSede: pLatitud
         }
     });
 
@@ -49,4 +50,81 @@ function obtenerSedes() {
     });
 
     return listaSedes;
+};
+
+function obtenerSedePorId(pId){
+    let usuario = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/buscar_sede_id',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pId
+        }
+      });
+    
+      peticion.done(function(response){
+        usuario = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return usuario;
+};
+
+function actualizarSede(pId, pNombre, pProvincia, pCanton, pDistrito, pEstado){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/modificar_sede',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: pId,
+            nombre : pNombre,
+            provincia : pProvincia,
+            canton : pCanton,
+            distrito :  pDistrito,
+            estado : pEstado
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+};
+
+function eliminarSede(pId){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/eliminar_sede',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: pId
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
 };

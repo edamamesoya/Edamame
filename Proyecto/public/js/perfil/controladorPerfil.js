@@ -8,25 +8,12 @@ botonSalir.addEventListener('click', salir);
 let sUsuario = localStorage.getItem('correoUsuarioActivo');
 let sRol = localStorage.getItem('rolUsuarioActivo');
 let listaPersonas = obtenerUsuarios();
-const sNombre = document.querySelector('#txtNombre');
-const sCedula = document.querySelector('#txtCedula');
-const dFecha = document.querySelector('#txtFecha');
-const sTelefono = document.querySelector('#txtTelefono');
-const sDireccion = document.querySelector('#txtDireccion');
-const pFoto = document.querySelector('txtFoto');
-
-const sEditarPrimerNombre = document.querySelector('#txtEditarNombre');
-const seditarCedula = document.querySelector('#txtEditarCedula');
-const dEditarFecha = document.querySelector('#txtEditarFecha');
-const inputEditarTelefono = document.querySelector('#txtEditarTelefono');
-const inputEditarDireccion = document.querySelector('#txtEditarDireccion');
-
-const botonModificar = document.querySelector('#btnEditar');
-const botonRegistrar = document.querySelector('#btnRegistrar');
-
-
-botonRegistrar.addEventListener('click', obtenerDatos);
-botonModificar.addEventListener('click', modificarDatos);
+let sNombre = document.querySelector('#txtNombre');
+let sCedula = document.querySelector('#txtCedula');
+let dFecha = document.querySelector('#txtFecha');
+let sTelefono = document.querySelector('#txtTelefono');
+let sDireccion = document.querySelector('#txtDireccion');
+let pFoto = document.querySelector('txtFoto');
 
 verificarAcceso(sUsuario);
 
@@ -138,38 +125,4 @@ function permisosRol() {
             document.getElementById('menuConfiguracion').remove();
             break;
     }
-};
-
-function limpiarFormulario(){
-    inputEditarDireccion.value = '';
-    inputEditarTelefono.value = '';
-};
-
-function editar(){
-    let id = this.dataset.id;
-
-    let inputEditarPrimerNombre, inputEditarSegundoNombre, inputEditarPrimerApellido, inputEditarCedula, inputEditarProvincia, inputEditarCanton, inputEditarDistrito, inputEditarFechaIngreso;
-    document.getElementById("modificar").click();
-    let usuario = obtenerUsuarioPorId(id);
-
-    inputEditarPrimerNombre.value = usuario['primerNombre'];
-    inputEditarSegundoNombre.value = usuario['segundoNombre'];
-    inputEditarPrimerApellido.value = usuario['primerApellido'];
-    inputEditarSegundoApellido.value = usuario['segundoApellido'];
-    inputEditarCedula.value = usuario['cedula'];
-    inputEditarProvincia.value = usuario['provincia'];
-    inputEditarCanton.value = usuario['canton'];
-    inputEditarDistrito.value = usuario['distrito'];
-    inputEditarDireccion.value = usuario['direccion'];
-    inputEditarFechaIngreso.valueAsDate = new Date(usuario['fechaIngreso']);
-    inputEditarTelefono.value = usuario['telefono'];
-    inputEditarCorreo.value = usuario['correo'];
-    inputEditarRol.value = usuario['rol'];
-    inputEditarPrimerNombreContacto.value = usuario['primerNombreContacto'];
-    inputEditarSegundoNombreContacto.value = usuario['segundoNombreContacto'];
-    inputEditarPrimerApellidoContacto.value = usuario['primerApellidoContacto'];
-    inputEditarSegundoApellidoContacto.value = usuario['segundoApellidoContacto'];
-    inputEditarTelefonoContacto.value = usuario['telefonoContacto'];
-    chkEstado.checked = usuario['estado'];
-    inputId.value = usuario['_id'];
 };

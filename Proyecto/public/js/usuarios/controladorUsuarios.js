@@ -275,7 +275,7 @@ function validarRegistro(){
         inputCedula.classList.remove('errorInput');
     }
     // Validación del input para dirección
-    if(sDireccion == 0 || (regexDireccion.test(sDireccion) == false) ){
+    if(regexDireccion.test(sDireccion) == false){
         inputDireccion.classList.add('errorInput');
         bError = true;
     }else{
@@ -358,7 +358,13 @@ function validarRegistro(){
     }else{
         inputCorreo.classList.remove('errorInput');
     }
-    //Rol
+    //Validación del rol
+    if (sRol == ''){
+        inputRol.classList.add('errorInput');
+        bError = true;
+    }else{
+        inputRol.classList.remove('errorInput');
+    }
     return bError;
 }
 
@@ -603,6 +609,13 @@ function limpiarFormulario(){
 function mostrarProvincias(){
     let selectProvincias = document.getElementById('txtProvincia');
     selectProvincias.innerHTML = '';
+
+    let placeholder = document.createElement('option');
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.text = 'Seleccione una opción';
+    placeholder.value = '';
+    selectProvincias.add(placeholder);
 
     for(let i=0; i < sListaProvincias.length; i++){
         let sProvincia = sListaProvincias[i]['nombre'];

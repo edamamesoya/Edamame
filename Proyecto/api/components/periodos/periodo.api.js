@@ -46,35 +46,3 @@ module.exports.buscar_periodo = function(req, res){
         }
     );
 };
-
-module.exports.eliminar_periodo = function (req, res) {
-    periodoModel.findByIdAndDelete(req.body._id,
-        function (err, periodo) {
-            if (err) {
-                res.json({ success: false, msg: 'El periodo no se ha podido eliminar. ' + handleError(err) });
-
-            } else {
-                res.json({ success: true, msg: 'El periodo se ha eliminado correctamente. ' + res });
-            }
-        });
-};
-
-module.exports.buscar_periodo_id = function (req, res) {
-    periodoModel.findById({ _id: req.body._id }).then(
-        function (periodo) {
-            res.send(periodo);
-        }
-    );
-};
-
-module.exports.modificar_periodo = function (req, res) {
-    periodoModel.findByIdAndUpdate(req.body._id, { $set: req.body },
-        function (err, periodo) {
-            if (err) {
-                res.json({ success: false, msg: 'El periodo no se ha podido modificar. ' + handleError(err) });
-
-            } else {
-                res.json({ success: true, msg: 'El periodo se ha actualizado correctamente. '});
-            }
-        });
-};

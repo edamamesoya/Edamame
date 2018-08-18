@@ -8,6 +8,7 @@
     <!--Páginas de estilo css-->
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/estilosGenerales.css">
+    <link rel="stylesheet" href="css/swalerts.css">
     <link rel="stylesheet" href="css/funciones.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
@@ -48,7 +49,7 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
@@ -74,22 +75,23 @@
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
                     <h3>Información de carrera</h3>
-                    <div>
+                    <div class="tooltip">
                         <label for="txtCodigo">Código *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtCodigo" placeholder="Ej, BISOFT02" required>
-                        <!-- <label for="txtCodigo" class="labelError">*</label> -->
+                        <span class="tooltiptext invisible" id="tooltipCodigo">1. El campo no puede estar vacío</span>
                     </div>
-                    <div>
+                    <div class="tooltip">
                         <label for="txtNombre">Nombre *</label>
                         <i class="fas fa-pencil-alt"></i>
                         <input type="text" id="txtNombre" placeholder="Ej, Ingeniería en desarrollo del software" required>
-                        <!-- <label for="txtNombre" class="labelError">*</label> -->
+                        <span class="tooltiptext invisible" id="tooltipNombre">1. El campo no puede estar vacío <br> 2. Únicamente letras y espacios</span>
                     </div>
                     <div>
                         <label for="txtGrado">Grado *</label>
                         <i class="fas fa-list"></i>
                         <select id="txtGrado" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
                             <option value="Maestría">Maestría</option>
                             <option value="Licenciatura">Licenciatura</option>
                             <option value="Postgrado">Postgrado</option>
@@ -172,16 +174,42 @@
                         <button type="button" id="btnAsignarCursos">Cursos sin asignar</button>
                     </div>
 
-                    <div id="pestannaAsignados" class="invisible">
+                    <div id="pestannaAsignados" class="invisible enlazar">
+                        <table id="tblCursosAsignados" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                            <thead>
+                                <tr>
+                                    <th width="25%">Seleccionar</th>
+                                    <th width="50%">Curso</th>
+                                    <th width="25%">Requisitos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            
+                            </tbody>
+                        </table>
+                        <h3 id="mensajeAsignados">No existen cursos asignados</h3>
                         <div id="lstCursosAsignados">
                         </div>
+                        <button type="button" id="btnDesasignar" class="button buttonLargo">Desasignar</button>
                     </div>
 
-                    <div id="pestannaAsignar" class="invisible">
+                    <div id="pestannaAsignar" class="invisible enlazar">
+                        <table id="tblCursosSinAsignar" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
+                            <thead>
+                                <tr>
+                                    <th width="25%">Seleccionar</th>
+                                    <th width="50%">Curso</th>
+                                    <th width="25%">Requisitos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            
+                            </tbody>
+                        </table>
+                        <h3 id="mensajePorAsignar">No existen cursos por asignar</h3>
                         <div id="lstCursosPorAsignar">
                         </div>
-
-                        <button type="button" id="btnAsignar" class="button">Asignar</button>
+                        <button type="button" id="btnAsignar" class="button buttonLargo">Asignar</button>
                     </div>
                 </fieldset>
             </form>
@@ -244,6 +272,7 @@
 
     <!--Scripts-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/carreras/servicioCarreras.js"></script>
     <script src="js/usuarios/servicioUsuarios.js"></script>

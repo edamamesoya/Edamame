@@ -26,11 +26,11 @@
                 <i class="fas fa-user-tie fa-5x"></i>
                 <!-- <img src="" alt="img usuario"> -->
                 <button type="button" class="fas fa-sign-out-alt" id="bLogOut">
-                </a>
-                <label for="bLogOut">Salir</label>
+                    </a>
+                    <label for="bLogOut">Salir</label>
             </div>
         </div>
-        
+
         <!--Menú general (arriba)-->
         <div class="menuGeneral">
             <!-- <a href="index.html" class="w3-bar-item w3-button" id="menuInicio">Inicio</a> -->
@@ -48,7 +48,7 @@
                     <a href="laboratorios.html" class="w3-bar-item w3-button">Laboratorios</a>
                 </div>
             </div>
-            <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
+            <a href="bitacoras.html" class="w3-bar-item w3-button" id="menuBitacoras">Bitácoras</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuReportes">Reportes</a>
             <a href="mantenimiento.html" class="w3-bar-item w3-button" id="menuConfiguracion">Configuración</a>
         </div>
@@ -69,81 +69,58 @@
             </p>
             <form action="" id="formRegistro">
                 <fieldset class="fieldset">
+                    <h3>Información de grupo</h3>
                     <div>
-                        <label for="txtCurso">Cursos:</label>
+                        <label for="txtCurso">Curso *</label>
                         <i class="fas fa-list"></i>
                         <select id="txtCurso" required>
                     
                         </select>
-                        <label for="txtCurso" class="labelError">*</label>
                     </div>
                     <div>
-                        <label for "txtNumeroGru">Número del grupo</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="number" id="txtNumeroGrupo" min="0" required placeholder="Ej, 30">
-                    </div>
-                    <div>
-                        <label for="txtLaboratorio">Laboratorios:</label>
+                        <label for="txtTipo">Tipo *</label>
                         <i class="fas fa-list"></i>
-                        <select id="txtLaboratorio" required>
+                        <select id="txtTipo" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Virtual">Virtual</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="txtNumero">Número *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="text" id="txtNumero" disabled placeholder="Seleccione un curso" required>
+                    </div>
+                    <div>
+                        <label for="txtCupo">Cupo *</label>
+                        <i class="fas fa-pencil-alt"></i>
+                        <input type="number" id="txtCupo" min="0" placeholder="Ej, 20" required>
+                    </div>
+                    <div>
+                        <label for="txtProfesor">Profesor *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtProfesor" required>
                     
                         </select>
-                        <label for="txtLaboratorio" class="labelError">*</label>
                     </div>
-                    <div>
-                        <label for="txtNombrePro">Nombre de profesor</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="text" id="txtNombrePro" required placeholder="Ej, Juan Manuel">
+                    <div id="divLaboratorio" class="invisible">
+                        <label for="txtLaboratorio">Laboratorio *</label>
+                        <i class="fas fa-list"></i>
+                        <select id="txtLaboratorio">
+                    
+                        </select>
                     </div>
-                    <div>
-                        <label for="txtNumeroEst">Número de estudiantes matriculados</label>
-                        <i class="fas fa-pencil-alt"></i>
-                        <input type="number" id="txtNumeroEst" min="1" required placeholder="Ej, 50">
-                    </div>
-                    <div>
-                        <div id="lstHorarios">   
-                            <h2>Registro de horario</h2> 
-                            <p>Seleccione el día o días de la semana en las que se imparte el curso</p>
-
-                            <input type="checkbox" value="Domingo" id="txtHorarioGrupoDomingo" class="checkbox">
-                            <label for="txtHorarioGrupoDomingo" class="label">Domingo</label>
-
-                            <input type="checkbox" value="Lunes" id="txtHorarioGrupoLunes" class="checkbox">
-                            <label for="txtHorarioGrupoLunes">Lunes</label>
-
-                            <input type="checkbox" value="Martes" id="txtHorarioGrupoMartes" class="checkbox">
-                            <label for="txtHorarioGrupoMartes">Martes</label>
-
-                            <input type="checkbox" value="Miercoles" id="txtHorarioGrupoMiercoles" class="checkbox">
-                            <label for="txtHorarioGrupoMiercoles">Miércoles</label>
-
-                            <input type="checkbox" value="Jueves" id="txtHorarioGrupoJueves" class="checkbox">
-                            <label for="txtHorarioGrupoJueves">Jueves</label>
-
-                            <input type="checkbox" value="Viernes" id="txtHorarioGrupoViernes" class="checkbox">
-                            <label for="txtHorarioGrupoViernes">Viernes</label>
-
-                            <input type="checkbox" value="Sabado" id="txtHorarioGrupoSabado" class="checkbox">
-                            <label for="txtHorarioGrupoSabado">Sábado</label>
-
-                            <input type="checkbox" value="Virtual" id="txtHorarioGrupoVirtual" class="checkbox">
-                            <label for="txtHorarioGrupoVirtual">Virtual</label>
-                        </div>
-                        <div>
-                            <input type="time" id="txtTiempoGrupoEntrada" value=""> Hora de inicio
-                            <input type="time" id="txtTiempoGrupoSalida" value=""> Hora de salida
-                        </div>
-                    </div>
-                    <button type="button" id="btnRegistrar" class="button">Registrar</button>
+                    <label for="" id="labelRequerido">*: campos requeridos</label>
                 </fieldset>
+                <button type="button" class="button" id="btnRegistrar">Registrar</button>
             </form>
         </section>
-        
+
         <!--listado de los grupos-->
         <section id="listarGrupo" class="tabcontent">
             <h2>Lista de grupos</h2>
-            <p>Despliegue total de registros para la sección "Grupos". Para búsquedas específicas, ingrese el nombre completo o
-                parcial del nombre del profesor en "Filtrar".
+            <p>Despliegue total de registros para la sección "Grupos". Para búsquedas específicas, ingrese el nombre completo
+                o parcial del nombre del profesor en "Filtrar".
             </p>
 
             <div>
@@ -154,16 +131,21 @@
             <table id="tblBusqueda" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-centered">
                 <thead>
                     <tr>
-                        <th>Número del Grupo</th>
-                        <th>Nombre del Profesor</th>
-                        <th>Número de estudiantes matriculados</th>
-                        <th>Hora de entrada</th>
-                        <th>Hora de Salida</th>
+                        <th width="20%">Curso</th>
+                        <th width="5%">Grupo</th>
+                        <th width="20%">Profesor(es)</th>
+                        <th width="5%">Tipo</th>
+                        <th width="15%">Laboratorio</th>
+                        <th width="5%">Cupo</th>
+                        <th width="5%">Editar</th>
+                        <th width="5%">Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
+
                 </tbody>
             </table>
+            <h3 id="mensajeLista">No existen grupos registrados</h3>
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>

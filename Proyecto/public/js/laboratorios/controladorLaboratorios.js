@@ -304,7 +304,7 @@ function eliminar() {
             mostrarBusquedaLaboratorios();
             mostrarListaLaboratorios();
             swal(
-                'Eliminado!',
+                'Eliminada!',
                 'El laboratorio ha sido eliminado.',
                 'success'
             )

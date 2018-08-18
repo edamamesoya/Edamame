@@ -3,19 +3,13 @@ const grupoModel = require('./grupo.model');
 //registrar grupos
 module.exports.registrar = function (req, res) {
     let nuevoGrupo = new grupoModel({
-        numeroGrupo: req.body.numeroGrupo,
-        nombreProfesor: req.body.nombreProfesor,
-        numeroEstudiantes: req.body.numeroEstudiantes,
-        horarioDomingo: req.body.horarioDomingo,
-        horarioLunes: req.body.horarioLunes,
-        horarioMartes: req.body.horarioMartes,
-        horarioMiercoles: req.body.horarioMiercoles,
-        horarioJueves: req.body.horarioJueves,
-        horarioViernes: req.body.horarioViernes,
-        horarioSabado: req.body.horarioSabado,
-        horarioVirtual: req.body.horarioVirtual,
-        tiempoEntrada: req.body.tiempoEntrada,
-        tiempoSalida: req.body.tiempoSalida
+        numero: req.body.numero,
+        curso : req.body.curso,
+        cupo : req.body.cupo,
+        profesores : req.body.profesores,
+        laboratorio : req.body.laboratorio,
+        tipo : req.body.tipo,
+        estado : 'true'
     });
 
     nuevoGrupo.save(function (error) {
@@ -28,7 +22,7 @@ module.exports.registrar = function (req, res) {
 };
 //listar grupos
 module.exports.listar_todos = function (req, res) {
-    grupoModel.find().sort({ numeroGrupo: 'asc' }).then(
+    grupoModel.find().sort({ curso: 'asc', numero: 'asc' }).then(
         function (grupos) {
             res.send(grupos);
         }
@@ -59,7 +53,6 @@ module.exports.agregar_curso = function(req, res){
         }
     )
 };
-
 //agregar laboratorio al grupo
 module.exports.agregar_laboratorio = function(req, res){
     
@@ -88,6 +81,25 @@ module.exports.buscar_grupo = function (req, res) {
     grupoModel.find({ "nombreProfesor": { "$regex": snombreProfesor, "$options": "i" } }).then(
         function (grupos) {
             res.send(grupos);
+        }
+    );
+};
+module.exports.eliminar_grupo = function (req, res) {
+    grupoModel.findByIdAndDelete(req.body._id,
+        function (err, grupo) {
+            if (err) {
+                res.json({ success: false, msg: 'El Grupo no se ha podido eliminar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'El Grupo se ha eliminado correctamente. ' + res });
+            }
+        });
+};
+
+module.exports.buscar_grupo_id = function (req, res) {
+    grupoModel.findById({ _id: req.body._id }).then(
+        function (grupo) {
+            res.send(grupo);
         }
     );
 };

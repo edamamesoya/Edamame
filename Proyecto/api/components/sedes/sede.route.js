@@ -13,4 +13,18 @@ router.route('/listar_sedes')
         sedeApi.listar_todos(req, res);
     });
 
+router.route('/buscar_sede_id')
+    .post(function (req, res) {
+        sedeApi.buscar_sede_id(req, res);
+    });
+
+router.route('/modificar_sede')
+    .post(function (req, res) {
+        sedeApi.modificar_sede(req, res);
+    });
+
+router.route('/eliminar_sede')
+    .post(function (req, res) {
+        sedeApi.eliminar_sede(req, res);
+    });
 module.exports = router;

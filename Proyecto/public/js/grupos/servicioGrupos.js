@@ -1,6 +1,6 @@
 'use strict';
 
-function registrarGrupo(id, idLab, pNumeroGrupo, pNombreProfesor, pNumeroEstudiantes, pHorarioDomingo, pHorarioLunes, pHorarioMartes, pHorarioMiercoles, pHorarioJueves, pHorarioViernes, pHorarioSabado, pHorarioVirtual, pTiempoEntrada, pTiempoSalida) {
+function registrarGrupo(pNumero, pCurso, pCupo, pProfesores, pTipo, pLaboratorio) {
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_grupo',
@@ -9,21 +9,12 @@ function registrarGrupo(id, idLab, pNumeroGrupo, pNombreProfesor, pNumeroEstudia
         dataType: 'json',
         async: false,
         data: {
-            _id: id,
-            _idLab: idLab,
-            numeroGrupo: pNumeroGrupo,
-            nombreProfesor: pNombreProfesor,
-            numeroEstudiantes: pNumeroEstudiantes,
-            horarioDomingo: pHorarioDomingo,
-            horarioLunes: pHorarioLunes,
-            horarioMartes: pHorarioMartes,
-            horarioMiercoles: pHorarioMiercoles,
-            horarioJueves: pHorarioJueves,
-            horarioViernes: pHorarioViernes,
-            horarioSabado: pHorarioSabado,
-            horarioVirtual: pHorarioVirtual,
-            tiempoEntrada: pTiempoEntrada,
-            tiempoSalida: pTiempoSalida
+            numero: pNumero,
+            curso: pCurso,
+            cupo: pCupo,
+            profesores: pProfesores,
+            tipo: pTipo,
+            laboratorio: pLaboratorio
         }
     });
 
@@ -82,4 +73,51 @@ function obtenerBusqueda(pBuscar) {
     });
 
     return listaGrupos;
+};
+function obtenerGrupoPorId(pId){
+    let usuario = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/buscar_grupo_id',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pId
+        }
+      });
+    
+      peticion.done(function(response){
+        usuario = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return usuario;
+};
+
+function eliminarGrupo(pId){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/eliminar_grupo',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: pId
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
 };
