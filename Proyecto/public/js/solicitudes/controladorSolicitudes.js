@@ -536,6 +536,7 @@ function aprobar() {
     let grupo = solicitud['grupos'];
     let curso = solicitud['cursos'];
     let sNombre = solicitud['nombre'];
+    let profe = solicitud['profe'];
     let estado = 'Aprobada';
 
     let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
@@ -551,6 +552,39 @@ function aprobar() {
     } else {
         swal({
             title: 'Aprobación incorrecta.',
+            text: respuesta.msg,
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    }
+}
+
+function rechazar() {
+    let id = this.dataset.id;
+
+    let solicitud = obtenerSolicitudPorId(id);
+
+    let sede = solicitud['sedes'];
+    let periodo = solicitud['periodos'];
+    let grupo = solicitud['grupos'];
+    let curso = solicitud['cursos'];
+    let sNombre = solicitud['nombre'];
+    let profe = solicitud['profe'];
+    let estado = 'Rechazada';
+
+    let respuesta = actualizarSolicitud(id, sede, periodo, curso, grupo, sNombre, estado, profe);
+    if (respuesta.success == true) {
+        swal({
+            title: 'Rechazada',
+            text: respuesta.msg,
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        listaSolicitudes = obtenerSolicitudes();
+        location.reload();
+    } else {
+        swal({
+            title: 'Rechazo incorrecto.',
             text: respuesta.msg,
             type: 'warning',
             confirmButtonText: 'Entendido'
